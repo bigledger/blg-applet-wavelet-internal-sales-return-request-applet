@@ -1,0 +1,4 @@
+[submodule "micro-fe/projects/shared-utilities"]
+	path = micro-fe/projects/shared-utilities
+	url = https://github.com/bigledger/blg-shared-utilities.git
+	branch = main
