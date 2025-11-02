@@ -1,0 +1,51 @@
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div
+      fxLayout="row wrap"
+      fxLayoutAlign="space-between end"
+      fxLayoutGap="10px"
+    >
+      <div fxFlex="3 0 0">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          fxLayoutGap="3px"
+        >
+            <app-advanced-search-general
+            fxFlex
+            fxFlex.lt-sm="100"
+            [id]="'sales-invoice-listing'"
+            [advSearchModel]="searchModel"
+            (search)="onSearch($event)"
+            [readPermissionDefintion]="readPermissionDefintion"
+          ></app-advanced-search-general>
+        </div>
+      </div>
+      <div
+        class="blg-accent"
+        fxFlex="1 0 25"
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+      >
+        <app-pagination-v2 fxFlex #pagination [agGridReference]="agGrid" [rowPerPage]="limit" [showAll]="true" (onMorePageClick)="onMorePage()" (onAllPageClick)="onAllPage()"></app-pagination-v2> 
+      </div>
+    </div>
+  </mat-card-title>
+  <div style="height: 100%">
+    <ag-grid-angular
+        #agGrid
+        style="height: 100%"
+        class="ag-theme-balham"
+        [columnDefs]="columnsDefs"
+        [rowData]="[]"
+        [pagination]="true"
+        [paginationPageSize]="pagination.rowPerPage"
+        [gridOptions]="gridOptions"
+        [getRowStyle]="getRowStyle"
+        (firstDataRendered)="onFirstDataRendered($event)"
+        (rowClicked)="onRowClicked($event.data)"
+        (gridReady)="onGridReady($event)"
+      >
+      </ag-grid-angular>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div style="text-align: right; margin-top: 16px;">
+    <button mat-raised-button color="primary" type="button" (click)="onReset()">RESET</button>
+    &nbsp;&nbsp;
+    <button mat-raised-button color="primary" type="button" (click)="onSave()">SAVE</button>
+    
+  </div>
+<app-select-multi-label-list-drop-down
+            [apiVisa]="apiVisa"
+            [labelList]="form.get(getDynamicControlName())"
+            [label]="'Item Category Group '"
+            [options]="{}">
+</app-select-multi-label-list-drop-down>

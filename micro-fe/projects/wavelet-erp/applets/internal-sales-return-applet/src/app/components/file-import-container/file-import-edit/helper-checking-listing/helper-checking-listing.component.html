@@ -1,0 +1,30 @@
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async" *ngIf="!showPanels()" (selectedTabChange)="onTabChanged($event)">
+  <mat-tab label="Error">
+    <app-helper-checking-listing-error></app-helper-checking-listing-error>
+  </mat-tab>
+  <mat-tab label="All">
+    <app-helper-checking-listing-all *ngIf="isTabSelected('All')"></app-helper-checking-listing-all>
+  </mat-tab>
+</mat-tab-group>
+
+<br>
+<mat-accordion *ngIf="showPanels()" [multi]="true">
+  <mat-expansion-panel *ngFor="let panel of panels; let i = index" [expanded]="i === expandedPanelIndex" (opened)="onPanelOpened(i)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ panel.title }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+  <ng-container *ngIf="panel.content === 'error'">
+    <ng-template matExpansionPanelContent>
+      <app-helper-checking-listing-error></app-helper-checking-listing-error>
+    </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="panel.content === 'all'">
+    <ng-template matExpansionPanelContent>
+      <app-helper-checking-listing-all *ngIf="isTabSelected('All')"></app-helper-checking-listing-all>
+    </ng-template>
+  </ng-container>
+</mat-expansion-panel>
+</mat-accordion>

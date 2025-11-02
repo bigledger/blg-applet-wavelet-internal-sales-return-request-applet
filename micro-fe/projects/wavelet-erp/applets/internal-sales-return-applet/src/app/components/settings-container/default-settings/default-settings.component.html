@@ -1,0 +1,24 @@
+<div style="text-align: right; margin-top: 16px;">
+  <button mat-raised-button color="primary" (click)="onSave()">SAVE</button>
+</div>
+<div style="margin: 10px;">
+  <mat-accordion>
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span class="field-header">Applet Default Settings</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ul>
+        <li>
+          Default Branch: <blg-select-branch-drop-down [apiVisa]="apiVisa" [(branch)]="form.controls['DEFAULT_BRANCH']"
+            (branchSelected)="onBranchSelected($event)"></blg-select-branch-drop-down>
+        </li>
+        <li>
+          Default Location: <blg-select-location-drop-down [branchSelectedGuid]="selectedBranch" [apiVisa]="apiVisa"
+            [(location)]="form.controls['DEFAULT_LOCATION']"></blg-select-location-drop-down>
+        </li>
+      </ul>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

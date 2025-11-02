@@ -1,0 +1,13 @@
+.date-picker-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-picker-group {
+  display: flex;
+  gap: 10px;
+}
+
+.date-picker-field {
+  flex: 1;
+}

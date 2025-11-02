@@ -1,0 +1,48 @@
+<mat-nav-list disableRipple="true" style="overflow: hidden;" appAccordion fxLayout="column wrap" [ngStyle]="sidebarBgColor$ | async">
+  <button [ngStyle]="logoBgColor$ | async" [ngClass]="opened ? 'opened' : 'closed'" fxHide.lt-md mat-icon-button (click)="onToggle()"
+  style="
+  position: fixed;
+  top: 87px;
+  background: mediumslateblue;
+  color: white;
+  ">
+    <mat-icon>login</mat-icon>
+  </button>
+  <app-applet-logo [opened]="opened" [appletName]="appletName" [logoBgColor$]="logoBgColor$"></app-applet-logo>
+  <mat-list-item appAccordionLink *ngFor="let menu of menuItems" routerLinkActive="active-link">
+    <table *ngIf="menu.type === 'tenant'">
+      <tr>
+        <td rowspan="2">
+          <img src="assets/images/blglogo.jpg" alt="logo" width="50px" height="50px">
+        </td>
+      </tr>
+      <tr>
+        <td><span class="tenant" [@animateText]="opened ? 'show' : 'hide'">{{ menu.name }}</span></td>
+      </tr>
+    </table>
+    <a appAccordionToggle [matTooltip]="menu.name" [routerLink]="mainPath + '/' + menu.state" *ngIf="menu.type === 'link'">
+      <mat-icon>{{menu.icon}}</mat-icon>
+      <span [@animateText]="opened ? 'show' : 'hide'" >{{ menu.name }}</span>
+    </a>
+  </mat-list-item>
+  <ng-container style="margin-top: auto;">
+    <mat-list-item
+      appAccordionLink
+      routerLinkActive="active-link" style="margin-top: auto;">
+      <a *ngIf="userRank==='OWNER'||userRank==='ADMIN'" matTooltip="Settings" appAccordionToggle [routerLink]="mainPath + '/settings'" >
+        <mat-icon>settings</mat-icon>
+        <span [@animateText]="opened ? 'show' : 'hide'">Settings</span>
+      </a>
+    </mat-list-item>
+    <mat-list-item
+      appAccordionLink
+      routerLinkActive="active-link">
+      <a matTooltip="Personalization" appAccordionToggle [routerLink]="mainPath + '/personalization'">
+        <img style="width: 24px; height: 24px; border-radius: 50%;" [src]="src$ | async" alt="profile">
+        <span [@animateText]="opened ? 'show' : 'hide'">Personalization</span>
+      </a>
+    </mat-list-item>
+  </ng-container>
+</mat-nav-list>
+
+

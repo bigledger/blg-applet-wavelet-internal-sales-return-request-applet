@@ -1,0 +1,39 @@
+<form [formGroup]="form">
+  <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+    <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+      <!-- <mat-checkbox style="float: left; margin-bottom: 2px;" [formControl]="copyFromHdr">Copy from Hdr</mat-checkbox> -->
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Segment</mat-label>
+        <mat-select placeholder="Segment" [formControl]="form.controls['segment']">
+          <mat-option *ngFor="let y of segment" [value]="y.bl_fi_mst_segment.guid">{{y.bl_fi_mst_segment.code}} |
+            {{y.bl_fi_mst_segment.name}}</mat-option>
+        </mat-select>
+        <mat-error>Segment is <strong>not valid</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>G/L Dimension</mat-label>
+        <mat-select placeholder="G/L Dimension" [formControl]="form.controls['dimension']">
+          <mat-option *ngFor="let y of dimension" [value]="y.bl_fi_mst_gl_dimension.guid">
+            {{y.bl_fi_mst_gl_dimension.code}} | {{y.bl_fi_mst_gl_dimension.name}}</mat-option>
+        </mat-select>
+        <mat-error>G/L Dimension<strong>not valid</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Profit Centre</mat-label>
+        <mat-select placeholder="Profit Centre" [formControl]="form.controls['profitCenter']">
+          <mat-option *ngFor="let y of profitCenter" [value]="y.bl_fi_mst_profit_center.guid">
+            {{y.bl_fi_mst_profit_center.code}} | {{y.bl_fi_mst_profit_center.name}}</mat-option>
+        </mat-select>
+        <mat-error>Profit Centre <strong>not valid</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Project</mat-label>
+        <mat-select placeholder="project" [formControl]="form.controls['project']">
+          <mat-option *ngFor="let y of project" [value]="y.bl_fi_mst_project.guid">{{y.bl_fi_mst_project.code}} |
+            {{y.bl_fi_mst_project.name}}</mat-option>
+        </mat-select>
+        <mat-error>Project<strong>not valid</strong></mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</form>

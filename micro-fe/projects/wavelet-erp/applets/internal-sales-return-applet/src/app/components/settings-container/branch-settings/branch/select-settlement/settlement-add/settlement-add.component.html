@@ -1,0 +1,57 @@
+<mat-card-title class="column-title">
+    <div fxLayout="row" fxLayoutAlign="space-between end">
+      <div>
+        <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+          (click)="onReturn()"
+          [disabled]="deactivateReturn$ | async">
+          <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+        </button>
+        <span style="font-size: 15px; margin-top: 10px;">
+          Add Settlement Method
+        </span>
+      </div>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" (click)="onSubmit()">ADD</button>
+    </div>
+  </mat-card-title>
+  <div class="view-col-table" fxLayout="column">
+    <mat-card-title class="column-title" style="margin-bottom: 10px;">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+        <div fxFlex="3 0 0">
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="6px">
+            <mat-form-field appearance="outline" class="search-box">
+              <mat-label>Search...</mat-label>
+              <mat-icon matPrefix>search</mat-icon>
+              <input matInput type="text" (keyup.enter)="onSearch()" [(ngModel)]="searchValue" placeholder="Search settlement method" />
+              <div role="group" matSuffix>
+                <button class="inline blg-small-button-icon" mat-icon-button (click)="reset()">
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </div>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+          <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+
+        </div>
+      </div>
+    </mat-card-title>
+    <div style="height: 100%" fxFlex>
+      <ag-grid-angular #agGrid
+      id="grid"
+      style="height: 100%"
+      class="ag-theme-balham"
+      [gridOptions]="gridOptions"
+      [getRowClass]="pagination.getRowClass"
+      [columnDefs]="columnsDefs"
+      [paginationPageSize]="pagination.rowPerPage"
+      [cacheBlockSize]="pagination.rowPerPage"
+      [rowSelection]="rowSelection"
+      (rowSelected)="onRowSelected($event)"
+      [suppressRowClickSelection]="true"
+      [suppressAggFuncInHeader]="true"
+      (gridReady)="onGridReady($event)"
+      >
+      </ag-grid-angular>
+    </div>
+  </div>

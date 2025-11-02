@@ -1,0 +1,79 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+        [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+      </button>
+      <span>
+        View Internal Sales Proforma Invoice
+      </span>
+    </div>
+    <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+      <button mat-raised-button color="primary" type="button"
+      (click)="onReset()">RESET</button>
+      <button mat-raised-button color="primary" type="button"
+      [disabled]="disableButton()"
+      (click)="onSave()">SAVE</button>
+    </div>
+  </div>
+</mat-card-title>
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async">
+  <mat-tab label="Main">
+    <div class="with-delete">
+      <app-internal-sales-proforma-invoice-create-main [draft$]="draft$" [credits$]="credits$" (updateMain)="onUpdateMain($event)"></app-internal-sales-proforma-invoice-create-main>
+    </div>
+  </mat-tab>
+  <mat-tab label="Account">
+    <div class="with-delete">
+      <app-internal-sales-proforma-invoice-create-account
+      [childSelectedIndex$]="childSelectedIndex$" [draft$]="draft$"
+      (entity)="onCustomer()" (shipping)="onShippingAddress()" (billing)="onBillingAddress()" (shippingInfo)="onUpdateShippingInfo($event)" (billingInfo)="onUpdateBillingInfo($event)"></app-internal-sales-proforma-invoice-create-account>
+    </div>
+  </mat-tab>
+  <mat-tab label="Line Items">
+    <div class="with-delete">
+      <app-internal-sales-proforma-invoice-create-line-items [draft$]="draft$" [localState]="localState$ | async" [rowData]="pns$ | async"  (next)="onNextAdd()" (lineItem)="onLineItem($event)"></app-internal-sales-proforma-invoice-create-line-items>
+    </div>
+  </mat-tab>
+  <mat-tab label="Delivery Details">
+    <div class="with-delete">
+      <app-internal-sales-proforma-invoice-create-delivery-details></app-internal-sales-proforma-invoice-create-delivery-details>
+    </div>
+  </mat-tab>
+  <mat-tab label="Settlement">
+    <div class="with-delete">
+      <app-internal-sales-proforma-invoice-create-settlement [localState]="localState$ | async" [draft$]="draft$" [rowData]="settlement$ | async" [pns]="pns$ | async" (next)="onAddSettlement()"></app-internal-sales-proforma-invoice-create-settlement>
+    </div>
+  </mat-tab>
+  <mat-tab label="Department Hdr">
+    <div class="with-delete">
+      <app-internal-sales-proforma-invoice-create-department [draft$]="draft$" (updateDepartment)="onUpdateDepartment($event)"></app-internal-sales-proforma-invoice-create-department>
+    </div>
+  </mat-tab>
+  <mat-tab label="Contra">
+    <div class="with-delete">
+      <app-internal-sales-proforma-invoice-create-contra [localState]="localState$ | async" (next)="onAddContra()"></app-internal-sales-proforma-invoice-create-contra>
+    </div>
+  </mat-tab>
+  <mat-tab label="Attachments">
+    <div class="with-delete">
+      <app-internal-sales-proforma-invoice-create-attachments [rowData]="attachments$ | async" [localState]="localState$ | async" (next)="onAddAttachments()"></app-internal-sales-proforma-invoice-create-attachments>
+    </div>
+  </mat-tab>
+  <mat-tab label="Export">
+    <div class="with-delete">
+      <app-internal-sales-proforma-invoice-view-export (print)="onPrint()"></app-internal-sales-proforma-invoice-view-export>
+    </div>
+  </mat-tab>
+  <mat-tab label="Convert">
+    <div class="with-delete">
+      <app-internal-sales-proforma-invoice-view-convert (convert)="onConvert()"></app-internal-sales-proforma-invoice-view-convert>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<div style="padding: 5px;">
+  <button mat-raised-button color="warn" type="button" (click)="onDelete()">
+    <span>{{ (deleteConfirmation$ | async) ? 'CLICK AGAIN TO CONFIRM' : 'DELETE'}}</span>
+  </button>
+</div>

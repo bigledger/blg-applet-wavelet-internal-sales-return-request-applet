@@ -1,0 +1,42 @@
+<div style="display: flex;">
+    <!-- Dropdown for item category grp -->
+    <mat-form-field appearance="outline" class="example-full-width p-10">
+      <mat-label>Branch Intercompany Setting</mat-label>
+      <mat-chip-list [multiple]="true" #chipList aria-label="Multi Category Group Selection">
+        <mat-chip *ngFor="let setting of selectedConfigs" (removed)="remove(setting)"
+        [selected]="setting.bl_fi_mst_branch_intercompany_setting.guid"   >
+          {{ setting.bl_fi_mst_branch_intercompany_setting.config_code}} | {{ setting.bl_fi_mst_branch_intercompany_setting.mode}}  
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input
+          #configInput
+          [formControl]="configControl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="false"
+          (matChipInputTokenEnd)="add($event)"
+          (input)="filterConfig($event.target.value)"
+  
+        />
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let opt of filteredConfigs$ | async" 
+          [value]="opt" class="custom-mat-option"
+        >
+          <div (click)="optionClicked($event, branch)">
+            <mat-checkbox
+              [checked]="opt.selected"
+              (change)="configToggleSelection(opt)"
+              (click)="$event.stopPropagation()"
+            >
+            {{opt.bl_fi_mst_branch_intercompany_setting.config_code }}
+          </mat-checkbox>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    
+  </div>
+  

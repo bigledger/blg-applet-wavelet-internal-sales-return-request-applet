@@ -1,0 +1,72 @@
+<mat-card-title class="column-title">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end">
+      <div>
+        <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button" (click)="onReturn()">
+          <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+            alt="add" width="40px" height="40px">
+        </button>
+        <span>
+          Select Customer
+        </span>
+      </div>
+    </div>
+    <mat-slide-toggle
+      [(ngModel)]="toggleMode"
+      (change)="toggle($event)"
+      #slide
+    >
+        <span>{{ slide.checked ? "Create/Edit Mode" : "Select Mode" }}</span>
+      </mat-slide-toggle>
+  </mat-card-title>
+  
+  <div class="view-col-table no-tab" fxLayout="column">
+    <mat-card-title class="column-title">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+        <div fxFlex="3 0 0">
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+            <button
+            *ngIf="toggleMode"
+            ngClass.xs="blg-button-mobile"
+            #navBtn
+            class="blg-button-icon"
+            mat-button
+            matTooltip="Create"
+            type="button"
+            [disabled]="deactivateAdd$ | async"
+            (click)="onNext()"
+          >
+            <img
+              [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null"
+              src="assets/images/add.png"
+              alt="add"
+              width="40px"
+              height="40px"
+            />
+          </button>
+             <app-advanced-search-general class="mobile" fxFlex [id]="'customer'" [advSearchModel]="searchModel" (search)="onSearch($event)"></app-advanced-search-general>
+          </div>
+        </div>
+        <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+          <app-pagination-v2 fxFlex #pagination [agGridReference]="agGrid" [rowPerPage]="limit" (onMorePageClick)="onMorePage()"></app-pagination-v2>
+        </div>
+      </div>
+    </mat-card-title>
+    <div style="height: 100%">
+      <ag-grid-angular
+        #agGrid
+        id="grid"
+        style="height: 100%"
+        class="ag-theme-balham"
+        [paginationPageSize]="pagination.rowPerPage"
+        [columnDefs]="columnsDefs"
+        [gridOptions]="gridOptions"
+        [rowData]="[]"
+        [detailCellRendererParams]="detailCellRendererParams"
+        masterDetail="true"
+        (firstDataRendered)="onFirstDataRendered($event)"
+        (rowClicked)="onRowClickedNoContact($event)"
+        (gridReady)="onGridReady($event)"
+      >
+      </ag-grid-angular>
+    </div>  
+  </div>

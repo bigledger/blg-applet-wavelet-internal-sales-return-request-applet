@@ -1,0 +1,196 @@
+<form [formGroup]="form">
+  <div fxLayout="column" [ngClass]="{'view-col-forms': !isInExpansionPanel}">
+    <div fxLayout="row wrap" fxFlexAlign="center" [ngClass]="{'view-col-forms': !isInExpansionPanel}">
+      <div class="border">
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Submission Type</mat-label>
+          <mat-select placeholder="Submission Type" [formControl]="form.controls['submissionType']"
+          (selectionChange)="onSubmissionTypeChange($event);" required>
+          <mat-option value="INDIVIDUAL" [disabled]="disableIndividual">INDIVIDUAL
+          </mat-option>
+          <mat-option value="CONSOLIDATED" *ngIf="!disableConsolidatedSubmission">CONSOLIDATED
+          </mat-option>
+          <mat-option value="SINGLE-GENERAL" [disabled]="disableSingleGeneral" *ngIf="!disableSingleGeneralSubmission">SINGLE-GENERAL
+          </mat-option>
+         </mat-select>
+         <mat-hint *ngIf="disableIndividual || disableSingleGeneral">
+          To Select INDIVIDUAL or SINGLE-GENERAL Need to select Account And Billing Address First
+        </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Document No</mat-label>
+          <input matInput placeholder="Document No" formControlName="documentNo" readonly>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Document Type</mat-label>
+          <input matInput placeholder="Document Type" formControlName="documentType" readonly>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline" >
+          <mat-label>Original E-invoice Ref No</mat-label>
+          <input matInput placeholder="Original E-invoice Ref No." class="navigate"
+          [formControl]="form.controls['originalEinvoiceRefNo']"
+          type="text"
+          (change)="dispatchValueChanges()"
+          >
+          <mat-icon matSuffix (click)="goToEinvoiceMainDocRefNo()">arrow_forward_ios</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Original E-invoice Ref UUID</mat-label>
+          <input matInput (change)="dispatchValueChanges()" placeholder="Original E-invoice Ref UUID" formControlName="originalEinvoiceRefUUID">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Document Date</mat-label>
+          <input matInput placeholder="Document Date" formControlName="documentDate" readonly>
+        </mat-form-field>
+
+      </div>
+      <div class="border">
+        <div class="headercus" fxFlex.gt-sm="100" fxFlex="100">
+          <span class="line"></span>
+          <p>Buyer's Info</p>
+          <span class="line"></span>
+        </div>
+
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field  appearance="outline">
+            <mat-label>Buyer Name</mat-label>
+            <input matInput placeholder="Buyer Name" formControlName="buyerName" (change)="dispatchValueChanges()">
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" (click)="selectFromAnotherCustomer()" [disabled]="isPostingStatusFinal">Select From Another Customer</button>
+
+        </div>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Buyer's ID Type</mat-label>
+          <mat-select placeholder="Buyer's ID Type" [formControl]="form.controls['buyerIdType']"
+                    (selectionChange)="dispatchValueChanges()">
+          <mat-option *ngFor="let val of buyerIdType" [value]="val.value">{{val.viewValue}}
+          </mat-option>
+        </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Buyer ID No</mat-label>
+          <input matInput placeholder="Buyer ID No" formControlName="buyerIdNo" (change)="dispatchValueChanges()">
+        </mat-form-field>
+
+
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Buyer Tax ID</mat-label>
+          <input matInput placeholder="Buyer Tax ID" formControlName="buyerTaxId" (change)="dispatchValueChanges()">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Buyer Sales Service Tax ID</mat-label>
+          <input matInput placeholder="Buyer Sales Service Tax ID" formControlName="buyerSalesServiceTaxId" (change)="dispatchValueChanges()">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Buyer Email</mat-label>
+          <input matInput placeholder="Buyer Email" formControlName="buyerEmail" (change)="dispatchValueChanges()">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10" appearance="outline">
+          <mat-label>Buyer Contact No</mat-label>
+          <input matInput placeholder="Buyer Contact No" formControlName="buyerContactNo" (change)="dispatchValueChanges()">
+        </mat-form-field>
+
+        <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms border">
+          <mat-form-field appearance="outline" class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-label>Buyer's Address Name</mat-label>
+            <input matInput placeholder="Address Name" formControlName="buyerAddressName" (change)="dispatchValueChanges()">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-label>Address Line 1</mat-label>
+            <input matInput placeholder="Address Line 1" formControlName="buyerAddressLine1" (change)="dispatchValueChanges()">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-label>Address Line 2</mat-label>
+            <input matInput placeholder="Address Line 2" formControlName="buyerAddressLine2" (change)="dispatchValueChanges()">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-label>Address Line 3</mat-label>
+            <input matInput placeholder="Address Line 1" formControlName="buyerAddressLine3" (change)="dispatchValueChanges()">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-label>Address Line 4</mat-label>
+            <input matInput placeholder="Address Line 4" formControlName="buyerAddressLine4" (change)="dispatchValueChanges()">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-label>Address Line 5</mat-label>
+            <input matInput placeholder="Address Line 5" formControlName="buyerAddressLine5" (change)="dispatchValueChanges()">
+          </mat-form-field>
+
+          <mat-form-field class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100" appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select placeholder="Country" formControlName="buyerCountry" (selectionChange)="patchStates($event.value);dispatchValueChanges()">
+              <mat-option>
+                <ngx-mat-select-search [placeholderLabel]="'Country'"
+                  [noEntriesFoundLabel]="'No matching records found'" [formControl]="countryOptionsFilterCtrl">
+                </ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let eachOption of filteredCountryOptions | async" [value]="eachOption.viewValue">
+                {{eachOption.viewValue}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-label>State</mat-label>
+            <mat-select placeholder="State" [formControl]="form.controls['buyerState']"
+            (selectionChange)="onStateSelection($event.value);dispatchValueChanges()">
+            <mat-option *ngFor="let val of states" [value]="val.name">{{val.name}}
+            </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="City" formControlName="buyerCity" (change)="dispatchValueChanges()">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-label>Postcode</mat-label>
+            <input matInput placeholder="Postcode" formControlName="buyerPostcode" (change)="dispatchValueChanges()">
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <div class="barcode" *ngIf="(qrCodeImage$ | async)">
+
+        <h3>Validation URL</h3>
+
+          <ng-container *ngIf="(qrCodeImage$ | async) as qrCodeImage">
+            <div class="barcodeImg">
+              <img class="bImg" src="{{ qrCodeImage.qrCode }}" alt="Generated Barcode">
+            </div>
+          </ng-container>
+      <br>
+        <mat-form-field appearance="outline">
+          <mat-label>Validation URL</mat-label>
+          <input
+
+            matInput
+            placeholder="Validation URL"
+            [formControl]="form.controls['validationUrl']"
+            type="text"
+          />
+        </mat-form-field>
+
+      </div>
+    </div>
+
+    <div class="button">
+      <button mat-raised-button color="primary" (click)="onExport()" [disabled]="isDisabled">Export</button>
+    </div>
+  </div>
+</form>

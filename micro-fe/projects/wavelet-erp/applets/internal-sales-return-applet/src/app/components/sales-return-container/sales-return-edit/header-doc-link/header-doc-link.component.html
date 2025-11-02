@@ -1,0 +1,32 @@
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" *ngIf="!showPanels()">
+  <mat-tab label="From">
+    <app-from [pns$]="pns$"></app-from>
+  </mat-tab>
+
+  <mat-tab label="To">
+    <app-to [pns$]="pns$"></app-to>
+  </mat-tab>
+</mat-tab-group>
+
+<mat-accordion *ngIf="showPanels()" [multi]="true">
+  <mat-expansion-panel *ngFor="let panel of panels; let i = index"
+                        [expanded]="i === expandedPanelIndex"
+                        (opened)="onPanelOpened(i)"
+                        [ngClass]="{'expanded-subpanel': expandedPanelIndex === i}">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ panel.title }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- From Panel Content -->
+    <ng-container *ngIf="panel.content === 'from'">
+      <app-from [pns$]="pns$"></app-from>
+    </ng-container>
+
+    <!-- To Panel Content -->
+    <ng-container *ngIf="panel.content === 'to'">
+      <app-to [pns$]="pns$"></app-to>
+    </ng-container>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,9 @@
+.scrollable-container {
+    height: 85vh; /* 10% space to make way for discard button */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+
+  /* Style for expanded panel */
+  .expanded-panel {
+    border: 2px solid rgb(53, 137, 247); /* Blue border for expanded panel */
+  }

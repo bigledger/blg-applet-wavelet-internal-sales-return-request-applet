@@ -1,0 +1,52 @@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div>
+  <button id="snav-hamburger" fxHide.gt-sm mat-icon-button style="position: absolute; top: 12px; left: 10px; z-index: 10000; color: white;" type="button" (click)="onToggle(!sidebar.opened); snav.toggle()">
+    <mat-icon>
+    dehaze
+    </mat-icon>
+  </button>
+</div>
+<div class="main-container" [dir]="dir">
+  <!-- ============================================================== -->
+  <!-- Topbar - style you can find in header.scss -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- End Topbar - style you can find in pages.scss -->
+  <!-- ============================================================== -->
+  <mat-sidenav-container class="example-sidenav-container">
+    <!-- ============================================================== -->
+    <!-- Sidebar - style you can find in sidebar.scss -->
+    <!-- ============================================================== -->
+
+    <mat-sidenav #snav
+    [opened]="mobileQuery.matches ? ((sideNavState$ | async) ? 'true' : 'false') : true"
+    [@onSideNavChange]="(sideNavState$ | async) ? 'open': 'close'"
+    id="snav" [fixedInViewport]="true"
+    fixedTopGap="64"
+    [mode]="mobileQuery.matches ? 'over' : 'side'">
+        <app-sidebar class="app-sidebar" #sidebar [mainPath]="mainPath" [menuItems]="menuItems" [appletName]="appletName" [opened]="sideNavState$ | async" (toggle)="onToggle($event)"></app-sidebar>
+    </mat-sidenav>
+
+    <!-- ============================================================== -->
+    <!-- Page container - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <mat-sidenav-content class="page-wrapper"
+    [@onMainContentChange]="!mobileQuery.matches ? ((sideNavState$ | async) ? 'open' : 'close'): 'mobile'" style="background-color: white">
+      <div
+      class="page-content"
+      [ngStyle.lt-md]="{'margin-left.px': 5, 'margin-right.px': 5}"
+      [ngStyle.gt-sm]="{'margin-left.px': 40, 'margin-right.px': 20}"
+      >
+        <router-outlet message="">
+        </router-outlet>
+        <ngx-ui-loader></ngx-ui-loader>
+      </div>
+
+    </mat-sidenav-content>
+    <!-- ============================================================== -->
+    <!-- Page container - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+  </mat-sidenav-container>
+</div>

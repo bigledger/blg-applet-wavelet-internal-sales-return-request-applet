@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<!-- meta block -->
+		<title>Initialization with multiple sheets and menu - DHTMLX Spreadsheet</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+		
+		<link rel="shortcut icon" href="./common/favicon/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="./common/favicon/icon-16.png" sizes="16x16" />
+		<link rel="icon" href="./common/favicon/icon-32.png" sizes="32x32" />
+		<link rel="icon" href="./common/favicon/icon-48.png" sizes="48x48" />
+		<link rel="icon" href="./common/favicon/icon-96.png" sizes="96x96" />
+		<link rel="icon" href="./common/favicon/icon-144.png" sizes="144x144" />
+		<!-- end meta block -->
+		<script type="text/javascript" src="../codebase/spreadsheet.js?v=5.1.5"></script>
+		<link rel="stylesheet" href="../codebase/spreadsheet.css?v=5.1.5">
+		
+		<link rel="stylesheet" href="./common/index.css?v=5.1.5">
+		<!-- custom sample head -->
+		<script src="./common/data.js?v=5.1.5"></script>
+		<style>
+			.dhx_sample-container__widget {
+				max-width: 100%;
+				height: calc(100% - 61px);
+			}
+		</style>
+	</head>
+	<body>
+		<header class="dhx_sample-header">
+			<div class="dhx_sample-header__main">
+				<nav class="dhx_sample-header__breadcrumbs">
+					<ul class="dhx_sample-header-breadcrumbs">
+						<li class="dhx_sample-header-breadcrumbs__item">
+							<a href="./index.html" class="dhx_sample-header-breadcrumbs__link">Back to Spreadsheet samples</a>
+						</li>
+					</ul>
+				</nav>
+				<h1 class="dhx_sample-header__title">
+					<div class="dhx_sample-header__content">
+						Initialization with multiple sheets and menu
+					</div>
+				</h1>
+			</div>
+</header>
+		<div class="dhx_sample-container__widget" id="spreadsheet"></div>
+		<script>
+			const spreadsheet = new dhx.Spreadsheet("spreadsheet", {
+				menu: true // the menu is switched on, false - to switch it off
+			});
+			spreadsheet.parse(dataset);
+		</script>
+	</body>
+</html>

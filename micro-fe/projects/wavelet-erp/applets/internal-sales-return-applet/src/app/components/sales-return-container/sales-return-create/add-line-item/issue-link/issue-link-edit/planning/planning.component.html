@@ -1,0 +1,139 @@
+<form [formGroup]="form">
+    <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+      <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Target Start Date</mat-label>
+          <input matInput placeholder="Target Start Date" [matDatepicker]="targetStartDatePicker"
+            [formControl]="form.controls['targetStartDate']" autocomplete="off" readonly
+            (click)="targetStartDatePicker.open()" >
+          <mat-error>Target start date is <strong>not valid</strong></mat-error>
+          <mat-datepicker-toggle matSuffix [for]="targetStartDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #targetStartDatePicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Target End Date</mat-label>
+          <input matInput placeholder="Target End Date" [matDatepicker]="targetEndDatePicker"
+            [formControl]="form.controls['targetEndDate']" autocomplete="off" readonly
+            (click)="targetEndDatePicker.open()" >
+          <mat-error>Target end date is <strong>not valid</strong></mat-error>
+          <mat-datepicker-toggle matSuffix [for]="targetEndDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #targetEndDatePicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Actual Start Date</mat-label>
+          <input matInput placeholder="Actual Start Date" [matDatepicker]="actualStartDatePicker"
+            [formControl]="form.controls['actualStartDate']" autocomplete="off" readonly
+            (click)="actualStartDatePicker.open()" >
+          <mat-error>Actual start date is <strong>not valid</strong></mat-error>
+          <mat-datepicker-toggle matSuffix [for]="actualStartDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #actualStartDatePicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Actual End Date</mat-label>
+          <input matInput placeholder="Actual End Date" [matDatepicker]="actualEndDatePicker"
+            [formControl]="form.controls['actualEndDate']" autocomplete="off" readonly
+            (click)="actualEndDatePicker.open()" >
+          <mat-error>Actual end date is <strong>not valid</strong></mat-error>
+          <mat-datepicker-toggle matSuffix [for]="actualEndDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #actualEndDatePicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Calculated Start Date</mat-label>
+          <input matInput placeholder="Calculated Start Date" [matDatepicker]="calcStartDatePicker"
+            [formControl]="form.controls['calcStartDate']" autocomplete="off" readonly
+            (click)="calcStartDatePicker.open()" >
+          <mat-error>Calculated start date is <strong>not valid</strong></mat-error>
+          <mat-datepicker-toggle matSuffix [for]="calcStartDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #calcStartDatePicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Calculated End Date</mat-label>
+          <input matInput placeholder="Calculated End Date" [matDatepicker]="calcEndDatePicker"
+            [formControl]="form.controls['calcEndDate']" autocomplete="off" readonly
+            (click)="calcEndDatePicker.open()" >
+          <mat-error>Calculated end date is <strong>not valid</strong></mat-error>
+          <mat-datepicker-toggle matSuffix [for]="calcEndDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #calcEndDatePicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Baseline Start Date</mat-label>
+          <input matInput placeholder="Baseline Start Date" [matDatepicker]="baseStartDatePicker"
+            [formControl]="form.controls['baseStartDate']" autocomplete="off" readonly
+            (click)="baseStartDatePicker.open()" >
+          <mat-error>Baseline start date is <strong>not valid</strong></mat-error>
+          <mat-datepicker-toggle matSuffix [for]="baseStartDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #baseStartDatePicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Baseline End Date</mat-label>
+          <input matInput placeholder="Baseline End Date" [matDatepicker]="baseEndDatePicker"
+            [formControl]="form.controls['baseEndDate']" autocomplete="off" readonly
+            (click)="baseEndDatePicker.open()" >
+          <mat-error>Baseline end date is <strong>not valid</strong></mat-error>
+          <mat-datepicker-toggle matSuffix [for]="baseEndDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #baseEndDatePicker></mat-datepicker>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Billing Currency</mat-label>
+          <mat-select placeholder="Billing Currency" [formControl]="form.controls['billCurrency']">
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Billing Amount</mat-label>
+          <input matInput placeholder="Billing Amount" [formControl]="form.controls['billAmt']" type="number" step=".01">
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Cost Currency</mat-label>
+          <mat-select placeholder="Cost Currency" [formControl]="form.controls['costCurrency']">
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Cost Amount</mat-label>
+          <input matInput placeholder="Cost Amount" [formControl]="form.controls['costAmt']" type="number" step=".01">
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Story Point</mat-label>
+          <input matInput placeholder="Story Point" [formControl]="form.controls['storyPoint']" type="text">
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Manday Target</mat-label>
+          <input matInput placeholder="Manday Target" [formControl]="form.controls['mandayTarget']" type="text">
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Manday Actual</mat-label>
+          <input matInput placeholder="Manday Actual" [formControl]="form.controls['mandayActual']" type="text">
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Manday Allocated</mat-label>
+          <input matInput placeholder="Manday Allocated" [formControl]="form.controls['mandayAlloc']" type="text">
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Manday Billing</mat-label>
+          <input matInput placeholder="Manday Billing" [formControl]="form.controls['mandayBilling']" type="text">
+        </mat-form-field>
+  
+      </div>
+    </div>
+  </form>
+  

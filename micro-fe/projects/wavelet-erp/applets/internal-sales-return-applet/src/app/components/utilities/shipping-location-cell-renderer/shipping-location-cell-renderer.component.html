@@ -1,0 +1,20 @@
+<mat-form-field class="example-full-width" appearance="outline">
+    <mat-select
+      name="inputLocation"
+      [(ngModel)]="inputLocation"
+      (selectionChange)="onLocationSelection($event.value)"
+    >
+      <mat-option>
+        <ngx-mat-select-search
+          (keyup)="applyLocationFilter($event.target.value)"
+          [noEntriesFoundLabel]="'No matching records found'"
+          placeholderLabel="Search location..."
+          ngDefaultControl
+        ></ngx-mat-select-search>
+      </mat-option>
+      <mat-option *ngFor="let item of newLocationArr" [value]="item.code">{{
+        item.code
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  

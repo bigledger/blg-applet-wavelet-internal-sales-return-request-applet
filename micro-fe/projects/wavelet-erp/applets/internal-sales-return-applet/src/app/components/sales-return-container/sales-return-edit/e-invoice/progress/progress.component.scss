@@ -1,0 +1,381 @@
+.card-container {
+  max-width: 80%;
+  margin: 0 auto;
+  position: relative;
+  max-height: 80vh;
+  font-size: 0.8rem;
+}
+
+.card {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  height: 17vh;
+  min-height: 17vh;
+  max-height: 20vh;
+  overflow: hidden;
+
+}
+
+.left-section{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.right-section{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.scrollable-message {
+  flex: 3;
+  text-align: center;
+  overflow-y: scroll; 
+  max-height: 80px; 
+
+  /* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+
+  /* Hide scrollbar for IE, Edge */
+  -ms-overflow-style: none;
+
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
+}
+
+.success{
+  flex: 1;
+}
+
+
+
+.indicator {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.blue {
+  background-color: rgb(145, 222, 248);
+}
+
+.title {
+  font-weight: bold;
+}
+
+.date {
+  color: gray;
+  font-size: 0.8em;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.right-section {
+  font-weight: bold;
+  color: rgb(42, 92, 97);
+}
+
+.right-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.right-section ul li {
+  margin: 5px 0;
+}
+
+
+// progress bar
+// posting queue
+.progress-container {
+  position: relative;
+}
+
+.progress-line-posting-queue {
+  position: absolute;
+  left: -20px; 
+  top: 50%;
+  bottom: 0;
+  width: 2px;
+  background-color: blue;
+  z-index: 1;
+  display: none;
+}
+
+
+
+.progress-line-posting-queue.completed {
+  display: flex;
+}
+
+.progress-line-posting-queue.completed::before {
+  content: '';
+  position: absolute;
+  left: 0; 
+  width: 20px; 
+  height: 2px;
+  background-color: blue;
+}
+
+.progress-line-2-posting-queue {
+  position: absolute;
+  right: -20px; 
+  top: 50%;
+  bottom: 0;
+  width: 2px;
+  background-color: grey;
+  z-index: 1;
+}
+
+.progress-line-2-posting-queue.completed {
+  display: none;
+}
+
+.progress-line-2-posting-queue.in-posting-queue {
+  bottom: -20px;
+}
+
+.progress-line-2-posting-queue.in-posting-queue::after {
+  content: '';
+  position: absolute;
+  right: 0; 
+  width: 20px; 
+  height: 2px;
+  background-color: grey;
+}
+
+// batch pool
+.progress-line-batch-pool {
+  position: absolute;
+  left: -20px; 
+  top: 0;
+  bottom: 50%;
+  width: 2px;
+  background-color: blue;
+  z-index: 1;
+  display: none;
+}
+
+.progress-line-batch-pool.in-batch-pool {
+  display: flex;
+  top: -20px;
+}
+
+.progress-line-batch-pool.in-batch-pool::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 100%; 
+  width: 20px; 
+  height: 2px;
+  background-color: blue;
+}
+
+.progress-line-batch-pool.completed {
+  display: flex;
+  top: -20px;
+  bottom: 0;
+}
+
+.progress-line-batch-pool.completed::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%; 
+  width: 20px; 
+  height: 2px;
+  background-color: blue;
+}
+
+.progress-line-2-batch-pool {
+  position: absolute;
+  right: -20px; 
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: grey;
+  z-index: 1;
+}
+
+.progress-line-2-batch-pool::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%; 
+  width: 20px; 
+  height: 2px;
+  background-color: grey;
+}
+
+.progress-line-2-batch-pool.completed {
+  display: none;
+}
+
+.progress-line-2-batch-pool.in-batch-pool {
+  top: 50%;
+  bottom: -20px;
+}
+
+.progress-line-2-batch-pool.in-batch-pool::after {
+  top: 0; 
+}
+
+// in internal submission queue
+.progress-line-internal-submission-queue {
+  position: absolute;
+  left: -20px; 
+  top: 0;
+  bottom: 50%;
+  width: 2px;
+  background-color: blue;
+  z-index: 1;
+  display: none;
+}
+
+.progress-line-internal-submission-queue.in-internal-submission-queue {
+  display: flex;
+  top: -20px;
+}
+
+.progress-line-internal-submission-queue.in-internal-submission-queue::before {
+  content: '';
+  position: absolute;
+  left: 0; 
+  top: 100%;
+  width: 20px; 
+  height: 2px;
+  background-color: blue;
+}
+
+.progress-line-internal-submission-queue.completed {
+  display: flex;
+  top: -20px;
+  bottom: 0;
+}
+
+.progress-line-internal-submission-queue.completed::before {
+  content: '';
+  position: absolute;
+  left: 0; 
+  top: 50%;
+  width: 20px; 
+  height: 2px;
+  background-color: blue;
+}
+
+.progress-line-2-internal-submission-queue {
+  position: absolute;
+  right: -20px; 
+  top: -20px;
+  bottom: 0;
+  width: 2px;
+  background-color: grey;
+  z-index: 1;
+}
+
+.progress-line-2-internal-submission-queue::after {
+  content: '';
+  position: absolute;
+  right: 0; 
+  top: calc(50% + 20px);
+  width: 20px; 
+  height: 2px;
+  background-color: grey;
+}
+
+.progress-line-2-internal-submission-queue.completed {
+  display: none;
+}
+
+.progress-line-2-internal-submission-queue.in-internal-submission-queue{
+  top: 50%;
+  bottom: -20px;
+}
+
+.progress-line-2-internal-submission-queue.in-internal-submission-queue::after{
+  content: '';
+  position: absolute;
+  right: 0; 
+  top: 0;
+  width: 20px; 
+  height: 2px;
+  background-color: grey;
+}
+
+// in internal submission history
+.progress-line-internal-submission-history {
+  position: absolute;
+  left: -20px; 
+  top: 0;
+  bottom: 50%;
+  width: 2px;
+  background-color: blue;
+  z-index: 1;
+  display: none;
+}
+
+.progress-line-internal-submission-history.in-internal-submission-history {
+  display: flex;
+  top: -20px;
+}
+
+.progress-line-internal-submission-queue.completed {
+  display: flex;
+}
+
+.progress-line-internal-submission-history.completed::before {
+  content: '';
+  position: absolute;
+  left: 0; 
+  top: 100%;
+  width: 20px; 
+  height: 2px;
+  background-color: blue;
+}
+
+.progress-line-2-internal-submission-history {
+  position: absolute;
+  right: -20px; 
+  top: -20px;
+  bottom: 50%;
+  width: 2px;
+  background-color: grey;
+  z-index: 1;
+}
+
+.progress-line-2-internal-submission-history::after {
+  content: '';
+  position: absolute;
+  right: 0; 
+  top: 100%;
+  width: 20px; 
+  height: 2px;
+  background-color: grey;
+}
+
+.progress-line-2-internal-submission-history.completed {
+  display: none;
+}

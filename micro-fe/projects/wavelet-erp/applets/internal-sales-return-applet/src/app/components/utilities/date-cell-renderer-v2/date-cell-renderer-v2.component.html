@@ -1,0 +1,17 @@
+<mat-form-field class="example-full-width" appearance="outline">
+  <input
+    matInput
+    [matDatepicker]="datepicker"
+    autocomplete="off"
+    [readonly]="!EDIT_CONTRA_TXN_DATE"
+    (click)="EDIT_CONTRA_TXN_DATE && datepicker.open()"
+    [(ngModel)]="inputDate"
+    (ngModelChange)="dateChange($event)"
+  />
+ <mat-error>Contra date is <strong>not valid</strong></mat-error>
+  <mat-datepicker-toggle
+    matSuffix
+    [for]="datepicker"
+  ></mat-datepicker-toggle>
+  <mat-datepicker touchUi="true" #datepicker></mat-datepicker>
+</mat-form-field>

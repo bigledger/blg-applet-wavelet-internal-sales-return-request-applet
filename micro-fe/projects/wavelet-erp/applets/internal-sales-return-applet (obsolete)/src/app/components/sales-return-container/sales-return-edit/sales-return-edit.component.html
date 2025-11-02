@@ -1,0 +1,71 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+        [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px">
+      </button>
+      <span>Edit Sales Return</span>
+    </div>
+    <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+      <button mat-raised-button color="primary" type="button" (click)="onReset()">RESET</button>
+      <button mat-raised-button color="primary" type="button" (click)="onPostToFinal()">FINAL</button>
+      <button mat-raised-button color="primary" type="button" [disabled]="disableSave()"
+        (click)="onSave()">SAVE</button>
+    </div>
+  </div>
+</mat-card-title>
+<br>
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async">
+  <mat-tab label="Main Details">
+    <app-sales-return-main-details [draft$]="draft$" (updateMain)="onUpdateMain($event)"
+      (selectSalesAgent)="goToSelectSalesAgent()" (selectMember)="goToSelectMember()"></app-sales-return-main-details>
+  </mat-tab>
+  <mat-tab label="Account">
+    <app-sales-return-account [draft$]="draft$" [selectedIndex]="accountSelectedIndex$ | async"
+      (selectEntity)="goToSelectEntity()" (selectBilling)="goToSelectBilling()" (selectShipping)="goToSelectShipping()"
+      (updateShipTo)="onUpdateShippingInfo($event)" (updateShippingAddress)="onUpdateShippingAddress($event)"
+      (updateBillTo)="onUpdateBillingInfo($event)" (updateBillingAddress)="onUpdateBillingAddress($event)">
+    </app-sales-return-account>
+  </mat-tab>
+  <mat-tab label="Lines">
+    <app-sales-return-line-item-listing [localState]="localState$ | async" [draft$]="draft$"
+      (itemCreate)="goToLineItemCreate()" (itemEdit)="goToLineItemEdit($event)"></app-sales-return-line-item-listing>
+  </mat-tab>
+  <mat-tab label="Delivery Details">
+    <app-sales-return-delivery-details [draft$]="draft$"></app-sales-return-delivery-details>
+  </mat-tab>
+  <mat-tab label="Settlement">
+    <app-sales-return-payment-listing [localState]="localState$ | async" [draft$]="draft$"
+      (paymentCreate)="goToPaymentCreate()" (paymentEdit)="goToPaymentEdit($event)"></app-sales-return-payment-listing>
+  </mat-tab>
+  <mat-tab label="Department Hdr">
+    <app-sales-return-department [draft$]="draft$" (updateDepartment)="onUpdateDepartmentInfo($event)">
+    </app-sales-return-department>
+  </mat-tab>
+  <mat-tab label="Posting">
+    <app-sales-return-posting [draft$]="draft$" (updatePosting)="onUpdatePostingInfo($event)">
+    </app-sales-return-posting>
+  </mat-tab>
+  <mat-tab label="Contra">
+    <app-sales-return-contra-listing [localState]="localState$ | async" [draft$]="draft$"
+      (contraCreate)="goToContraCreate()" (contraEdit)="goToContraEdit($event)"></app-sales-return-contra-listing>
+  </mat-tab>
+  <mat-tab label="Doc Link">
+    <app-sales-return-header-doc-link [pns$]="pns$"></app-sales-return-header-doc-link>
+  </mat-tab>
+  <mat-tab label="Export">
+    <app-sales-return-export></app-sales-return-export>
+  </mat-tab>
+  <mat-tab label="Attachments">
+    <app-sales-return-attachments-listing [localState]="localState$ | async" (addAttachment)="goToAddAttachments()">
+    </app-sales-return-attachments-listing>
+  </mat-tab>
+</mat-tab-group>
+
+<div style="padding: 5px;">
+  <button mat-raised-button color="warn" type="button" (click)="onDelete()">
+    <span>{{ (deleteConfirmation$ | async) ? 'CLICK AGAIN TO CONFIRM' : 'DELETE'}}</span>
+  </button>
+</div>

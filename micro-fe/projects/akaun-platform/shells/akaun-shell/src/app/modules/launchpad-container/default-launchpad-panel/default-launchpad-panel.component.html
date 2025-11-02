@@ -1,0 +1,25 @@
+<!--<h3>Default LaunchPad Panel</h3>-->
+<div fxLayout="row wrap">
+  <mat-form-field appearance="outline" class="searchBar"  >
+    <mat-label>Search</mat-label>
+    <input matInput  [(ngModel)]="searchInput">
+  </mat-form-field>
+</div>
+<div fxLayout="row wrap">
+  <div fxFlex.lg="25%" fxFlex.md ="50%" fxFlex.sm="100%" class="container" *ngFor="let applet  of installedApplets1 | search: searchInput; let i = index">
+<!--    <mat-card matBadge="10" matBadgeColor="green" matBadgeSize="medium"><button [routerLink]="applet.property_json.routerLink" style="cursor: pointer; background: none; border: none;">-->
+    <mat-card matBadge="10" matBadgeColor="green" matBadgeSize="medium"><button (click)="createDynamic(i, applet)" style="cursor: pointer; background: none; border: none;">
+    <div class="headerText">
+      <h4 style="margin-bottom: 0px">{{applet?.catalog?.catalog_name}}</h4>
+    </div>
+
+<!--      <img *ngIf= "applet?.property_json?.appletIconUrl" mat-card-image src="{{applet?.property_json?.appletIconUrl}}" class="image" alt="Photo of a Shiba Inu">-->
+      <img  mat-card-image src="assets/images/big/img4.jpg" class="image" alt="Photo of a Shiba Inu">
+
+      <h4 class="pictureText">{{applet?.tenant?.tenant_name}}</h4>
+    <div class="headerBody">
+      <h4><strong>{{applet?.applet?.applet_name}}</strong></h4>
+    </div></button>
+    </mat-card>
+  </div>
+</div>

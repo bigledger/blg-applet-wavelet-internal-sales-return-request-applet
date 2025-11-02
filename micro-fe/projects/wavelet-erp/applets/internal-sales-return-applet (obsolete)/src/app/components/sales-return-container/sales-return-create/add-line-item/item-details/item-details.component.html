@@ -1,0 +1,17 @@
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async">
+    <mat-tab label="Main Details">
+        <app-item-details-main-details [editMode]="editMode"></app-item-details-main-details>
+    </mat-tab>
+    <mat-tab label="Delivery Instruction">
+        <app-item-details-delivery-instructions [editMode]="editMode"></app-item-details-delivery-instructions>
+    </mat-tab>
+    <mat-tab label="Department">
+        <app-item-details-department [editMode]="editMode"></app-item-details-department>
+    </mat-tab>
+    <mat-tab *ngIf="editMode" label="Doc Link">
+        <app-item-details-related-documents></app-item-details-related-documents>
+    </mat-tab>
+    <mat-tab *ngIf="editMode" label="Delivery Details">
+        <app-item-details-delivery-details></app-item-details-delivery-details>
+    </mat-tab>
+</mat-tab-group>

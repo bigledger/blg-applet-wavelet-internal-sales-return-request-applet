@@ -1,0 +1,90 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+        [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px">
+      </button>
+      <span>
+        Edit Line Item
+      </span>
+    </div>
+    <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+      <button mat-raised-button color="primary" type="button" [disabled]="disableSave()"
+        (click)="onSave()">SAVE</button>
+    </div>
+  </div>
+</mat-card-title>
+<br>
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" *ngIf="!showPanels()" [selectedIndex]="selectedIndex$ | async">
+  <mat-tab label="Item Details">
+    <app-edit-line-item-details [selectedIndex$]="itemSelectedIndex$"></app-edit-line-item-details>
+  </mat-tab>
+  <mat-tab label="Serial Number">
+    <app-edit-line-item-serial-number [selectedIndex$]="serialSelectedIndex$"></app-edit-line-item-serial-number>
+  </mat-tab>
+  <mat-tab label="Costing Details">
+    <app-edit-line-item-costing-details></app-edit-line-item-costing-details>
+  </mat-tab>
+  <mat-tab label="Pricing Details">
+    <app-edit-line-item-pricing-details></app-edit-line-item-pricing-details>
+  </mat-tab>
+  <mat-tab label="Issue Link">
+    <app-edit-line-item-issue-link-listing (editIssueLink)="goToEditIssueLink()">
+    </app-edit-line-item-issue-link-listing>
+  </mat-tab>
+</mat-tab-group>
+
+<mat-accordion *ngIf="showPanels()" [multi]="true">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Item Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-line-item-details [selectedIndex$]="itemSelectedIndex$"></app-edit-line-item-details>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Serial Number
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-line-item-serial-number [selectedIndex$]="serialSelectedIndex$"></app-edit-line-item-serial-number>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Costing Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-line-item-costing-details></app-edit-line-item-costing-details>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Pricing Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-line-item-pricing-details></app-edit-line-item-pricing-details>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Issue Link
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-line-item-issue-link-listing (editIssueLink)="goToEditIssueLink()"></app-edit-line-item-issue-link-listing>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div style="padding: 5px;">
+  <button mat-raised-button color="warn" type="button" (click)="onDelete()" *ngIf="deleteCondition()">
+    <span>{{ (deleteConfirmation$ | async) ? 'CLICK AGAIN TO CONFIRM' : 'DELETE'}}</span>
+  </button>
+</div>

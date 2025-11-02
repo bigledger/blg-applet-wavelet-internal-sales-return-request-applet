@@ -1,0 +1,80 @@
+
+<form [formGroup]="form" #formDirectives="ngForm">
+  <div class="view-col-forms">
+    <div class="inner-tab" fxLayout="row" fxLayoutGap="5px">
+      <div fxFlex="50" fxLayout="column">
+        <div *ngFor="let x of leftColControls; let i = index">
+          <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <input  matInput readonly [formControl]="form.controls[x.formControl]" autocomplete="off">
+          </mat-form-field>
+          <ng-template #input>
+            <ng-container [ngSwitch]="x.type">
+              <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+                <mat-label>{{x.label}}</mat-label>
+                <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="text">
+                <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+              </mat-form-field>
+              <mat-form-field *ngSwitchCase="'number'" appearance = "outline">
+                <mat-label>{{x.label}}</mat-label>
+                <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number">
+                <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+              </mat-form-field>
+              <mat-form-field *ngSwitchCase="'text-area'" appearance = "outline">
+                <mat-label>{{x.label}}</mat-label>
+                <textarea #remarks matInput [formControl]="form.controls[x.formControl]"></textarea>
+                <mat-hint align="end">{{remarks.value.length}} characters</mat-hint>
+              </mat-form-field>
+              <mat-form-field *ngSwitchCase="'date'" appearance = "outline">
+                <mat-label>{{x.label}}</mat-label>
+                <input matInput [matDatepicker]="datepicker" [formControl]="form.controls[x.formControl]" autocomplete="off" readonly (click)="datepicker.open()">
+                <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #datepicker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field *ngSwitchCase="'entityId'" appearance="outline">
+                <mat-label>{{x.label}}</mat-label>
+                <input style="cursor: pointer" matInput readonly [formControl]="form.controls[x.formControl]" autocomplete="off" type="text" (click)="selectCustomer()">
+                <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+              </mat-form-field>
+            </ng-container>
+          </ng-template>
+        </div>
+      </div>
+      <div fxFlex="50" fxLayout="column">
+        <div *ngFor="let x of rightColControls; let i = index">
+          <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <input  matInput readonly [formControl]="form.controls[x.formControl]" autocomplete="off">
+          </mat-form-field>
+          <ng-template #input>
+            <ng-container [ngSwitch]="x.type">
+              <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+                <mat-label>{{x.label}}</mat-label>
+                <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="text">
+                <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+              </mat-form-field>
+              <mat-form-field *ngSwitchCase="'number'" appearance = "outline">
+                <mat-label>{{x.label}}</mat-label>
+                <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number">
+                <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+              </mat-form-field>
+              <mat-form-field *ngSwitchCase="'text-area'" appearance = "outline">
+                <mat-label>{{x.label}}</mat-label>
+                <textarea #remarks matInput [formControl]="form.controls[x.formControl]"></textarea>
+                <mat-hint align="end">{{remarks.value.length}} characters</mat-hint>
+              </mat-form-field>
+              <mat-form-field *ngSwitchCase="'date'" appearance = "outline">
+                <mat-label>{{x.label}}</mat-label>
+                <input matInput [matDatepicker]="datepicker" [formControl]="form.controls[x.formControl]" autocomplete="off" readonly (click)="datepicker.open()">
+                <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #datepicker></mat-datepicker>
+              </mat-form-field>
+            </ng-container>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

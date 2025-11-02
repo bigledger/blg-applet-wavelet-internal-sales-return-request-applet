@@ -1,0 +1,52 @@
+<form [formGroup]="form">
+  <div class="view-col-forms">
+    <div fxLayout="row wrap" fxLayoutAlign="start center">
+      <mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+        <mat-label>Bin Code</mat-label>
+        <input matInput [formControl]="form.controls['bin_code']" (click)="onSelectBin()">
+        <mat-hint class="text-danger" *ngIf="binInvalid">The bin code is invalid</mat-hint>
+      </mat-form-field>
+      <div fxFlex="20" fxFlex.lt-sm="40" style="margin-bottom: 20px;">
+        <button mat-raised-button color="primary" type="button" [disabled]="disableAdd()" (click)="onAdd()" >ADD</button>
+      </div>
+      <mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+        <mat-label>Container Measure</mat-label>
+        <input matInput [formControl]="form.controls['container_measure']" type="number">
+      </mat-form-field>
+      <mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+        <mat-label>Container Quantity</mat-label>
+        <input matInput [formControl]="form.controls['container_qty']" type="number">
+      </mat-form-field>
+      <mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <input matInput [formControl]="form.controls['qty']" type="number" (change)="checkQtyInput($event.target.value)">
+        <mat-hint class="text-danger" *ngIf="invalidQty">The quantity is invalid</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+</form>
+<div>
+  <div style="text-align: right;">
+    <span style="float: left;">Quantity: {{ total }}</span>
+    <mat-checkbox [formControl]="selectAll" (click)="onSelectAll()">Select All</mat-checkbox>
+  </div>
+  <fieldset>
+    <legend>Bin Numbers</legend>
+    <mat-selection-list #matList style="text-align: left; max-height: 30vh; overflow: auto;">
+      <ng-container *ngFor="let b of binNumbers">
+        <mat-list-option [value]="b" (click)="onSelect($event)">
+          <div matLine>
+            <p fxFlex="40">{{ b.bin_hdr_code }}</p>
+            <p fxFlex="25">{{ b.container_measure }}</p>
+            <p fxFlex="25">{{ b.container_qty }}</p>
+            <p fxFlex="10">{{ b.qty }}</p>
+          </div>
+        </mat-list-option>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-selection-list>
+  </fieldset>
+  <div style="text-align: right; margin-top: 10px;">
+    <button mat-raised-button color="warn" type="button" (click)="onRemove()">REMOVE</button>
+  </div>
+</div>

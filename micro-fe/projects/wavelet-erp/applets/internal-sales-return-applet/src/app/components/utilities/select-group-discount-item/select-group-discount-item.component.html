@@ -1,0 +1,16 @@
+<mat-form-field class="full-width" appearance="outline">
+    <mat-label>Group Discount Item</mat-label>
+    <mat-select [formControl]="groupDiscount" (selectionChange)="onSelect($event.value)">
+      <mat-option>
+        <ngx-mat-select-search [placeholderLabel]="'Key in Item Code/Name'"
+          [noEntriesFoundLabel]="'No matching records found'"
+          [formControl]="serverSideFiltering" [searching]="serverSideSearching"></ngx-mat-select-search>
+      </mat-option>
+      <mat-option *ngFor="let eachOption of filteredOptions$ | async" [value]="eachOption.bl_fi_mst_item_hdr.guid">
+        {{eachOption.bl_fi_mst_item_hdr.code}} | {{eachOption.bl_fi_mst_item_hdr.name}}  
+      </mat-option>
+    </mat-select>
+    <mat-error>
+      Group Discount Item <strong>not valid</strong>
+    </mat-error>
+  </mat-form-field>

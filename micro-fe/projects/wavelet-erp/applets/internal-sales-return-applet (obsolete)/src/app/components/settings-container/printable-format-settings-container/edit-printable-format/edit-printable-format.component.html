@@ -1,0 +1,69 @@
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div fxLayout="row" fxLayoutAlign="space-between end">
+      <div>
+        <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+          [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+          <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+            alt="add" width="40px" height="40px">
+        </button>
+        <span>
+          Edit Printable Format
+        </span>
+      </div>
+      <button mat-raised-button color="primary" type="button" [disabled]="disableSave()"
+        (click)="onSave()">Save</button>
+    </div>
+
+
+    <form [formGroup]="form">
+      <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+        <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Format Code</mat-label>
+            <input matInput placeholder="Format Code" [formControl]="form.controls['formatCode']" type="text">
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Format Name</mat-label>
+            <input matInput placeholder="Format Name" [formControl]="form.controls['formatName']" type="text">
+          </mat-form-field>
+
+        </div>
+      </div>
+    </form>
+
+
+  </mat-card-title>
+  <div class="main-container">
+    <div appDragDrop (dropEvent)="onChange($event.dataTransfer.files)" class="drop-zone">
+      <input hidden #input type="file" single (change)="onChange($event.target.files)">
+      <h3>
+        Drag and drop your files anywhere or
+      </h3>
+      <label for="input" (click)="input.click()">Upload File(s)</label>
+    </div>
+  </div>
+  <div class="grid-container">
+    <div *ngIf="attachment" class="img-container">
+      <button style="position: absolute;" mat-icon-button color="warn" type="button" (click)="onDeleteFile()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <ng-container *ngIf="attachment.fileSRC === 'icon'; else preview">
+        <mat-icon style="transform: translate(0px, 30px);" class="file-preview">description</mat-icon>
+      </ng-container>
+      <ng-template #preview>
+        <img class="file-preview" [src]="attachment.fileSRC">
+      </ng-template>
+      <p class="file-name">{{attachment.fileAttributes?.fileName}}</p>
+    </div>
+  </div>
+
+  <div style="padding: 5px;">
+    <button mat-raised-button color="warn" type="button" (click)="onDelete()">
+      <span>{{ (deleteConfirmation$ | async) ? 'CLICK AGAIN TO CONFIRM' : 'DELETE'}}</span>
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,51 @@
+import { IGrid, Grid } from "../../../ts-grid";
+import { DataPage } from "../../../muon";
+import { ICell, ICellMeta, Id, ICopyData, IRange, IRangeIndex, IActionConfig, IExecuteConfig, ISpan } from "./../types";
+export declare function getLetterFromNumber(num: number): string;
+export declare function getNumberFromLetter(str: string): number;
+export declare function getCellIds(cell: string, grid: IGrid): ICell | IRange | any;
+export declare function getCellIndex(cell: string, grid: IGrid, includeHidden?: boolean): {
+    row: number;
+    col: number;
+};
+export declare function getCellNameByIndex(rowIndex: number, colIndex: number, grid: IGrid): string;
+export declare function getCellNameById(grid: IGrid, row: Id, col: Id): string;
+export declare function getCellInfo(cell: string, page: DataPage, grid: IGrid): ICellMeta;
+export declare function isRangeId(id: string): boolean;
+export declare function getRangeIndexes(range: string, grid: IGrid, includeHidden?: boolean): IRangeIndex;
+type rangeDir = "row" | "col";
+export declare function getRangeArray(range: string, grid: IGrid, dir?: rangeDir): string[];
+export declare function getRangeMatrix(range: string, grid: IGrid, dir?: rangeDir): any[];
+export declare function getNextRangeCell(range: string, current: string, grid: IGrid, dir?: rangeDir): string;
+export declare function getPrevRangeCell(range: string, current: string, grid: IGrid, dir?: rangeDir): string;
+export declare function getCellsArray(cells: string, grid: IGrid): string[];
+export declare function extendConfig(target?: {}, source?: {}, deep?: boolean): any;
+export declare function cleanActionConfig(config: IExecuteConfig | IActionConfig): any;
+export declare function isWasmSupported(): boolean;
+export declare function fetchFile(url: string, method?: "GET", responseType?: XMLHttpRequestResponseType): Promise<any>;
+export declare function getSeparatorsFromMSO(html: string): {
+    decimal: string;
+    thousands: string;
+};
+export declare function analyzeMSOFormat(format: string, separators?: {
+    decimal: any;
+    thousands: any;
+}): string;
+export declare function parseHtmlTable(html: string): ICopyData;
+export declare function parseFromText(str: any): ICopyData;
+export declare function getTextHeight(text: any, width: number): number;
+export declare function convertStyles(styles: any): any;
+export declare function isMac(): boolean;
+export declare function getCellNode(cell: string, grid: Grid, includeHidden?: boolean): HTMLElement;
+export declare function isURL(text: any): string | boolean;
+export declare function doesContainUrl(value: any): string | undefined;
+export declare function getStylesObject(claasName?: string): {};
+export declare function checkSpan({ from, to }: ISpan, leftSplit: any, topSplit: any, grid: any): boolean;
+export declare function checkSpanByNames(cell: string, leftSplit: any, topSplit: any, grid: any): boolean;
+export declare function isCellFixed(cell: string, leftSplit: any, topSplit: any, grid: any): {
+    isTopFixed: boolean;
+    isLeftFixed: boolean;
+};
+export declare function isCellSpaned(cell: string, merged: ISpan[]): ISpan | undefined;
+export declare function showAlert(text: string): void;
+export {};

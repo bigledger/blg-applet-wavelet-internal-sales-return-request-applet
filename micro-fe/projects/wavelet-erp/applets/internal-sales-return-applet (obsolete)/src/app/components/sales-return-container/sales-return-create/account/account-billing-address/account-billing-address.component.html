@@ -1,0 +1,130 @@
+<div class="view-col-forms">
+  <div class="inner-tab">
+    <form [formGroup]="billingForm">
+      <div fxLayout="row" fxLayoutGap="5px">
+        <div fxFlex="50" fxLayout="column">
+          <div *ngFor="let x of billingLeftColControls; let i = index">
+            <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput readonly [formControl]="billingForm.controls[x.formControl]" autocomplete="off">
+            </mat-form-field>
+            <ng-template #input>
+              <ng-container [ngSwitch]="x.type">
+                <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input matInput [formControl]="billingForm.controls[x.formControl]" autocomplete="off" type="text"
+                    (change)="updateBillTo.emit(billingForm.value)">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field *ngSwitchCase="'number'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input matInput [formControl]="billingForm.controls[x.formControl]" autocomplete="off" type="number"
+                    (change)="updateBillTo.emit(billingForm.value)">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field *ngSwitchCase="'email'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input matInput [formControl]="billingForm.controls[x.formControl]" autocomplete="off" type="email"
+                    (change)="updateBillTo.emit(billingForm.value)">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                </mat-form-field>
+              </ng-container>
+            </ng-template>
+          </div>
+        </div>
+        <div fxFlex="50" fxLayout="column">
+          <div *ngFor="let x of billingRightColControls; let i = index">
+            <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput readonly [formControl]="billingForm.controls[x.formControl]" autocomplete="off">
+            </mat-form-field>
+            <ng-template #input>
+              <ng-container [ngSwitch]="x.type">
+                <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input matInput [formControl]="billingForm.controls[x.formControl]" autocomplete="off" type="text"
+                    (change)="updateBillTo.emit(billingForm.value)">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field *ngSwitchCase="'number'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input matInput [formControl]="billingForm.controls[x.formControl]" autocomplete="off" type="number"
+                    (change)="updateBillTo.emit(billingForm.value)">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field *ngSwitchCase="'email'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input matInput [formControl]="billingForm.controls[x.formControl]" autocomplete="off" type="email"
+                    (change)="updateBillTo.emit(billingForm.value)">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                </mat-form-field>
+              </ng-container>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </form>
+    <mat-divider style="margin-bottom: 25px;"></mat-divider>
+    <form [formGroup]="addressForm">
+      <div fxLayout="row" fxLayoutGap="5px">
+        <div fxFlex="50" fxLayout="column">
+          <div *ngFor="let x of addressLeftColControls; let i = index">
+            <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput readonly [formControl]="addressForm.controls[x.formControl]" autocomplete="off"
+                (change)="updateBillingAddress.emit(addressForm.value)">
+            </mat-form-field>
+            <ng-template #input>
+              <ng-container [ngSwitch]="x.type">
+                <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input matInput [formControl]="addressForm.controls[x.formControl]" autocomplete="off" type="text"
+                    (change)="updateBillingAddress.emit(addressForm.value)">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field *ngSwitchCase="'number'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input matInput [formControl]="addressForm.controls[x.formControl]" autocomplete="off" type="number"
+                    (change)="updateBillingAddress.emit(addressForm.value)">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field *ngSwitchCase="'billingAddress'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input style="cursor: pointer" matInput readonly [formControl]="addressForm.controls[x.formControl]"
+                    autocomplete="off" type="text" (click)="selectAddress()">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                  <mat-hint><strong>Entity ID</strong> must be selected first</mat-hint>
+                </mat-form-field>
+              </ng-container>
+            </ng-template>
+          </div>
+        </div>
+        <div fxFlex="50" fxLayout="column">
+          <div *ngFor="let x of addressRightColControls; let i = index">
+            <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput readonly [formControl]="addressForm.controls[x.formControl]" autocomplete="off"
+                (change)="updateBillingAddress.emit(addressForm.value)">
+            </mat-form-field>
+            <ng-template #input>
+              <ng-container [ngSwitch]="x.type">
+                <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input matInput [formControl]="addressForm.controls[x.formControl]" autocomplete="off" type="text"
+                    (change)="updateBillingAddress.emit(addressForm.value)">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                </mat-form-field>
+                <mat-form-field *ngSwitchCase="'number'" appearance="outline">
+                  <mat-label>{{x.label}}</mat-label>
+                  <input matInput [formControl]="addressForm.controls[x.formControl]" autocomplete="off" type="number"
+                    (change)="updateBillingAddress.emit(addressForm.value)">
+                  <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+                </mat-form-field>
+              </ng-container>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

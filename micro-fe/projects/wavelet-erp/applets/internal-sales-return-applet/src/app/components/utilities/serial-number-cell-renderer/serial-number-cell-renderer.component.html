@@ -1,0 +1,10 @@
+<div *ngIf="serialNumbers.length>0">
+  <mat-checkbox [checked]="isAllSelected()" (change)="selectAll($event)">
+    Select All
+  </mat-checkbox>
+</div>
+<div *ngFor="let serialNumber of serialNumbers">
+  <mat-checkbox [checked]="serialNumber.checked" (change)="showOptions($event, serialNumber.serialNumber)"> 
+    {{ serialNumber.serialNumber }}
+  </mat-checkbox>
+</div>

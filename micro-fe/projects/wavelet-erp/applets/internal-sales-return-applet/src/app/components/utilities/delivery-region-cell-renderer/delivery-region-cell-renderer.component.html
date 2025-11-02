@@ -1,0 +1,19 @@
+<mat-form-field class="example-full-width" appearance="outline">
+  <mat-select
+    name="inputRegion"
+    [(ngModel)]="inputRegion"
+    (selectionChange)="onRegionSelection($event.value)"
+  >
+    <mat-option>
+      <ngx-mat-select-search
+        (keyup)="applyRegionFilter($event.target.value)"
+        [noEntriesFoundLabel]="'No matching records found'"
+        placeholderLabel="Search region..."
+        ngDefaultControl
+      ></ngx-mat-select-search>
+    </mat-option>
+    <mat-option *ngFor="let item of newRegArr" [value]="item.region">{{
+      item.region
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>

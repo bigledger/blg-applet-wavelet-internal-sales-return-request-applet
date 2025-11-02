@@ -1,0 +1,34 @@
+//DO NOT ADD @include without a CSS GATE: OMAR
+
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+// Default akaun color palette
+$custom-app-primary: mat-palette($mat-blue, 800);
+$custom-app-accent: mat-palette($mat-amber, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$custom-app-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$custom-app-theme: mat-light-theme(
+  $custom-app-primary,
+  $custom-app-accent,
+  $custom-app-warn
+);
+
+$custom-app-theme-dark: mat-dark-theme(
+  $custom-app-primary,
+  $custom-app-accent,
+  $custom-app-warn
+);
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+.akaun-light-theme {
+  @include angular-material-theme($custom-app-theme);
+}
+.akaun-dark-theme {
+  @include angular-material-theme($custom-app-theme-dark);
+}

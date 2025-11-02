@@ -1,0 +1,146 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button" (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px">
+      </button>
+      <span>Edit Payment</span>
+    </div>
+    <button mat-raised-button color="primary" type="button" [disabled]="disableSave()" (click)="onSave()">SAVE</button>
+  </div>
+</mat-card-title>
+<form [formGroup]="form">
+  <div class="view-col-forms">
+    <!-- <app-select-settlement-method [(settlement)]="settlementMethod" [selectedBranchGuid]="selectedBranchGuid" (settlementType)="onSettlementTypeChange($event)"></app-select-settlement-method> -->
+    <mat-form-field appearance="outline">
+      <mat-label>Settlement Type</mat-label>
+      <mat-select (selectionChange)="onSettlementGroupChange($event.value)" formControlName="settlementGroup" required [disabled]="true">
+        <mat-option>
+          <ngx-mat-select-search [placeholderLabel]="'Settlement Type'"
+            [noEntriesFoundLabel]="'No matching records found'" [formControl]="settlementGroupOptionsFilterCtrl">
+          </ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let eachOption of settlementGroupOptions" [value]="eachOption.value">
+          {{eachOption.viewValue}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Settlement Method</mat-label>
+      <mat-select (selectionChange)="onSettlementTypeChange($event.value)" formControlName="settlementType" [disabled]="true" required>
+        <mat-option>
+          <ngx-mat-select-search [placeholderLabel]="'Settlement Method'"
+            [noEntriesFoundLabel]="'No matching records found'" [formControl]="settlementTypeOptionsFilterCtrl">
+          </ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let eachOption of settlementList" [value]="eachOption.bl_fi_mst_item_hdr.guid">
+          {{eachOption.bl_fi_mst_item_hdr.code}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngFor="let x of leftColControls; let i = index">
+      <ng-container *ngIf="!x.hidden">
+      <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+        <mat-label>{{x.label}}</mat-label>
+        <input matInput readonly [formControl]="form.controls[x.formControl]" autocomplete="off">
+        <mat-hint>{{x.hint}}</mat-hint>
+      </mat-form-field>
+      <ng-template #input>
+        <ng-container [ngSwitch]="x.type">
+          <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="text">
+            <mat-error *ngIf="x.mandatory">{{x.label}} is <strong>not valid</strong></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'number'" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number">
+            <mat-error *ngIf="x.mandatory">{{x.label}} is <strong>not valid</strong></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'money'" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number" step=".01" (change)="form.controls[x.formControl].setValue($event.target.valueAsNumber.toFixed(2))">
+            <mat-error *ngIf="x.mandatory">{{x.label}} is <strong>not valid</strong></mat-error>
+            <mat-hint>{{x.hint}}</mat-hint>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'text-area'" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <textarea #remarks matInput [formControl]="form.controls[x.formControl]"></textarea>
+            <mat-hint align="end">{{remarks.value.length}} characters</mat-hint>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'date'" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <input matInput [matDatepicker]="datepicker" [formControl]="form.controls[x.formControl]" autocomplete="off" readonly (click)="datepicker.open()">
+            <mat-error *ngIf="x.mandatory">{{x.label}} is <strong>not valid</strong></mat-error>
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #datepicker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'chequeDate'" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <input matInput [matDatepicker]="chequeDatepicker" [formControl]="form.controls[x.formControl]" autocomplete="off" readonly (click)="chequeDatepicker.open()">
+            <mat-error *ngIf="x.mandatory">{{x.label}} is <strong>not valid</strong></mat-error>
+            <mat-datepicker-toggle matSuffix [for]="chequeDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #chequeDatepicker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'cardType'" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <mat-select [formControl]="form.controls[x.formControl]">
+              <mat-option value="VISA">VISA</mat-option>
+              <mat-option value="MASTERCARD">MASTERCARD</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'points'" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <mat-select [formControl]="form.controls[x.formControl]">
+              <mat-option value="Gold">Gold</mat-option>
+              <mat-option value="Silver">Silver</mat-option>
+              <mat-option value="Rebate Point">Rebate Point</mat-option>
+            </mat-select>
+            <mat-error *ngIf="x.mandatory">{{x.label}} is <strong>not valid</strong></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'pointCurrencyForSettlement'" appearance="outline">
+            <mat-label>{{x.label}}</mat-label>
+            <input matInput readonly [formControl]="form.controls[x.formControl]" autocomplete="off" type="number">
+            <mat-error *ngIf="x.mandatory">{{x.label}} is <strong>not valid</strong></mat-error>
+          </mat-form-field>
+          <fieldset *ngSwitchCase="'cardExpiry'">
+            <!-- <legend>Card Expiry</legend> -->
+            <legend>{{x.label}}</legend>
+            <mat-form-field appearance="outline">
+              <mat-label>Year</mat-label>
+              <mat-select [formControl]="form.controls['year']">
+                <mat-option *ngFor="let y of years" [value]="y">{{y}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Month</mat-label>
+              <mat-select [formControl]="form.controls['month']">
+                <mat-option value="01">01</mat-option>
+                <mat-option value="02">02</mat-option>
+                <mat-option value="03">03</mat-option>
+                <mat-option value="04">04</mat-option>
+                <mat-option value="05">05</mat-option>
+                <mat-option value="06">06</mat-option>
+                <mat-option value="07">07</mat-option>
+                <mat-option value="08">08</mat-option>
+                <mat-option value="09">09</mat-option>
+                <mat-option value="10">10</mat-option>
+                <mat-option value="11">11</mat-option>
+                <mat-option value="12">12</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="x.mandatory && (form.controls['year'].invalid || form.controls['month'].invalid)">
+              {{x.label}} is <strong>not valid</strong>
+            </mat-error>
+          </fieldset>
+        </ng-container>
+      </ng-template>
+      </ng-container>
+    </div>
+  </div>
+</form>
+
+<div style="padding: 5px;">
+  <button mat-raised-button color="warn" type="button" (click)="onDelete()">
+    <span>{{ (deleteConfirmation$ | async) ? 'CLICK AGAIN TO CONFIRM' : 'DELETE'}}</span>
+  </button>
+</div>

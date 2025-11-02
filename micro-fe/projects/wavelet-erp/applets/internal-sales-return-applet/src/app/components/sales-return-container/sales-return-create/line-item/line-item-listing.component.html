@@ -1,0 +1,67 @@
+<div class="view-col-table" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div fxFlex="3 0 0">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+          <button ngClass.xs="blg-button-mobile" #navBtn class="blg-button-icon" mat-button matTooltip="Create"
+            type="button" [disabled]="localState.deactivateAdd" (click)="onNext()" *ngIf="posting()">
+            <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="assets/images/add.png" alt="add"
+              width="40px" height="40px">
+          </button>
+          <!-- <app-advanced-search-lines fxFlex fxFlex.lt-sm="100" [id]="'internal-ipSalesReturn-line-item'"
+            [advSearchModel]="searchModel" (search)="onSearch($event)"></app-advanced-search-lines> -->
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Scan Code (Case Sensitive)</mat-label>
+            <mat-icon matPrefix>search</mat-icon>
+            <input #basic matInput type="text" [formControl]="form.controls['scanned_code']"
+            (keydown.enter)="onSearch($event)"/>
+            <mat-error *ngIf="form.controls['scanned_code'].hasError('invalid_item_code')" class="text-danger font-14">
+              Invalid Item Code
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+
+      </div>
+    </div>
+  </mat-card-title>
+  <form [formGroup]="form">
+    <div  class="p-10" fxLayout.lt-sm="column" fxLayoutGap="5px" fxLayoutAlign="space-between">
+      <div>
+        <mat-form-field appearance="outline" fxFlex="50%">
+          <mat-label>Group Discount Amount</mat-label>
+          <input matInput [formControl]="form.controls['discAmount']" autocomplete="off" type="number" (keyup.enter)="onGroupDiscAmt()">
+        </mat-form-field>&nbsp;
+        <mat-form-field appearance="outline" fxFlex="50%">
+          <mat-label>Group Discount %</mat-label>
+          <input matInput [formControl]="form.controls['discPercentage']" autocomplete="off" type="number"  (keyup.enter)="onGroupDiscPercent()">
+        </mat-form-field>
+      </div>
+      <div style="padding-top: 10px;">
+        <div style="text-align: right"  *ngIf="!appletSettings.HIDE_TOTAL_DISCOUNT_AMOUNT"> 
+          Discount Amount: <strong style="color: #1e88e5; margin-right: 8px;">{{ discount }}</strong>
+          <strong>{{ (draft$ | async).doc_ccy }}</strong>
+        </div>
+        <div style="text-align: right">
+          Tax Amount: <strong style="color: #1e88e5; margin-right: 8px;">{{ tax }}</strong>
+          <strong>{{ (draft$ | async).doc_ccy }}</strong>
+        </div>
+        <div style="text-align: right">
+          Total Txn Amount: <strong style="color: #1e88e5; margin-right: 8px;">{{ total }}</strong>
+          <strong>{{ (draft$ | async).doc_ccy }}</strong>
+        </div>
+       </div>
+    </div>
+  </form>
+
+  <div style="height: 100%;">
+    <ag-grid-angular #agGrid style="height: 100%;" class="ag-theme-balham" rowSelection="single"
+      [getRowClass]="pagination.getRowClass" [rowData]="rowData" [paginationPageSize]="pagination.rowPerPage"
+      [animateRows]="true" [defaultColDef]="defaultColDef" [suppressRowClickSelection]="false" [sideBar]="true"
+      [frameworkComponents]="frameworkComponents" (rowClicked)="onRowClicked($event.data)" [gridOptions]="gridOptions"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div> <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+        [disabled]="deactivateReturn$ | async" (click)="onReturn()"> <img
+          [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px"> </button> <span> Tax Create </span> </div> <button mat-raised-button
+       type="button" (click)="onSave()" [disabled]="!taxInfo.valid" color={{isClicked}} >{{addSuccess}}</button> 
+  </div>
+</mat-card-title>
+<form [formGroup]="taxInfo" #formDirectives="ngForm">
+  <mat-tab-group [dynamicHeight]="true">
+    <mat-tab label="Main">
+      <div fxLayout="column" class="view-col-forms">
+        <div fxLayout="raw wrap" fxFlexAlign="center" class="row">
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <mat-select placeholder="Country" [formControl]="taxInfo.controls['country']"
+                (selectionChange)="onCountryChange($event)" required>
+                <mat-option *ngFor="let item of country" [value]="item.value">{{item.viewValue}}</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="taxInfo.controls['country'].hasError('required') && taxInfo.controls['country'].touched"
+                class="text-danger font-14">You must select Country </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Tax Type</mat-label>
+              <mat-select placeholder="taxType" [formControl]="taxInfo.controls['tax_type']"
+                (selectionChange)="onTypeChange($event)">
+                <mat-option *ngFor="let item of taxType" [value]="item">{{item}}</mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="taxInfo.controls['tax_type'].hasError('required') && taxInfo.controls['tax_type'].touched"
+                class="text-danger font-14">You must select Tax Type </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Tax Code</mat-label>
+              <mat-select placeholder="taxType" [formControl]="taxInfo.controls['tax_code']"
+                (selectionChange)="onCodeChange($event)">
+                <mat-option *ngFor="let item of taxCode" [value]="item">
+                  {{item.tax_code}}</mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="taxInfo.controls['tax_code'].hasError('required') && taxInfo.controls['tax_code'].touched"
+                class="text-danger font-14">You must select Tax Code </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Tax Rate (%)</mat-label> <input maxlength="255" matInput type="number" step=".01"
+                formControlName="tax_rate" required readonly disabled>
+              <mat-hint
+                *ngIf="taxInfo.controls['tax_rate'].hasError('required') && taxInfo.controls['tax_rate'].touched"
+                class="text-danger font-14">You must insert Tax Rate </mat-hint>
+              <mat-hint *ngIf="taxInfo.controls['tax_rate'].value?.length === 255" class="text-danger font-14">Please
+                insert
+                no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Tax Option</mat-label>
+              <mat-select placeholder="Tax Option" [formControl]="taxInfo.controls['tax_option']">
+                <mat-option *ngFor="let item of taxOption" [value]="item.value">{{item.viewValue}}</mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="taxInfo.controls['tax_option'].hasError('required') && taxInfo.controls['tax_option'].touched"
+                class="text-danger font-14">You must select Tax Option </mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</form>

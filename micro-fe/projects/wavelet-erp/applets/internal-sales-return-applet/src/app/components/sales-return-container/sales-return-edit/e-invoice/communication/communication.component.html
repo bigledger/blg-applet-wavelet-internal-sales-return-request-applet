@@ -1,0 +1,38 @@
+<form [formGroup]="form">
+  <div fxLayout="column" class="view-col-forms">
+    <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+      <div class="border">
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>Customer Name</mat-label>
+          <input matInput placeholder="Customer Name" formControlName="customerName" readonly>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>Customer Email</mat-label>
+          <input matInput placeholder="Customer Email" formControlName="customerEmail" readonly>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>Email Template</mat-label>
+          <input matInput placeholder="Email Template" formControlName="emailTemplate" readonly>
+        </mat-form-field>
+
+       
+      </div>
+
+      <br>
+      <mat-divider class="mat-divider" style="height: 5px; border-top-width: 3px;" [inset]="true"></mat-divider>
+      <br>
+
+      <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+        
+      </div>
+
+    </div>
+    
+    <div class="button">
+      <button mat-raised-button color="primary">Send</button>
+    </div>
+  </div>
+</form>

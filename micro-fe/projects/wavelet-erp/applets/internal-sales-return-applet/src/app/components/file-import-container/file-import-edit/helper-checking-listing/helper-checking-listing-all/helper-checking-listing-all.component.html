@@ -1,0 +1,40 @@
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title" style="padding: 5px">
+    <div
+      [ngStyle.gt-md]="{ 'flex-flow': 'row' }"
+      [ngStyle.lt-lg]="{ 'flex-flow': 'row wrap' }"
+      fxLayoutAlign="space-between end"
+      fxLayoutGap="10px"
+    >
+      <div fxFlex="60" fxFlex.lt-lg="100">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          fxLayoutGap="3px"
+        ></div>
+      </div>
+      <!-- <div
+        class="blg-accent"
+        fxFlex="1 0 25"
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+      >
+      <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+      </div> -->
+    </div>
+  </mat-card-title>
+
+  <div style="height: 80%; margin-top: 20px; padding: 5px">
+    <ag-grid-angular #agGrid
+    id="grid"
+    style="height: 100%;"
+    class="ag-theme-balham"
+    [columnDefs]="columnsDefs"
+    [rowData]="[]"
+    [paginationPageSize]="999"
+    [gridOptions]="gridOptions"
+    (firstDataRendered)="onFirstDataRendered($event)"
+    (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

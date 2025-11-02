@@ -1,0 +1,9 @@
+<input *ngIf="showInputBox" type="number"
+         [style.width.px]="100"
+         [style.text-align]="'right'"
+         [value]="displayValue"
+         (change)="onInputChange($event)"
+         [disabled]="disabled"
+         (blur)="onBlur()"
+         (keydown.enter)="onEnter($event)"
+         >

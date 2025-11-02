@@ -1,0 +1,74 @@
+
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button" [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+      </button>
+      <span>
+        Contra Details
+      </span>
+    </div>
+    <button mat-raised-button color="primary" type="button" [disabled]="!enableSave" (click)="onSave()">SAVE</button>
+  </div>
+</mat-card-title>
+<!--<form [formGroup]="form">
+  <div class="view-col-forms">
+    <div *ngFor="let x of leftColControls; let i = index">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ x.label }}</mat-label>
+        <input matInput readonly [formControl]="form.controls[x.formControl]" autocomplete="off">
+        <mat-hint>{{ x.hint }}</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+</form>-->
+
+<form [formGroup]="form">
+  <div class="view-col-forms">
+    <div *ngFor="let x of leftColControls; let i = index">
+      <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+        <mat-label>{{ x.label }}</mat-label>
+        <input matInput readonly [formControl]="form.controls[x.formControl]" autocomplete="off">
+        <mat-hint>{{ x.hint }}</mat-hint>
+      </mat-form-field>
+      <ng-template #input>
+        <ng-container [ngSwitch]="x.type">
+          <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+            <mat-label>{{ x.label }}</mat-label>
+            <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="text">
+            <mat-error>{{ x.label }} is <strong>not valid</strong></mat-error>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'money'" appearance="outline" class="signIndication">
+            <mat-label>{{ x.label }}</mat-label>
+            <div class="input-wrapper">
+            <span class="prefix">{{ arapBalance >= 0 ? '+' : '-' }}</span>
+            <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number" step=".01" (change)="formatMoney($event.target.valueAsNumber);onCalculateFromContraAmount()">
+            </div>
+            <mat-error>{{ x.label }} is <strong>not valid</strong></mat-error>
+            <mat-hint>{{ x.hint }}</mat-hint>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'text-area'" appearance="outline">
+            <mat-label>{{ x.label }}</mat-label>
+            <textarea #remarks matInput [formControl]="form.controls[x.formControl]"></textarea>
+            <mat-hint align="end">{{ remarks.value.length }} characters</mat-hint>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'date'" appearance="outline">
+            <mat-label>{{ x.label }}</mat-label>
+            <input matInput [matDatepicker]="datepicker"
+                [formControl]="form.controls[x.formControl]" autocomplete="off" readonly (change)="updateMainDetails.emit(form.value)" (ngModelChange)="onDateChange()">
+            <mat-error>{{ x.label }} is <strong>not valid</strong></mat-error>
+            <!-- <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="false" #datepicker></mat-datepicker> -->
+          </mat-form-field>
+        </ng-container>
+      </ng-template>
+    </div>
+  </div>
+</form>
+
+<div style="padding: 5px;">
+	<button mat-raised-button color="warn" type="button" (click)="onDelete()">
+		<span>{{ (deleteConfirmation$ | async) ? 'CLICK AGAIN TO CONFIRM' : 'DELETE'}}</span>
+	</button>
+</div>

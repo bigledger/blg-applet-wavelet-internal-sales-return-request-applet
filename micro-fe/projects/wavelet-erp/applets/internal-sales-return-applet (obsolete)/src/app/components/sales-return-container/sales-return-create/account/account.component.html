@@ -1,0 +1,15 @@
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex">
+  <mat-tab label="Entity Details">
+    <app-account-entity-details [draft$]="draft$" (selectEntity)="selectEntity.emit()"></app-account-entity-details>
+  </mat-tab>
+  <mat-tab label="Bill To">
+    <app-account-billing-address [draft$]="draft$" (selectBilling)="selectBilling.emit()"
+      (updateBillTo)="updateBillTo.emit($event)" (updateBillingAddress)="updateBillingAddress.emit($event)">
+    </app-account-billing-address>
+  </mat-tab>
+  <mat-tab label="Ship To">
+    <app-account-shipping-address [draft$]="draft$" (selectShipping)="selectShipping.emit()"
+      (updateShipTo)="updateShipTo.emit($event)" (updateShippingAddress)="updateShippingAddress.emit($event)">
+    </app-account-shipping-address>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,293 @@
+<form [formGroup]="form">
+    <div [ngClass]="{'view-col-forms': !isInExpansionPanel}">
+        <mat-form-field appearance="outline" *ngIf="modeValue">
+            <mat-label>Document type</mat-label>
+            <input readonly matInput [formControl]="form.controls['docType']" (change)="updateMain.emit(form.value)" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="modeValue && (!appletSettings.HIDE_SERVER_DOC_1 || SHOW_DOC_NO_TENANT)">
+            <mat-label>Doc No (Tenant)</mat-label>
+            <input readonly matInput [formControl]="form.controls['tenantDocNo']" (change)="updateMain.emit(form.value)" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="modeValue && (!appletSettings.HIDE_SERVER_DOC_2 || SHOW_DOC_NO_COMPANY)">
+            <mat-label>Doc No (Company)</mat-label>
+            <input readonly matInput [formControl]="form.controls['companyDocNo']" (change)="updateMain.emit(form.value)" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" *ngIf="modeValue && (!appletSettings.HIDE_SERVER_DOC_3 || SHOW_DOC_NO_BRANCH)">
+            <mat-label>Doc No (Branch)</mat-label>
+            <input readonly matInput [formControl]="form.controls['branchDocNo']" (change)="updateMain.emit(form.value)" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline"  *ngIf ="modeValue && (!appletSettings.HIDE_CLIENT_DOC_TYPE || SHOW_CLIENT_DOC_TYPE)">
+            <mat-label>Client Document type</mat-label>
+            <input
+            readonly matInput
+              [formControl]="form.controls['clientDocType']"
+              (change)="updateMain.emit(form.value)"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline"  *ngIf ="modeValue && (!appletSettings.HIDE_CLIENT_DOC_1 || SHOW_CLIENT_DOC_1)">
+            <mat-label>Client Doc 1 No</mat-label>
+            <input
+            readonly matInput
+              [formControl]="form.controls['clientDoc1No']"
+              (change)="updateMain.emit(form.value)"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline"  *ngIf ="modeValue && (!appletSettings.HIDE_CLIENT_DOC_2 || SHOW_CLIENT_DOC_2)">
+            <mat-label>Client Doc 2 No</mat-label>
+            <input
+            readonly matInput
+              [formControl]="form.controls['clientDoc2No']"
+              (change)="updateMain.emit(form.value)"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline"  *ngIf ="modeValue && (!appletSettings.HIDE_CLIENT_DOC_3 || SHOW_CLIENT_DOC_3)">
+            <mat-label>Client Doc 3 No</mat-label>
+            <input
+            readonly matInput
+              [formControl]="form.controls['clientDoc3No']"
+              (change)="updateMain.emit(form.value)"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline"  *ngIf ="modeValue && (!appletSettings.HIDE_CLIENT_DOC_4 || SHOW_CLIENT_DOC_4)">
+            <mat-label>Client Doc 4 No</mat-label>
+            <input
+            readonly matInput
+              [formControl]="form.controls['clientDoc4No']"
+              (change)="updateMain.emit(form.value)"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline"  *ngIf ="modeValue && (!appletSettings.HIDE_CLIENT_DOC_5 || SHOW_CLIENT_DOC_5)">
+            <mat-label>Client Doc 5 No</mat-label>
+            <input
+            readonly matInput
+              [formControl]="form.controls['clientDoc5No']"
+              (change)="updateMain.emit(form.value)"
+            />
+          </mat-form-field>
+
+        <div fxLayout="row" fxLayoutGap="5px">
+            <div fxFlex="100" fxLayout="column">
+
+                <blg-select-branch-drop-down-v2 [apiVisa]="apiVisa" [(branch)]="form.controls['branch']" (branchSelected)="onBranchSelected($event); updateMain.emit(form.value)" [branchGuids]="branchGuids">
+                </blg-select-branch-drop-down-v2>
+
+                <blg-select-location-drop-down-latest [branchSelectedGuid]="selectedBranch" [apiVisa]="apiVisa"
+                                                      [(location)]="form.controls['location']" (locationSelected)="updateMain.emit(form.value); onLocationSelected($event)" *ngIf="(!appletSettings.HIDE_LOCATION)">
+                </blg-select-location-drop-down-latest>
+
+                <blg-select-branch-drop-down-v2
+                [apiVisa]="apiVisa"
+                [(branch)]="form.controls['deliveryBranch']"
+                (branchSelected)="onDeliveryBranchSelected($event); updateMain.emit(form.value)"
+                [branchGuids]="deliveryBranchGuids"
+                [controlName]="'Delivery Branch'"
+                *ngIf="(!appletSettings.HIDE_DELIVERY_BRANCH)"
+              ></blg-select-branch-drop-down-v2>
+              <blg-select-location-drop-down-latest [branchSelectedGuid]="selectedDeliveryBranch" [apiVisa]="apiVisa"
+                                                    [(location)]="form.controls['deliveryLocation']" (locationSelected)="onDeliveryLocationSelected($event); updateMain.emit(form.value)" [controlName]="'Delivery Location'" *ngIf="(!appletSettings.HIDE_DELIVERY_LOCATION)">
+              </blg-select-location-drop-down-latest>
+              <div fxLayout="row" fxLayoutGap="5px" *ngIf="applyToLines && modeValue" style="padding: 5px;">
+                <button mat-raised-button color="primary" type="button"
+                  (click)="onApplyToLines()">Apply to Lines</button>
+              </div>
+
+                <!-- <app-sales-man *ngIf="!HIDE_SALES_AGENT || SHOW_SALES_AGENT" [(salesAgent)]="form.controls['salesAgent']" [labels]="this.appletSettings.salesManLabels" (selectionChange)="updateMain.emit(form.value)">
+                </app-sales-man> -->
+                <app-select-multi-employee-drop-down-v2 [(employee)]="form.controls['salesAgent']"
+                  [options]="{'required': false, 'multiple': false}"
+                  [apiVisa]="apiVisa"
+                  (selectionChange)="updateMain.emit(form.value)"
+                  [branchGuid]="selectedBranch"
+                ></app-select-multi-employee-drop-down-v2>
+
+                <mat-form-field class="example-full-width" appearance="outline" *ngIf="!appletSettings.HIDE_MEMBER_CARD">
+                    <mat-label>Member Card</mat-label>
+                    <input style="cursor: pointer" readonly matInput placeholder="Member Card" [formControl]="form.controls['memberCard']" type="text" autocomplete="off" (click)="goToSelectMember()">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Transaction Date</mat-label>
+                    <input matInput [disabled]="!SHOW_TRANSACTION_DATE" placeholder="Transaction Date" [matDatepicker]="transactionDatePicker" [formControl]="form.controls['transactionDate']" autocomplete="off" readonly (click)="transactionDatePicker.open()" (change)="updateMain.emit(form.value)">
+                    <mat-error>Transaction date is <strong>not valid</strong></mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #transactionDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline" *ngIf="!appletSettings.HIDE_CREDIT_TERMS">
+                    <mat-label>Credit Terms</mat-label>
+                    <mat-select [formControl]="form.controls['creditTerms']" (selectionChange)="updateMain.emit(form.value);calculateDueDate()">
+                        <mat-option *ngFor="let terms of creditTermsList" [value]="terms.value_json.name">
+                            {{terms.value_json.code}} | {{terms.value_json.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Credit Terms is <strong>not valid</strong></mat-error>
+                    <mat-hint><strong>Entity ID</strong> must be selected first</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline" *ngIf="!appletSettings.HIDE_CREDIT_LIMIT" >
+                    <mat-label>Credit Limit</mat-label>
+                    <mat-select [formControl]="form.controls['creditLimit']" (selectionChange)="updateMain.emit(form.value);calculateDueDate()">
+                      <mat-option *ngFor="let limit of creditLimitList" [value]="limit.value_json.name">
+                        {{limit.value_json.code}} | {{limit.value_json.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error>Credit Limit is <strong>not valid</strong></mat-error>
+                    <mat-hint><strong>Entity ID</strong> must be selected first</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline"*ngIf="!appletSettings.HIDE_DUE_DATE" >
+                    <mat-label>Due Date</mat-label>
+                    <input matInput [matDatepicker]="dueDate" [formControl]="form.controls['dueDate']" autocomplete="off" readonly (click)="dueDate.open()" (dateInput)="updateMain.emit(form.value)">
+                    <mat-error>Due Date is <strong>not valid</strong></mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="dueDate"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #dueDate></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="!appletSettings.HIDE_REASON" class="example-full-width" appearance="outline">
+                    <mat-label>Reason</mat-label>
+                    <mat-select placeholder="Reason" formControlName="reasonOfRepair" (selectionChange)="getReasonNameCode()">
+                      <mat-option>
+                        <ngx-mat-select-search [placeholderLabel]="'Reason'"
+                          [noEntriesFoundLabel]="'No matching records found'" [formControl]="reasonOptionsFilterCtrl">
+                        </ngx-mat-select-search>
+                      </mat-option>
+                      <mat-option *ngFor="let eachOption of filteredReasonOptions | async" [value]="eachOption.value">
+                        {{eachOption.viewValue}}</mat-option>
+                    </mat-select>
+                  <mat-error *ngIf="
+                                     !appletSettings.HIDE_REASON &&
+                                      appletSettings.MANDATORY_REASON_FIELD &&
+                                      form.get('reasonOfRepair')?.hasError('required') &&
+                                      (form.get('reasonOfRepair')?.touched || form.get('reasonOfRepair')?.dirty)
+                                  ">
+                    Reason is required
+                  </mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Due Date</mat-label>
+        <input matInput placeholder="Due Date" [matDatepicker]="dueDatePicker" [formControl]="form.controls['dueDate']"
+          autocomplete="off" readonly (click)="dueDatePicker.open()" (change)="updateMain.emit(form.value)">
+        <mat-error>Due date is <strong>not valid</strong></mat-error>
+        <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #dueDatePicker></mat-datepicker>
+      </mat-form-field> -->
+
+                <mat-form-field class="example-full-width" appearance="outline" *ngIf="!appletSettings.HIDE_REFERENCE">
+                    <mat-label>Reference</mat-label>
+                    <input matInput placeholder="Reference" [formControl]="form.controls['reference']" type="text" (change)="updateMain.emit(form.value)">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline" *ngIf="!appletSettings.HIDE_REMARKS">
+                    <mat-label>Remarks</mat-label>
+                    <textarea #remarks matInput placeholder="Remarks" [formControl]="form.controls['remarks']" (change)="updateMain.emit(form.value)"></textarea>
+                    <mat-hint align="end">{{remarks.value.length}} characters</mat-hint>
+                  <mat-error *ngIf="
+                                     !appletSettings.HIDE_REMARKS &&
+                                      appletSettings.MANDATORY_REMARKS_FIELD &&
+                                      form.get('remarks')?.hasError('required') &&
+                                      (form.get('remarks')?.touched || form.get('remarks')?.dirty)
+                                  ">
+                    Remarks is required
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline" *ngIf="!appletSettings.HIDE_PERMIT_NO">
+                    <mat-label>Permit No</mat-label>
+                    <input matInput placeholder="Permit No" [formControl]="form.controls['permitNo']" type="text" (change)="updateMain.emit(form.value)">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline" *ngIf="!appletSettings.HIDE_BASE_CURRENCY">
+                  <mat-label>Base Currency</mat-label>
+                  <input matInput placeholder="Base Currency" [formControl]="form.controls['baseCurrency']" type="text" (change)="updateMain.emit(form.value)"/>
+                </mat-form-field>
+
+                <div *ngIf="!appletSettings.HIDE_CURRENCY">
+                  <app-currency *ngIf="(!appletSettings.SHOW_FOREX_DATA_SOURCE)" [currency]="form.controls['currency']" (currencyChange)="setCurrency($event)"></app-currency>
+
+                  <mat-form-field *ngIf="(!appletSettings.SHOW_FOREX_DATA_SOURCE)" class="example-full-width" appearance="outline">
+                    <mat-label>Currency Rate</mat-label>
+                    <input matInput placeholder="Currency Rate" [formControl]="form.controls['currencyRate']" type="number" (change)="updateMain.emit(form.value)"/>
+                    <button [disabled]="isFinal" mat-icon-button matSuffix color="primary"
+                    matTooltip="Get Currency Live Rate"
+                    (click)="getCurencyRate()"><mat-icon>settings_backup_restore</mat-icon></button>
+                </mat-form-field>
+                </div>
+
+
+
+                <app-forex-data-source-drop-down
+                  *ngIf="(appletSettings.SHOW_FOREX_DATA_SOURCE)"
+                  [forexDataSource]="form.controls['forexSourceHdrGuid']"
+                  [currencyRate]="form.controls['currencyRate']"
+                  [apiVisa]="apiVisa"
+                  [isSales]="true"
+                  [baseCurrency]="form.controls['baseCurrency'].value"
+                  (forexDataSourceSelected)="onForexDataSourceSelected($event)">
+                </app-forex-data-source-drop-down>
+
+                <mat-form-field class="example-full-width" appearance="outline" *ngIf="!appletSettings.HIDE_TRACKING_ID">
+                    <mat-label>Tracking ID</mat-label>
+                    <input matInput placeholder="Tracking ID" [formControl]="form.controls['trackingID']" type="text" (change)="updateMainDetails.emit(form.value)">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Customer</mat-label>
+                    <input matInput readonly [formControl]="form.controls['customer']" autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline" *ngIf="modeValue">
+                    <mat-label>Workflow Status</mat-label>
+                    <mat-select [formControl]="form.controls['processStatusGuid']" (selectionChange)="workflowSelected($event)">
+                        <mat-option>
+                            <ngx-mat-select-search [placeholderLabel]="'Workflow Status'" [noEntriesFoundLabel]="'No matching records found'" [formControl]="WorkflowStatusFilterCtrl">
+                            </ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let x of availableStatus" [value]="x.bl_wf_md_process_status.guid">
+                            {{x.bl_wf_md_process_status.code}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="outline" *ngIf="modeValue">
+                    <mat-label>Workflow Resolution</mat-label>
+                    <input matInput placeholder="Workflow Resolution" [formControl]="form.controls['resolutionCode']" type="text" readonly>
+                </mat-form-field>
+
+            </div>
+        </div>
+        <div *ngIf="!appletSettings.HIDE_CREATED_BY_DETAILS">
+          <mat-divider></mat-divider>
+              <div fxLayout="row wrap" fxFlexAlign="left" class="row">
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label> Created By </mat-label> <input matInput placeholder="Created By" formControlName="createdBy" style="color: grey" readonly />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label> Created Date </mat-label> <input matInput placeholder="Created Date" formControlName="createdDate" style="color: grey" readonly />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label> Modified By </mat-label> <input matInput placeholder="Modified By" formControlName="modifiedBy" style="color: grey" readonly />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label> Modified Date </mat-label> <input matInput placeholder="Modified Date" formControlName="modifiedDate" style="color: grey" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+        </div>
+    </div>
+</form>

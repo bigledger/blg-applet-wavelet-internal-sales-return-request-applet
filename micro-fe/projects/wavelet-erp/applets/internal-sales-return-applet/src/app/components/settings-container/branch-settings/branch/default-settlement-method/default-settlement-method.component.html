@@ -1,0 +1,19 @@
+<div fxLayout="column" class="p-10">
+    <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" (click)="onSubmit()">SAVE</button>
+    </div>
+     
+   
+    <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+      <app-select-default-settlement-method [(defaultSettlement)]="form.controls['default_settlement_cash']"  [branchGuid]="branchGuid" [settlementMethodType]="'CASH'"></app-select-default-settlement-method>  
+      <app-select-default-settlement-method [(defaultSettlement)]="form.controls['default_settlement_credit_card']"  [branchGuid]="branchGuid" [settlementMethodType]="'CREDIT_CARD'"></app-select-default-settlement-method>  
+      <app-select-default-settlement-method [(defaultSettlement)]="form.controls['default_settlement_debit_card']"  [branchGuid]="branchGuid" [settlementMethodType]="'DEBIT_CARD'"></app-select-default-settlement-method>  
+      <app-select-default-settlement-method [(defaultSettlement)]="form.controls['default_settlement_voucher']"  [branchGuid]="branchGuid" [settlementMethodType]="'VOUCHER'"></app-select-default-settlement-method>  
+      <app-select-default-settlement-method [(defaultSettlement)]="form.controls['default_settlement_bank_transfer']"  [branchGuid]="branchGuid" [settlementMethodType]="'BANK_TRANSFER'"></app-select-default-settlement-method>  
+      <app-select-default-settlement-method [(defaultSettlement)]="form.controls['default_settlement_cheque']"  [branchGuid]="branchGuid" [settlementMethodType]="'CHEQUE'"></app-select-default-settlement-method>  
+      <app-select-default-settlement-method [(defaultSettlement)]="form.controls['default_settlement_others']"  [branchGuid]="branchGuid" [settlementMethodType]="'OTHERS'"></app-select-default-settlement-method>  
+      <app-select-default-settlement-method [(defaultSettlement)]="form.controls['default_settlement_ewallet']"  [branchGuid]="branchGuid" [settlementMethodType]="'E_WALLET'"></app-select-default-settlement-method>  
+      <app-select-default-settlement-method [(defaultSettlement)]="form.controls['default_settlement_membership_point_currency']"  [branchGuid]="branchGuid" [settlementMethodType]="'MEMBERSHIP_POINT_CURRENCY'"></app-select-default-settlement-method>  
+    </div>
+      
+  </div>

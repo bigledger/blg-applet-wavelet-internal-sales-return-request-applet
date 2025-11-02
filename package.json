@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "fs-extra": "^11.3.2",
+    "inquirer": "^8.2.7",
+    "inquirer-autocomplete-prompt": "^2.0.0",
+    "node-fetch": "^3.3.2",
+    "quagga": "^0.12.1"
+  }
+}

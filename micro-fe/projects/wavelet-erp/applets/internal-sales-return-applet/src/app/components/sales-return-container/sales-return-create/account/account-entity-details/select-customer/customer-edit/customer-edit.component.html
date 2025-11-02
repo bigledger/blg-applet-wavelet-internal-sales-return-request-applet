@@ -1,0 +1,278 @@
+<mat-card-title class="column-title">
+  <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+    [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+    <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+      alt="add" width="40px" height="40px">
+  </button>
+  Customer Edit
+  <button mat-raised-button color="primary" type="button" (click)="onSave()" [disabled]="!form.valid"
+    style="float: right;">Save</button>
+</mat-card-title>
+<div [ngStyle]="(toggleColumn$ | async)">
+  <form [formGroup]="form" #formDirectives="ngForm">
+
+
+    <mat-tab-group [selectedIndex]="selectedIndex$ | async" [dynamicHeight]="true">
+      <mat-tab label="Main">
+        <div fxLayout="column" class="view-col-forms">
+          <div fxLayout="row wrap" fxFlexAlign="center" class="row">
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label> Customer Name </mat-label>
+                <input matInput placeholder="Customer Name" [formControl]="form.controls['name']" required
+                  maxlength="255" required>
+                <mat-hint *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched"
+                  class="text-danger font-14">Please insert Customer Name </mat-hint>
+                <mat-hint *ngIf="form.controls['name'].value?.length === 255" class="text-danger font-14">Please
+                  insert
+                  no
+                  more than 255
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label> Customer Code </mat-label> <input matInput placeholder="Customer Code"
+                  [formControl]="form.controls['code']" type="text" maxlength="255" required>
+                <mat-hint *ngIf="form.controls['code'].hasError('required') && form.controls['code'].touched "
+                  class="text-danger font-14">Please insert Customer Code </mat-hint>
+                <mat-hint *ngIf="form.controls['code'].value?.length === 255" class="text-danger font-14">Please
+                  insert
+                  no
+                  more than 255
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label> Status </mat-label>
+                <mat-select placeholder="Status" formControlName="status" required>
+                  <mat-option *ngFor="let s of status" [value]="s.value"> {{s.viewValue}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label> Type </mat-label>
+                <mat-select placeholder="Type" formControlName="type" (selectionChange)="onTypeChange($event)" required>
+                  <mat-option *ngFor="let type of type" [value]="type.value"> {{type.viewValue}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100"
+              *ngIf="form.get('type').value === 'INDIVIDUAL'">
+              <mat-form-field appearance="outline">
+                <mat-label> Identity Type </mat-label>
+                <mat-select placeholder="Identity Type" formControlName="id_type">
+                  <mat-option *ngFor="let type of idType" [value]="type.value"> {{type.viewValue}} </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="form.controls['id_type'].value?.length === 255" class="text-danger font-14">Please
+                  insert no more than 255
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label> {{id_placeholder}} </mat-label> <input matInput placeholder={{id_placeholder}}
+                  formControlName="id_number" type="text" maxlength="255">
+              </mat-form-field>
+            </div>
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100"
+              *ngIf="form.get('type').value === 'INDIVIDUAL'">
+              <mat-form-field appearance="outline">
+                <mat-label>Gender</mat-label>
+                <mat-select placeholder="Gender" formControlName="gender">
+                  <mat-option *ngFor="let gender of gender" [value]="gender.value"> {{gender.viewValue}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label> {{taxID_placeholder}} </mat-label> <input matInput placeholder={{taxID_placeholder}}
+                  formControlName="taxID" type="text" maxlength="255">
+                <mat-hint *ngIf="form.controls['taxID'].value?.length === 255" class="text-danger font-14">Please
+                  insert
+                  no more than 255
+                </mat-hint>
+              </mat-form-field>
+            </div>
+
+            <!-- <mat-checkbox [formControl]="isRequired">Hide required marker</mat-checkbox> -->
+            <!-- <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100"
+              *ngIf="form.get('type').value === 'CORPORATE'">
+              <mat-form-field appearance="outline" [hideRequiredMarker]="true">
+                <mat-label> Company Tax Registration ID </mat-label> <input matInput
+                  placeholder="Company Tax Registration ID" formControlName="taxID" type="text" maxlength="255">
+                <mat-hint *ngIf="form.controls['taxID'].value?.length === 255" class="text-danger font-14">Please
+                  insert
+                  no more than 255
+                </mat-hint>
+              </mat-form-field>
+            </div> -->
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label> Currency </mat-label>
+                <mat-select placeholder="Currency" [formControl]="form.controls['currency']" required>
+                  <mat-option>
+                    <ngx-mat-select-search (keyup)="applyCurrencyFilter($event.target.value)"
+                      [placeholderLabel]="'Currency'" [noEntriesFoundLabel]="'No matching records found'"
+                      formControlName="currentCurrency" ngDefaultControl>
+                    </ngx-mat-select-search>
+                  </mat-option>
+
+                  <mat-option *ngFor="let item of newCurrency" [value]="item.display_short">
+                    {{item.display_short}} - {{ item.display_main }}
+                  </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="form.controls['currency'].hasError('required') && form.controls['currency'].touched"
+                  class="text-danger font-14">Please choose currency </mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label> Description </mat-label> <input matInput placeholder="Description"
+                  formControlName="description" type="text" maxlength="255">
+                <mat-hint *ngIf="form.controls['description'].value?.length === 255" class="text-danger font-14">
+                  Please
+                  insert no
+                  more than 255
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+              <mat-form-field appearance="outline">
+                <mat-label> AR / AP Type </mat-label>
+                <mat-select placeholder="AR/AP Type" formControlName="arap_type">
+                  <mat-option *ngFor="let type of arapType" [value]="type.value"> {{type.viewValue}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+              <mat-form-field appearance="outline">
+                <mat-label> GL Code </mat-label>
+                <mat-select placeholder="GL Code" formControlName="glCode" required>
+                  <mat-option>
+                    <ngx-mat-select-search (keyup)="applyGLCodeFilter($event.target.value)"
+                      [placeholderLabel]="'GL Code'" [noEntriesFoundLabel]="'No matching records found'"
+                      formControlName="currentGlCode" ngDefaultControl>
+                    </ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let item of newGlCode1" [value]="item.glcode_guid">{{ item.glcode_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+              <mat-form-field appearance="outline">
+                <mat-label> Phone Number </mat-label>
+                <input matInput placeholder="Phone Number" formControlName="phone" type="text" maxlength="255" />
+                <mat-hint *ngIf="form.controls['phone'].value?.length === 255" class="text-danger font-14">
+                  Please insert no more than 255
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+              <mat-form-field appearance="outline">
+                <mat-label> Email </mat-label>
+                <input matInput placeholder="Email" formControlName="email" type="text" maxlength="255" />
+                <mat-hint *ngIf="form.controls['email'].value?.length === 255" class="text-danger font-14">
+                  Please insert no more than 255
+                </mat-hint>
+                <mat-hint *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
+                  class="text-danger font-14"> Please enter valid email </mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div fxLayout="row wrap" fxFlexAlign="left" class="row">
+            <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label> Created By </mat-label> <input matInput placeholder="Created By" formControlName="createdBy"
+                  style="color: grey" readonly />
+
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label> Creation Date </mat-label> <input matInput placeholder="Creation Date"
+                  formControlName="createdDate" style="color: grey" readonly />
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label> Modified By </mat-label> <input matInput placeholder="Modified By"
+                  formControlName="modifiedBy" style="color: grey" readonly />
+
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label> Modified Date </mat-label> <input matInput placeholder="Modified Date"
+                  formControlName="updatedDate" style="color: grey" readonly />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class=" center" style="margin-top: 10px; width: 50px;">
+            <button mat-raised-button color="warn" type="button" (click)="onRemove()">Remove </button>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Customer Category">
+        <app-customer-category [localState]="localState$ | async" (lineItem)="offSideBar($event)">
+        </app-customer-category>
+      </mat-tab>
+      <mat-tab label="Login">
+        <app-customer-login [localState]="localState$ | async" [customerExt$]="editLoginTab$"
+          (lineItem)="offSideBar($event)"></app-customer-login>
+      </mat-tab>
+      <mat-tab label="Payment Config">
+        <app-customer-payment-config [localState]="localState$ | async" [customerExt$]="editPaymentTab$"
+          (lineItem)="offSideBar($event)"></app-customer-payment-config>
+      </mat-tab>
+      <mat-tab label="Tax">
+        <app-customer-tax [localState]="localState$ | async" [taxArray$]="editTaxTab$" (lineItem)="offSideBar($event)">
+        </app-customer-tax>
+      </mat-tab>
+      <mat-tab label="Address">
+        <app-customer-address [localState]="localState$ | async" [customerAddress$]="editAddressTab$"
+          (lineItem)="offSideBar($event)"></app-customer-address>
+      </mat-tab>
+      <mat-tab label="Contact">
+        <app-customer-contact [localState]="localState$ | async" [customerExt$]="editContactTab$"
+          (lineItem)="offSideBar($event)"></app-customer-contact>
+      </mat-tab>
+      <mat-tab label="Branch">
+        <app-customer-branch [localState]="localState$ | async" [customerExt$]="editBranchTab$"
+          (lineItem)="offSideBar($event)"></app-customer-branch>
+      </mat-tab>
+      <mat-tab label="Item Pricing">
+        <app-customer-item-pricing [localState]="localState$ | async" [customerExt$]="customerExt$"
+          (lineItem)="offSideBar($event)">
+        </app-customer-item-pricing>
+      </mat-tab>
+      <mat-tab label="Remark">
+        <div fxFlex.gt-sm="100" fxFlex="100" class="p-10">
+          <div [froalaEditor]="froalaOptions" formControlName="remark">
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Credit Term and Limit">
+
+        <mat-tab-group [selectedIndex]="LimitIndex$ | async">
+          <mat-tab label="Credit Term">
+            <app-credit-terms-main [localState]="localState$ | async" [customerExt$]="editCreditTerm$"
+              (lineItem)="offSideBar($event)"></app-credit-terms-main>
+          </mat-tab>
+          <mat-tab label="Credit Limit">
+            <app-credit-limits-main [localState]="localState$ | async" [customerExt$]="editCreditLimit$"
+              (lineItem)="offSideBar($event)"></app-credit-limits-main>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </form>
+</div>

@@ -1,0 +1,51 @@
+<div *ngIf="adjustmentStatus === 'PROCESSING' || adjustmentStatus === 'UNPROCESSED' || adjustmentStatus === 'FAILED'"
+  [ngStyle]="{'color': 'red', 'margin-top': '20px', 'text-align': 'center'}">
+The current adjustment is being processed.
+</div>
+<div  *ngIf="!adjustmentStatus || adjustmentStatus === 'PROCESSED' " class="view-col-table" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div fxFlex="3 0 0">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+          <button ngClass.xs="blg-button-mobile" #navBtn class="blg-button-icon" mat-button matTooltip="Create"
+            type="button" *ngIf="canAddAdjustment()" (click)="onNext()">
+            <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="assets/images/add.png" alt="add"
+              width="40px" height="40px">
+          </button>
+        </div>
+      </div>
+      <div  class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+      </div>
+    </div>
+  </mat-card-title>
+
+  <div *ngIf="!adjustmentStatus || adjustmentStatus === 'PROCESSED' " fxLayout="row" fxLayoutAlign="end center" style="margin-top: 10px;">
+    <button mat-raised-button color="primary" type="button" [disabled]="disableAdjust()" (click)="onAdjust()">
+      ADJUST SETTLEMENT
+    </button>
+  </div>
+  <div>
+    <div style="text-align: right">
+      Total Payment: <strong style="color: #1e88e5">{{ getTotal() }} </strong><strong>{{(draft$ | async).doc_ccy}}</strong>
+      {{ getForex(totalSettlement) }}
+    </div>
+    <div style="text-align: right">
+      Doc Open Amount: <strong style="color: #1e88e5">{{ getOpenAmount()  }} </strong><strong>{{(draft$ | async).doc_ccy}}</strong>
+      {{ getForex(docOpenAmount) }}
+    </div>
+    <div style="text-align: right" *ngIf="editMode">
+      Doc ARAP Balance: <strong style="color: #1e88e5">{{ getARAP() }} </strong><strong>{{(draft$ | async).doc_ccy}}</strong>
+      {{ getForex(docArapBalance) }}
+    </div>
+
+    <div style="height: 100%;min-height: 100vh;min-width: 100vh;">
+      <ag-grid-angular #agGrid style="height: 100%;" class="ag-theme-balham" rowSelection="single"
+        [getRowClass]="pagination.getRowClass" [columnDefs]="columnsDefs" [rowData]="rowData"
+        [paginationPageSize]="pagination.rowPerPage" [animateRows]="true" [defaultColDef]="defaultColDef"
+        [suppressRowClickSelection]="false" [sideBar]="true" (rowClicked)="onRowClicked($event.data)"
+        (gridReady)="onGridReady($event)" [gridOptions]="gridOptions">
+      </ag-grid-angular>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+.header_container{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 98%;
+}
+
+.value_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.container_value{
+  flex: 2;
+}
+
+.bin {
+  flex: 1;
+}
+
+.data {
+  text-align: center;
+}

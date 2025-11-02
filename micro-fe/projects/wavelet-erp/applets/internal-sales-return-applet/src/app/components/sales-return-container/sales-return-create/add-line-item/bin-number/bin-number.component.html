@@ -1,0 +1,67 @@
+<form [formGroup]="form">
+  <div class="view-col-forms">
+    <div fxLayout="row wrap" fxLayoutAlign="start center">
+      <mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+        <mat-label>Bin Code</mat-label>
+        <input matInput [formControl]="form.controls['bin_code']">
+        <mat-hint class="text-danger" *ngIf="binInvalid">The bin code is invalid</mat-hint>
+      </mat-form-field>
+      <div fxFlex="20" fxFlex.lt-sm="40" style="margin-bottom: 20px;">
+        <button mat-raised-button color="primary" type="button" [disabled]="disableAdd()" (click)="onAdd()" >ADD</button>
+      </div>
+      <mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+        <mat-label>Container Measure</mat-label>
+        <input matInput [formControl]="form.controls['container_measure']" type="number" pattern="[0-9]*" (change)="calculateBinQuantity()">
+        <mat-hint class="text-danger" *ngIf="invalidContainerMeasure">The Container Measure is invalid</mat-hint>
+      </mat-form-field>
+      <mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+        <mat-label>Container Quantity</mat-label>
+        <input matInput [formControl]="form.controls['container_qty']" type="number" pattern="[0-9]*" (change)="calculateBinQuantity()">
+        <mat-hint class="text-danger" *ngIf="invalidContainerQuantity">The Container Quantity is invalid</mat-hint>
+      </mat-form-field>
+  
+      <app-uom fxFlex="80" fxFlex.lt-sm="70" appearance="outline" [(uom)]="form.controls['container_uom']"  [fiitem$]="item$" (selectedUomModel)="onSelectedUomModel($event)" >
+      </app-uom>
+   
+      <mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <input matInput [formControl]="form.controls['qty']" type="number" pattern="[0-9]*" readonly>
+      </mat-form-field>
+    </div>
+  </div>
+</form>
+<div>
+  <div style="text-align: right;">
+    <span style="float: left;">Quantity: {{ total }}</span>
+    <mat-checkbox [formControl]="selectAll" (click)="onSelectAll()">Select All</mat-checkbox>
+  </div>
+  <fieldset>
+    <legend>Bin Numbers</legend>
+    <mat-selection-list #matList style="text-align: left; max-height: 30vh; overflow: auto;">
+      <div matLine class="header_container">
+        <p  class="bin">Bin Code</p >
+        <p  class="container_value">Container Measure</p >
+        <p  class="container_value">Container Quantity</p >
+        <p  class="container_value">Container UOM</p >
+        <p  class="bin">Quantity</p >
+      </div>
+      <mat-divider></mat-divider>
+      <ng-container *ngFor="let b of binNumbers">
+        <mat-list-option [value]="b" (click)="onSelect($event)">
+          <div matLine style="display: flex; justify-content: space-around; align-items: center;" class="value_container">
+            <p class="bin">{{ b.bin_hdr_code }}</p>
+            <p class="container_value data">{{ b.container_measure }}</p>
+            <p class="container_value data">{{ b.container_qty }}</p>
+            <p class="container_value" style="text-align: center;">{{ b.container_uom }}</p>
+            <p class="bin" style="text-align: right;">{{ b.qty }}</p>
+          </div>
+        </mat-list-option>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-selection-list>
+  </fieldset>
+  
+  <div style="text-align: right; margin-top: 10px;">
+    <button mat-raised-button color="warn" type="button" (click)="onRemove()">REMOVE</button>
+  </div>
+</div>

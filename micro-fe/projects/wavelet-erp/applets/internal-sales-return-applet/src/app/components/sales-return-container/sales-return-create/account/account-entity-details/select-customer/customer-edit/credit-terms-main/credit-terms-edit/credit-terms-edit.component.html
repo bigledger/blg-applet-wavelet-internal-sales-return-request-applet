@@ -1,0 +1,143 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div> <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button" (click)="onReturn()"> <img
+          [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px"> </button> <span> Credit Term Edit </span> </div><button
+          mat-raised-button color={{isClicked}} type="button" (click)="onSave()" [disabled]="!form.valid" >{{addSuccess}}</button>
+  </div>
+</mat-card-title>
+
+<form [formGroup]="form" #formDirectives="ngForm">
+  <div fxLayout="column" class="view-col-forms">
+    <div fxLayout="row wrap" fxFlexAlign="center" class="row">
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Credit Term Code </mat-label> <input matInput placeholder="Credit Term Code"
+            [formControl]="form.controls['code']" required maxlength="255" style="text-transform:uppercase" oninput="this.value = this.value.toUpperCase() " readonly>
+        </mat-form-field>
+        <mat-hint *ngIf="form.controls['code'].hasError('required') && form.controls['code'].touched"
+          class="text-danger font-14">Please insert credit term code</mat-hint>
+
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Credit Term Name </mat-label> <input matInput placeholder="Credit Term Name"
+            [formControl]="form.controls['name']" required maxlength="255">
+
+          <mat-hint *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched"
+            class="text-danger font-14">Please insert credit term name</mat-hint>
+          <mat-hint *ngIf="form.controls['name'].hasError('pattern')" class="text-danger font-14">
+            Please insert only numbers</mat-hint>
+        </mat-form-field>
+
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Status </mat-label>
+          <mat-select placeholder="Status" formControlName="status" required>
+            <mat-option *ngFor="let s of status" [value]="s.value"> {{s.viewValue}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-divider> </mat-divider>
+
+    <!---->
+    <div fxLayout="row wrap" fxFlexAlign="center" class="row">
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Set Year </mat-label> <input matInput placeholder="Year" [formControl]="form.controls['year']">
+          <!--<mat-hint *ngIf="form.controls['year'].hasError('pattern') && form.controls['year'].touched"
+            class="text-danger font-14">Please insert number only</mat-hint>-->
+        </mat-form-field>
+      </div>
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Set Month </mat-label>
+          <mat-select placeholder="Month" formControlName="month">
+
+            <mat-option *ngFor="let month of month" [value]="month.value"> {{month.viewValue}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Set Day </mat-label>
+          <mat-select placeholder="Day" formControlName="day">
+            <mat-option *ngFor="let day of day" [value]="day.value"> {{day.viewValue}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+
+
+    <div fxLayout="row wrap" fxFlexAlign="left" class="row">
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Add Year </mat-label> <input matInput placeholder="Year" [formControl]="form.controls['addyear']">
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Add Month </mat-label> <input matInput placeholder="Month"
+            [formControl]="form.controls['addmonth']">
+        </mat-form-field>
+
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Add Day </mat-label> <input matInput placeholder="Day" [formControl]="form.controls['addday']">
+        </mat-form-field>
+
+      </div>
+
+
+    </div>
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row wrap" fxFlexAlign="left" class="row">
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Created By </mat-label> <input matInput placeholder="Created By" formControlName="createdBy"
+          style="color: grey" readonly />
+        </mat-form-field>
+
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Creation Date </mat-label> <input matInput placeholder="Creation Date"
+                  formControlName="createdDate" style="color: grey" readonly />
+        </mat-form-field>
+
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Modified By </mat-label> <input matInput placeholder="Modified By"
+                  formControlName="modifiedBy" style="color: grey" readonly />
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Modified Date </mat-label> <input matInput placeholder="Modified Date"
+                  formControlName="modifiedDate" style="color: grey" readonly />
+        </mat-form-field>
+
+      </div>
+    </div>
+  </div>
+
+</form>
+<div class=" center" style="margin-top: 10px; width: 50px;">
+  <button mat-raised-button color="warn" type="button" (click)="onRemove()">Remove</button>
+</div>

@@ -1,0 +1,17 @@
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async">
+    <mat-tab label="Main Details">
+        <app-edit-item-details-main-details></app-edit-item-details-main-details>
+    </mat-tab>
+    <mat-tab label="Delivery Instruction">
+        <app-edit-item-details-delivery-instructions></app-edit-item-details-delivery-instructions>
+    </mat-tab>
+    <mat-tab label="Department">
+        <app-edit-item-details-department></app-edit-item-details-department>
+    </mat-tab>
+    <mat-tab label="Related Documents">
+        <app-edit-item-details-related-documents></app-edit-item-details-related-documents>
+    </mat-tab>
+    <mat-tab label="Delivery Details">
+        <app-edit-item-details-delivery-details></app-edit-item-details-delivery-details>
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,69 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+      [disabled]="deactivateReturn$ | async"
+      (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+      </button>
+      <span>
+        Edit Issue
+      </span>
+    </div>
+    <button mat-raised-button color="primary" type="button">SAVE</button>
+  </div>
+  <!-- <div>
+    <form [formGroup]="form" #formDirectives="ngForm">
+      <div *ngFor="let x of leftColControls; let i = index">
+        <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+          <mat-label>{{x.label}}</mat-label>
+          <input matInput readonly [formControl]="form.controls[x.formControl]" autocomplete="off">
+          <mat-hint>{{x.hint}}</mat-hint>
+        </mat-form-field>
+        <ng-template #input>
+          <ng-container [ngSwitch]="x.type">
+            <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [formControl]="form.controls[x.formControl]" [formControl]="form.controls[x.formControl]" autocomplete="off" type="text">
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'select'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <mat-select [formControl]="form.controls[x.formControl]" >
+                <mat-option [value]="'NULL'">NULL</mat-option>
+              </mat-select>
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+            </mat-form-field>
+          </ng-container>
+        </ng-template>
+      </div>
+    </form>
+  </div> -->
+</mat-card-title>
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async">
+  <mat-tab label="Main Details">
+    <app-edit-issue-main-details></app-edit-issue-main-details>
+  </mat-tab>
+  <mat-tab label="Details">
+    <app-edit-issue-details></app-edit-issue-details>
+  </mat-tab>
+  <mat-tab label="Attachment">
+    <app-edit-issue-attachment></app-edit-issue-attachment>
+  </mat-tab>
+  <mat-tab label="Comment">
+    <app-edit-issue-comment></app-edit-issue-comment>
+  </mat-tab>
+  <mat-tab label="Subtasks">
+    <app-edit-issue-substasks></app-edit-issue-substasks>
+  </mat-tab>
+  <mat-tab label="Linked Issues">
+    <app-edit-issue-linked-issues></app-edit-issue-linked-issues>
+  </mat-tab>
+  <mat-tab label="Worklog">
+    <app-edit-issue-worklog></app-edit-issue-worklog>
+  </mat-tab>
+  <mat-tab label="Activity">
+    <app-edit-issue-activity></app-edit-issue-activity>
+  </mat-tab>
+</mat-tab-group>
+  

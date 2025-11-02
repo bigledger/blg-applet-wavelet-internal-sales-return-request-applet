@@ -1,0 +1,11 @@
+<div class="view-col-forms">
+    <div fxLayout="column" fxLayoutGap="10px">
+        <ng-select-printable-format [(printableFormat)]="printableFormat" [txn_type]="txn_type" [apiVisa]="apiVisa"
+            (selectedPrintableFormat)="onPrintableFormatChange($event)">
+        </ng-select-printable-format>
+        <button mat-raised-button color="primary" type="button" (click)="onPrint()">EXPORT AS PDF</button>
+        <!-- <button mat-raised-button color="primary" disabled="true">EXPORT AS CSV</button>
+        <button mat-raised-button color="primary" disabled="disabled">EXPORT AS DOCX</button>
+        <button mat-raised-button color="primary" disabled="disabled">EXPORT AS ZIP</button> -->
+    </div>
+</div>

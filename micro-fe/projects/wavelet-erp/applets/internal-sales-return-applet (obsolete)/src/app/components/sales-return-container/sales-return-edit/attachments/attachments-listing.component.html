@@ -1,0 +1,30 @@
+<div class="view-col-table" fxLayout="column">
+  <div fxLayout="row wrap" fxLayoutAlign="end">
+    <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+      <button ngClass.xs="blg-button-mobile" #navBtn class="blg-button-icon" mat-button matTooltip="Create" type="button"
+        [disabled]="localState.deactivateAdd"
+        (click)="onNext()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="assets/images/add.png" alt="add" width="40px" height="40px">
+      </button>
+      <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+      <app-grid-toggle class="blg-button-icon"></app-grid-toggle>
+    </div>
+  </div>
+  <div style="height: 100%;">
+    <ag-grid-angular #agGrid
+    style="height: 100%;"
+    class="ag-theme-balham"
+    rowSelection="single"
+    pagination="true"
+    animateRows="true"
+    suppressRowClickSelection="false"
+    [sideBar]="true"
+    [getRowClass]="pagination.getRowClass"
+    [columnDefs]="columnsDefs"
+    [rowData]="rowData"
+    [paginationPageSize]="pagination.rowPerPage"
+    [defaultColDef]="defaultColDef"
+    (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

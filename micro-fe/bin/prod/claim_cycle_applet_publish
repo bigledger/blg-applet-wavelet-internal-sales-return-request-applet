@@ -1,0 +1,18 @@
+#!/bin/sh
+
+
+
+set -e
+set -x
+
+export NODE_OPTIONS=--max_old_space_size=8192
+
+#compile angular application
+ng build --configuration=production --project=claim-cycle-applet --output-hashing none
+node elements-build-scripts/wavelet-erp/claim-cycle-applet/claim-cycle-applet-elements-build.js
+
+# WARNING: Backup first
+ aws s3 mv s3://akaun-applets/bigledger/wavelet-erp/claim-cycle-applet/prod s3://akaun-applets/bigledger/wavelet-erp/claim-cycle-applet/prod/backups/Backup-`date +%Y-%m-%d:%H:%M:%S` --profile akaun --recursive --exclude "backups/*"
+
+# WARNING: Upload the new  file to s3
+ aws s3 cp elements/wavelet-erp/applets/claim-cycle-applet/ s3://akaun-applets/bigledger/wavelet-erp/claim-cycle-applet/prod --profile akaun --acl public-read --recursive

@@ -1,0 +1,45 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@akaun-dev-lib/*": [
+        "akaun-dev-lib/*"
+      ],
+      "@elements/*": [
+        "elements/*"
+      ],
+      "issue-tracker-lib": [
+        "dist/issue-tracker-lib"
+      ],
+      "issue-tracker-lib/*": [
+        "dist/issue-tracker-lib/*"
+      ],
+      "akaun-lib": [
+        "dist/akaun-lib"
+      ],
+      "akaun-lib/*": [
+        "dist/akaun-lib/*"
+      ]
+    },
+    "downlevelIteration": true,
+    "module": "esnext",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom",
+      "esnext"
+    ],
+    "allowSyntheticDefaultImports": true
+  }
+}

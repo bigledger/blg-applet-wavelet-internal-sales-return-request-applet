@@ -1,0 +1,67 @@
+@import '../../styles/variable.scss';
+
+img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+::ng-deep {
+  #snav
+  .mat-nav-list,
+  .mat-list-item.selected,
+  .sub-item,
+  .mat-list-item-content,
+  a.selected {
+    color: #8f999e;
+  }
+  .bottom-link {
+    margin-top: auto;
+  }
+  #snav .mat-drawer-inner-container {
+    height: 100% !important;
+    mat-nav-list[appAccordion] {
+      min-height: 100%;
+      justify-content: start;
+    }
+  }
+}
+button, mat-nav-list {
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.opened {
+  left: 194px;
+  transform: rotate(180deg)
+}
+.closed {
+  left: 54px;
+  transform: rotate(0deg)
+}
+.active-link {
+  a {
+    background-color: $themecolor-alt !important;
+    border-radius: $radius;
+    color: white !important;
+    mat-icon {
+      color: $white !important;
+    }
+  }
+}
+.tenant {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+}
+a:hover {
+  background: $themecolor-alt !important;
+  border-radius: $radius;
+  color: white !important;
+  mat-icon {
+    color: $white !important;
+  }
+}
+a:active {
+  background-color: mediumslateblue !important;
+}

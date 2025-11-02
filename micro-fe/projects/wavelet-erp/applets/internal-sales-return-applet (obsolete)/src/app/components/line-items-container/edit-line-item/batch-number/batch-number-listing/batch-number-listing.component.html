@@ -1,0 +1,45 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button" (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+      </button>
+      <span>
+        Batch Number Listing
+      </span>
+    </div>
+  </div>
+</mat-card-title>
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+        <app-grid-toggle class="blg-button-icon"></app-grid-toggle>
+      </div>
+    </div>
+  </mat-card-title>
+  <div style="height: 80%;">
+    <ag-grid-angular #agGrid
+      id="grid"
+      style="height: 100%;"
+      class="ag-theme-balham"
+      [getRowClass]="pagination.getRowClass"
+      [columnDefs]="columnsDefs"
+      [rowData]="[]"
+      [paginationPageSize]="pagination.rowPerPage"
+      [cacheBlockSize]="pagination.rowPerPage"
+      [pagination]="true"
+      [animateRows]="true"
+      [floatingFilter]="true"
+      [defaultColDef]="defaultColDef"
+      [suppressRowClickSelection]="false"
+      [rowSelection]="'single'"
+      [sideBar]="true"
+      [rowModelType]="'serverSide'"
+      [serverSideStoreType]="'partial'"
+      (rowClicked)="onRowClicked($event.data)"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

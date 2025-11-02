@@ -1,0 +1,61 @@
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex | async" *ngIf="!showPanels()">
+  <mat-tab label="Entity Details">
+    <app-account-entity-details [draft$]="draft$" (selectEntity)="selectEntity.emit()" (accountStatusChange)="onAccountStatusChange($event)"></app-account-entity-details>
+  </mat-tab>
+  <mat-tab label="Bill To">
+    <app-account-billing-address [draft$]="draft$" (selectBilling)="selectBilling.emit()"
+      (updateBillTo)="updateBillTo.emit($event)" (updateBillingAddress)="updateBillingAddress.emit($event)">
+    </app-account-billing-address>
+  </mat-tab>
+  <mat-tab label="Ship To">
+    <app-account-shipping-address [draft$]="draft$" (selectShipping)="selectShipping.emit()"
+      (updateShipTo)="updateShipTo.emit($event)" (updateShippingAddress)="updateShippingAddress.emit($event)">
+    </app-account-shipping-address>
+  </mat-tab>
+  <mat-tab label="Intercompany">
+    <ng-template matTabContent>
+      <intercompany-transaction [draft$]="draft$">
+      </intercompany-transaction>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+
+<mat-accordion *ngIf="showPanels()">
+  <mat-expansion-panel *ngFor="let panel of panels; let i = index"
+                           [expanded]="i === expandedPanelIndex"
+                           (opened)="onPanelOpened(i)"
+                           [ngClass]="{'expanded-subpanel': expandedPanelIndex === i}">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+          {{ panel.title }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+    <!-- Entity Details Panel Content -->
+    <ng-container *ngIf="panel.content === 'entity-details'">
+      <app-account-entity-details [draft$]="draft$" (selectEntity)="selectEntity.emit()" (accountStatusChange)="onAccountStatusChange($event)"></app-account-entity-details>
+    </ng-container>
+
+    <!-- Bill To Panel Content -->
+    <ng-container *ngIf="panel.content === 'bill-to'">
+      <app-account-billing-address [draft$]="draft$" (selectBilling)="selectBilling.emit()"
+    (updateBillTo)="updateBillTo.emit($event)" (updateBillingAddress)="updateBillingAddress.emit($event)">
+      </app-account-billing-address>
+    </ng-container>
+
+    <!-- Ship To Panel Content -->
+    <ng-container *ngIf="panel.content === 'ship-to'">
+      <app-account-shipping-address [draft$]="draft$" (selectShipping)="selectShipping.emit()"
+      (updateShipTo)="updateShipTo.emit($event)" (updateShippingAddress)="updateShippingAddress.emit($event)">
+      </app-account-shipping-address>
+    </ng-container>
+
+    <!-- InterCompany Panel Content -->
+    <ng-container *ngIf="panel.content === 'intercompany'">
+      <ng-template matExpansionPanelContent>
+        <intercompany-transaction [draft$]="draft$"></intercompany-transaction>
+      </ng-template>
+    </ng-container>
+  </mat-expansion-panel>
+</mat-accordion>
+

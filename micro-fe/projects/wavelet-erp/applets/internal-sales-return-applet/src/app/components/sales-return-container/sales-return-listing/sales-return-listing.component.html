@@ -1,0 +1,57 @@
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div style="margin-top: 20px">{{ compName }}</div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div fxFlex="3 0 0">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+          <button ngClass.xs="blg-button-mobile" #navBtn class="blg-button-icon" mat-button matTooltip="Create"
+            type="button" [disabled]="(deactivateAdd$ | async) || !hasCreatePermission" (click)="onAdd()">
+            <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="assets/images/add.png" alt="add"
+              width="40px" height="40px" />
+          </button>
+          <app-advanced-search-general fxFlex fxFlex.lt-sm="100" [id]="compId" [advSearchModel]="searchModel" [readPermissionDefintion]="readPermissionDefintion" (search)="onSearch($event)" [appletSettings]="appletSettings"></app-advanced-search-general>
+          <app-column-toggle [currentToggle]="toggleColumn$ | async" (toggleColumn)="onToggle($event)" fxHide.lt-sm>
+          </app-column-toggle>
+        </div>
+      </div>
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="3px" [style.padding]="'5px'" class="listing-button-container">
+      <button mat-raised-button color="primary" type="button" [disabled]="(processing$ | async )|| disableFinalButton" (click)="onFinal()"
+        *ngIf="isShowColumn('HIDE_GENDOC_FINAL_BUTTON','SHOW_GENDOC_FINAL_BUTTON')">
+        FINAL
+      </button>
+      <button mat-raised-button color="warn" type="button"  [disabled]="disableDiscardButton" (click)="onDiscard()" 
+        *ngIf="isShowColumn('HIDE_GENDOC_DISCARD_BUTTON', 'SHOW_GENDOC_DISCARD_BUTTON')">
+        DISCARD
+      </button>
+      <button mat-raised-button color="warn" type="button" (click)="onVoid()" [disabled]="disableVoidButton"
+        *ngIf="isShowColumn('HIDE_GENDOC_VOID_BUTTON', 'SHOW_GENDOC_VOID_BUTTON')">
+        VOID
+      </button>
+      <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="onBulkPrint()"
+      [disabled]="!appletSettings.PRINTABLE"
+    >
+      SINGLE/MULTIPLE PRINT
+    </button>
+    </div>
+  </mat-card-title>
+  <div style="height: 100%">
+    <app-ag-grid-custom
+      #agGrid
+      [id]="compId+'Listing'"
+      [title]="compName"
+      [columnDefs]="columnsDefs"
+      [gridOptions]="gridOptions"
+      [getRowStyle]="getRowStyle"
+      (onMorePageClick)="onMorePage()"
+      (onAllPageClick)="onAllPage()"
+      (gridReady)="onGridReady($event)"
+    ></app-ag-grid-custom>
+  </div>
+</div>

@@ -1,0 +1,157 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div> <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+        [disabled]="deactivateReturn$ | async" (click)="onReturn()"> <img
+          [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px"> </button> <span> Credit Term Create </span> </div>
+    <button mat-raised-button color="primary" type="button" (click)="onSave()" [disabled]="!form.valid"> Add</button>
+  </div>
+</mat-card-title>
+
+<div fxLayout="column">
+  <form [formGroup]="form">
+    <mat-tab-group [dynamicHeight]="true">
+      <mat-tab label="Main">
+        <div fxLayout="row wrap" fxFlexAlign="center">
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Customer Name</mat-label> <input maxlength="100" matInput formControlName="custname"
+                style="color: grey" readonly>
+              <mat-hint *ngIf="form.controls['custname'].value?.length === 100" class="text-danger font-14">
+                Customer Name
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Customer Code</mat-label> <input maxlength="100" matInput formControlName="custcode"
+                style="color: grey" readonly>
+              <mat-hint *ngIf="form.controls['custcode'].value?.length === 100" class="text-danger font-14">
+                Customer Code
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-divider> </mat-divider>
+      </mat-tab>
+    </mat-tab-group>
+  </form>
+
+  <div fxLayout="row wrap" fxFlexAlign="center" style="margin: 20px 10px">
+    <mat-radio-group [(ngModel)]="selection">
+      <mat-radio-button [value]="2" style="margin-right: 20px;">
+        Existing Credit Term</mat-radio-button>
+      <mat-radio-button [value]="1">New Credit Term</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+
+  <!-- form 1  New Form-->
+  <form [formGroup]="form1" style="width: 100%">
+    <div *ngIf="selection==1" fxLayout="row wrap" fxFlexAlign="center">
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Credit Term Code </mat-label>
+          <input matInput placeholder="Credit Term Code" (blur)="onCheck()" formControlName="code" required
+            maxlength="255" style="text-transform:uppercase" oninput="this.value = this.value.toUpperCase()">
+          <mat-hint *ngIf="form1.controls['code'].hasError('required') && form1.controls['code'].touched"
+            class="text-danger font-14">Please insert credit term code</mat-hint>
+          <mat-error *ngIf="form1.controls['code'].hasError('exist')" class="text-danger font-14">{{message}}
+          </mat-error>
+          <!-- <mat-error *ngIf="form1.controls['code'].hasError('required')" style="color: red;">{{message}}</mat-error> -->
+
+          <!-- <mat-hint *ngIf="haveError" style="color: red;">Code already exist</mat-hint> -->
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Credit Term Name </mat-label>
+          <input matInput placeholder="Credit Term Name" formControlName="name" required maxlength="255">
+          <mat-hint *ngIf="form1.controls['name'].hasError('required') && form1.controls['name'].touched"
+            class="text-danger font-14">Please insert credit term name</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Status </mat-label>
+          <mat-select placeholder="Status" formControlName="status" required>
+            <mat-option *ngFor="let s of status" [value]="s.value"> {{s.viewValue}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Set Year </mat-label> <input matInput placeholder="Set year"
+            [formControl]="form1.controls['year']">
+        </mat-form-field>
+      </div>
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Set Month </mat-label>
+          <mat-select placeholder="Set month" formControlName="month">
+            <mat-option *ngFor="let month of month" [value]="month.value"> {{month.viewValue}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Set Day </mat-label>
+          <mat-select placeholder="Set day" formControlName="day">
+            <mat-option *ngFor="let day of day" [value]="day.value"> {{day.viewValue}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Add Year </mat-label> <input matInput placeholder="Add year"
+            [formControl]="form1.controls['addyear']">
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Add Month </mat-label> <input matInput placeholder="Add month"
+            [formControl]="form1.controls['addmonth']">
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Add Day </mat-label> <input matInput placeholder="Add day"
+            [formControl]="form1.controls['addday']">
+        </mat-form-field>
+      </div>
+
+    </div>
+  </form>
+
+  <!-- form 2 -->
+  <form [formGroup]="form2" style="width: 100%">
+    <div *ngIf="selection==2" fxLayout="row wrap" fxFlexAlign="center">
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Credit Term</mat-label>
+          <mat-select placeholder="Credit Term" required formControlName="term">
+            <mat-option>
+              <ngx-mat-select-search (keyup)="applyCreditTermFilter($event.target.value)"
+                [placeholderLabel]="'Credit Term'" [noEntriesFoundLabel]="'No matching records found'"
+                formControlName="currentTerm" ngDefaultControl>
+              </ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let item of newCreditTermArr" [value]="item">{{item.name}} - {{item.code}} </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="form2.controls['term'].hasError('required') && form2.controls['term'].touched"
+            class="text-danger font-14">You must insert Credit Term</mat-hint>
+          <mat-error *ngIf="haveError" style="color: red;">{{message}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>

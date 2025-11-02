@@ -1,0 +1,96 @@
+<div class="view-col-table no-tab" fxLayout="column">
+    <mat-card-title class="column-title">
+      <div
+        fxLayout="row wrap"
+        fxLayoutAlign="space-between end"
+        fxLayoutGap="10px"
+      >
+        <div>
+          <button
+            #navBtn
+            mat-button
+            class="blg-button-icon"
+            matTooltip="Back"
+            type="button"
+            (click)="onReturn()"
+          >
+            <img
+              [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null"
+              src="../../../assets/images/backbutton.png"
+              alt="add"
+              width="40px"
+              height="40px"
+            />
+          </button>
+          <span>Invoice Line Listing</span>
+        </div>
+      </div>
+      <div
+        fxLayout="row wrap"
+        fxLayoutAlign="space-between end"
+        fxLayoutGap="10px"
+      >
+        <div
+          class="blg-accent"
+          fxFlex="1 0 25"
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+        >
+          <app-pagination
+            fxFlex
+            #pagination
+            [agGridReference]="agGrid"
+          ></app-pagination>
+
+        </div>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="10px"  [style.padding]="'5px'">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="onAddToSalesReturn()"
+          style="height: 50px ; padding-right: 10px;"
+        >
+          Add Selected to Sales Return
+        </button>
+        <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="onAddAllToSalesReturn()"
+        style="height: 50px ;"
+      >
+        Add All to Sales Return
+      </button>
+      </div>
+    </mat-card-title>
+    <div style="height: 80%">
+      <ag-grid-angular
+        #agGrid
+        id="grid"
+        style="height: 100%"
+        class="ag-theme-balham"
+        [getRowClass]="pagination.getRowClass"
+        [columnDefs]="columnsDefs"
+        [rowData]="[]"
+        [paginationPageSize]="pagination.rowPerPage"
+        [cacheBlockSize]="pagination.rowPerPage"
+        [pagination]="true"
+        [animateRows]="true"
+        [defaultColDef]="defaultColDef"
+        [suppressRowClickSelection]="false"
+        [frameworkComponents]="frameworkComponents"
+        [getRowHeight]="getRowHeight"
+        [rowSelection]="'multiple'"
+        (cellEditingStarted)="onCellEditingStarted($event)"
+        [sideBar]="true"
+        [rowModelType]="'serverSide'"
+        [serverSideStoreType]="'partial'"
+        [applyColumnDefOrder]="true"
+        (gridReady)="onGridReady($event)"
+        [suppressRowClickSelection]="true"
+      >
+      </ag-grid-angular>
+    </div>
+  </div>

@@ -1,0 +1,36 @@
+ <!-- <div > -->
+ <!-- <mat-card-title class="column-title">
+    <div [ngStyle.gt-md]="{'flex-flow': 'row'}" [ngStyle.lt-lg]="{'flex-flow': 'row wrap'}" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div fxFlex="60" fxFlex.lt-lg="100">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+        </div>
+      </div>
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+
+      </div>
+    </div>
+  </mat-card-title>
+  -->
+  <!-- <div style="height: 100%;">  -->
+    <ag-grid-angular #agGrid
+    id="grid"
+    style="height: 13vh;"
+    class="ag-theme-balham"
+
+    [columnDefs]="columnsDefs"
+    [rowData]="[]"
+
+
+    [animateRows]="true"
+    [defaultColDef]="defaultColDef"
+    [suppressRowClickSelection]="false"
+    [rowSelection]="'single'"
+    [sideBar]="true"
+    [rowModelType]="'serverSide'"
+    [serverSideStoreType]="'partial'"
+    (rowClicked)="onRowClicked($event.data)"
+    (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  <!-- </div>
+</div> -->

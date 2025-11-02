@@ -1,0 +1,47 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+      [disabled]="deactivateReturn$ | async"
+      (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+      </button>
+      <span>Edit Item</span>
+    </div>
+    <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+      <button mat-raised-button color="primary" type="button" [disabled]="disableSave()" (click)="onSave()">SAVE</button>
+    </div>
+  </div>
+</mat-card-title>
+<br>
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" *ngIf="lineItem$ | async" [selectedIndex]="selectedIndex$ | async">
+  <mat-tab label="Item Details">
+    <app-line-item-details [selectedIndex$]="itemSelectedIndex$" [editMode]="true"></app-line-item-details>
+  </mat-tab>
+  <mat-tab *ngIf="subItemType === SUB_ITEM_TYPE.serialNumber" label="Serial Number">
+    <app-line-item-serial-number [selectedIndex$]="serialSelectedIndex$" [editMode]="true"></app-line-item-serial-number>
+  </mat-tab>
+  <mat-tab *ngIf="subItemType === SUB_ITEM_TYPE.batchNumber" label="Batch Number">
+    <app-line-item-batch-number [editMode]="true" (selectBatch)="goToBatchListing()"></app-line-item-batch-number>
+  </mat-tab>
+  <mat-tab *ngIf="subItemType === SUB_ITEM_TYPE.binNumber" label="Bin Number">
+    <app-line-item-bin-number [editMode]="true" (selectBin)="goToBinListing()"></app-line-item-bin-number>
+  </mat-tab>
+  <mat-tab label="Costing Details">
+    <app-line-item-costing-details></app-line-item-costing-details>
+  </mat-tab>
+  <mat-tab label="Pricing Details">
+    <app-line-item-pricing-details></app-line-item-pricing-details>
+  </mat-tab>
+  <mat-tab label="Issue Link">
+    <app-line-item-issue-link-listing (editIssueLink)="goToEditIssueLink()"></app-line-item-issue-link-listing>
+  </mat-tab>
+</mat-tab-group>
+
+<div style="padding: 5px;">
+  <button mat-raised-button color="warn" type="button" (click)="onDelete()">
+    <span>{{ (deleteConfirmation$ | async) ? 'CLICK AGAIN TO CONFIRM' : 'DELETE'}}</span>
+  </button>
+</div>
+
+  

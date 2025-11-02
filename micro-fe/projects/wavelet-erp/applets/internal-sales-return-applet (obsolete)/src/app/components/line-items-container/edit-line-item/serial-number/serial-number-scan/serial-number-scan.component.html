@@ -1,0 +1,69 @@
+<form [formGroup]="form">
+	<div class="view-col-forms">
+		<div class="inner-tab" fxLayout="column">
+			<div id="camera"></div>
+			<div fxLayout="row wrap" fxLayoutAlign="start center">
+				<mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+					<mat-label>Delimiter</mat-label>
+					<mat-select [formControl]="form.controls['delimiter']" (selectionChange)="onDelimiterSelected($event.value)">
+						<mat-option value=null>None</mat-option>
+						<mat-option value=" ">Space</mat-option>
+						<mat-option value=",">Comma</mat-option>
+						<mat-option value=";">Semicolon</mat-option>
+						<mat-option value=":">Colon</mat-option>
+						<mat-option value="|">Pipe</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+					<mat-label>Serial Number</mat-label>
+					<input matInput [formControl]="form.controls['serialNumber']" (keydown.enter)="onAdd($event.target.value)">
+					<mat-hint class="text-danger" *ngIf="invalid">The serial number is invalid</mat-hint>
+				</mat-form-field>
+				<div fxFlex="20" fxFlex.lt-sm="30" style="margin-bottom: 20px;">
+					<button mat-raised-button color="primary" type="button" (click)="onAdd()">ADD</button>
+				</div>
+				<mat-form-field fxFlex="40" fxFlex.lt-sm="70" appearance="outline">
+					<mat-label>From</mat-label>
+					<input matInput [formControl]="form.controls['from']" pattern="[A-Z0-9]*">
+				</mat-form-field>
+				<mat-form-field fxFlex="40" fxFlex.lt-sm="70" appearance="outline">
+					<mat-label>To</mat-label>
+					<input matInput [formControl]="form.controls['to']" pattern="[A-Z0-9]*">
+				</mat-form-field>
+				<div fxFlex="20" fxFlex.lt-sm="30" style="margin-bottom: 20px;">
+					<button mat-raised-button color="primary" type="button" (click)="onAddRange()">ADD</button>
+				</div>
+				<mat-form-field fxFlex="80" fxFlex.lt-sm="70" appearance="outline">
+					<mat-label>Serial Number Type</mat-label>
+					<mat-select [formControl]="form.controls['readers']">
+						<mat-option value="code_128_reader">Code 128</mat-option>
+						<mat-option value="ean_reader">EAN</mat-option>
+						<mat-option value="ean_8_reader">EAN-8</mat-option>
+						<mat-option value="code_39_reader">Code 39</mat-option>
+						<mat-option value="code_39_vin_reader">Code 39 VIN</mat-option>
+						<mat-option value="codabar_reader">Codabar</mat-option>
+						<mat-option value="upc_reader">UPC</mat-option>
+						<mat-option value="upc_e_reader">UPC-E</mat-option>
+						<mat-option value="i2of5_reader">I2of5</mat-option>
+						<mat-option value="2of5_reader">standard 2 of 5</mat-option>
+						<mat-option value="code_93_reader">Code 93</mat-option>
+					</mat-select>
+					<mat-hint>Cannot be changed once scanning starts</mat-hint>
+				</mat-form-field>
+				<div fxFlex="20" fxFlex.lt-sm="30" style="margin-bottom: 20px;">
+					<ng-container [ngSwitch]="quaggaStatus$ | async">
+						<button *ngSwitchCase="'idle'" mat-raised-button color="primary" type="button" (click)="onScan()">
+							SCAN
+						</button>
+						<button *ngSwitchCase="'initializing'" style="margin-top: 4px;" mat-raised-button color="primary" type="button" disabled>
+							<mat-spinner style="margin: 8px;" diameter="20" mode="indeterminate"></mat-spinner>
+						</button>
+						<button *ngSwitchCase="'ready'" mat-raised-button color="primary" type="button" (click)="onStop()">
+							STOP
+						</button>
+					</ng-container>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,256 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-card-title class="column-title">
+    <div fxLayout="row" fxLayoutAlign="space-between end">
+      <div>
+        <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+          (click)="onReturn()"
+          [disabled]="deactivateReturn$ | async">
+          <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+        </button>
+        <span>
+          Company Edit
+        </span>
+      </div>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">SAVE</button>
+    </div>
+  </mat-card-title>
+  <mat-tab-group [selectedIndex]="selectedIndex$ | async">
+    <mat-tab label="Details">
+      <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Company Name</mat-label>
+            <input maxlength="255" matInput placeholder="Company Name" formControlName="name"
+              required>
+            <mat-hint
+              *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched"
+              class="text-danger font-14">Please insert company name
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Company Code</mat-label>
+            <input maxlength="255" matInput placeholder="Company Code" readonly
+              formControlName="code" style="color: grey" required>
+          </mat-form-field>
+        </div>
+        <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Description</mat-label>
+            <input maxlength="255" matInput placeholder="Description" formControlName="description">
+          </mat-form-field>
+        </div>
+        <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Abbreviation</mat-label>
+            <input maxlength="255" matInput placeholder="Abbreviation"
+              formControlName="abbreviation">
+          </mat-form-field>
+        </div>
+        <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Currency</mat-label>
+            <mat-select maxlength="255" placeholder="Currency" formControlName="currency" required>
+              <ngx-mat-select-search (keyup)="applyCurrencyFilter($event.target.value)"
+                [placeholderLabel]="'Currency'" [noEntriesFoundLabel]="'No matching records found'"
+                formControlName="currentCurrency" ngDefaultControl>
+              </ngx-mat-select-search>
+              <mat-option *ngFor="let item of newArr" [value]="item.currency_code">
+                {{ item.currency_code }} -
+                {{ item.currency_name }}</mat-option>
+            </mat-select>
+            <mat-hint
+              *ngIf="form.controls['currency'].hasError('required') && form.controls['currency'].touched"
+              class="text-danger font-14">Please insert currency
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Company Registration No.</mat-label>
+            <input maxlength="255" matInput placeholder="Company Registration No."
+              formControlName="registrationNum" required>
+            <mat-hint
+              *ngIf="form.controls['registrationNum'].hasError('required') && form.controls['registrationNum'].touched"
+              class="text-danger font-14">Please insert company registration no
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Company Incoporation Date</mat-label>
+            <input maxlength="255" matInput formControlName="companyIncoDate" [matDatepicker]="dp"
+              placeholder="Verbose datepicker" required>
+              <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+              <mat-datepicker #dp></mat-datepicker>
+            <mat-hint
+              *ngIf="form.controls['companyIncoDate'].hasError('required') && form.controls['companyIncoDate'].touched"
+              class="text-danger font-14">Please insert company incoporate date
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Tax ID#</mat-label>
+            <input maxlength="255" matInput placeholder="Tax ID#"
+              formControlName="taxRegistrationNum">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input maxlength="255" matInput placeholder="Phone Number" formControlName="phoneNum">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Fax Number</mat-label>
+            <input maxlength="255" matInput placeholder="Fax Number" formControlName="faxNum">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Website</mat-label>
+            <input maxlength="255" matInput placeholder="Website" formControlName="website">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input maxlength="255" matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select maxlength="255" placeholder="Status" [formControl]="form.controls['status']"
+              (selectionChange)="closingDate($event.value)">
+              <ngx-mat-select-search [placeholderLabel]="'Status'"
+                [noEntriesFoundLabel]="'No matching records found'" formControlName="currentStatus"
+                ngDefaultControl></ngx-mat-select-search>
+              <mat-option *ngFor="let item of status" [value]="item.viewValue">{{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-hint
+            *ngIf="form.controls['status'].hasError('required') && form.controls['status'].touched"
+            class="text-danger font-14">Please choose status
+          </mat-hint>
+        </div>
+        <mat-divider class="mat-divider" style="height: 5px; border-top-width: 3px;" [inset]="true">
+        </mat-divider>
+        <br>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Created By</mat-label>
+            <input matInput placeholder="Created By" formControlName="createdBy" style="color: grey"
+              readonly />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Creation Date</mat-label>
+            <input matInput placeholder="Creation Date" formControlName="createdDate"
+              style="color: grey" readonly />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Modified By</mat-label>
+            <input matInput placeholder="Modified By" formControlName="modifiedBy"
+              style="color: grey" readonly />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Modified Date</mat-label>
+            <input matInput placeholder="Modified Date" formControlName="modifiedDate"
+              style="color: grey" readonly />
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10" *ngIf="close">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Closing Date</mat-label>
+            <input matInput placeholder="Closing Date" formControlName="closingDate" type="date">
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Address">
+      <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms" style="max-height: 49vh;">
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Address Line 1</mat-label>
+            <input maxlength="255" matInput placeholder="Address Line 1 "
+              formControlName="address1">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Address Line 2</mat-label>
+            <input maxlength="255" matInput placeholder="Address Line 2 "
+              formControlName="address2">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Address Line 3</mat-label>
+            <input maxlength="255" matInput placeholder="Address Line 3 "
+              formControlName="address3">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>City</mat-label>
+            <input maxlength="255" matInput placeholder="City" formControlName="city">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Postal Code</mat-label>
+            <input maxlength="255" matInput placeholder="Postal Code " formControlName="postalCode">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select maxlength="255" placeholder="Country"
+              [formControl]="form.controls['country']"
+              (selectionChange)="selectCountry($event.value)">
+              <ngx-mat-select-search (keyup)="applyCountryFilter($event.target.value)"
+                [placeholderLabel]="'Country'" [noEntriesFoundLabel]="'No matching records found'"
+                formControlName="currentCountry" ngDefaultControl>
+              </ngx-mat-select-search>
+              <mat-option *ngFor="let item of newCountryArr" [value]="item.country_id">
+                {{ item.country_name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>State</mat-label>
+            <mat-select maxlength="255" placeholder="State" [formControl]="form.controls['state']">
+              <ngx-mat-select-search (keyup)="applyStateFilter($event.target.value)"
+                [placeholderLabel]="'State'" [noEntriesFoundLabel]="'No matching records found'"
+                formControlName="currentState" ngDefaultControl>
+              </ngx-mat-select-search>
+              <mat-option *ngFor="let item of newStateArr" [value]="item.state_name">
+                {{ item.state_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  <!-- <mat-card-title>
+    <button mat-raised-button class="deleteButton" color="warn" (click)="deleteCompany()"
+      type="button">
+      Delete
+    </button>
+  </mat-card-title> -->
+</form>

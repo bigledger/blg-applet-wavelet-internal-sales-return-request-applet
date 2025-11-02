@@ -1,0 +1,128 @@
+<mat-card-title class="column-title">
+    <div fxLayout="row" fxLayoutAlign="space-between end">
+      <div>
+        <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+          [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+          <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+            alt="add" width="40px" height="40px">
+        </button>
+        <span>Add Item</span>
+      </div>
+      <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+        <button mat-raised-button color="primary" type="button" [disabled]="disableAdd()" (click)="onAdd()">ADD</button>
+      </div>
+    </div>
+  </mat-card-title>
+  <br>
+  <mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async" *ngIf="!showPanels()">
+    <mat-tab label="Item Details">
+      <app-line-item-details [selectedIndex]="itemSelectedIndex$" [editMode]="false">
+      </app-line-item-details>
+    </mat-tab>
+    <mat-tab *ngIf="itemData?.bl_fi_mst_item_hdr?.txn_type==='GROUPED_ITEM'" label="Grouped Item">
+      <app-line-item-group-item  [itemHdr]="itemData?.bl_fi_mst_item_hdr"></app-line-item-group-item>
+    </mat-tab>
+    <mat-tab *ngIf="subItemType === SUB_ITEM_TYPE.serialNumber" label="Serial Number" [aria-label]="serialNumberTabColor$|async">
+      <app-util-line-item-serial-number
+      [selectedIndex$]="serialSelectedIndex$"
+      [editMode]="false"
+      [txnType] = "'PURCHASE'"
+      [postingStatus] = "postingStatus"
+      [viewModelStore]="viewModelStore"
+      [ColumnViewActions]="ColumnViewActions"
+      [ColumnViewSelectors]="ColumnViewSelectors"
+      [serialNumberListing$] ="serialNumberListing$"
+      [draft$] ="draft$"
+      [invItem$] ="invItem$"
+      [serverDocType]="serverDocType"
+      ></app-util-line-item-serial-number>
+    </mat-tab>
+    <mat-tab *ngIf="subItemType === 'BATCH_NUMBER'" label="Batch Number">
+      <app-line-item-add-batch-number [editMode]="false"></app-line-item-add-batch-number>
+    </mat-tab>
+    <mat-tab *ngIf="subItemType === 'BIN_NUMBER'" label="Bin Number">
+      <app-line-item-add-bin-number [editMode]="false"></app-line-item-add-bin-number>
+    </mat-tab>
+    <mat-tab label="Costing Details" *ngIf="!appletSettings.HIDE_COSTING_DETAILS || showCostingDetails">
+      <app-line-item-costing-details></app-line-item-costing-details>
+    </mat-tab>
+    <!-- <mat-tab label="Pricing Details">
+      <ng-template matTabContent>
+      <app-line-item-pricing-details></app-line-item-pricing-details>
+      </ng-template>
+    </mat-tab> -->
+    <mat-tab label="Issue Link">
+      <app-line-item-issue-link-listing (editIssueLink)="goToEditIssueLink()"></app-line-item-issue-link-listing>
+    </mat-tab>
+  </mat-tab-group>
+
+<mat-accordion *ngIf="showPanels()" [multi]="true">
+  <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+          Item Details
+            </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-line-item-details [selectedIndex]="itemSelectedIndex$" [editMode]="false" [orientation]="orientation"></app-line-item-details>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="subItemType === SUB_ITEM_TYPE.serialNumber">
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+            Serial Number
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-util-line-item-serial-number
+      [selectedIndex$]="serialSelectedIndex$"
+      [editMode]="false"
+      [txnType] = "'PURCHASE'"
+      [postingStatus] = "postingStatus"
+      [viewModelStore]="viewModelStore"
+      [ColumnViewActions]="ColumnViewActions"
+      [ColumnViewSelectors]="ColumnViewSelectors"
+      [serialNumberListing$] ="serialNumberListing$"
+      [draft$] ="draft$"
+      [invItem$] ="invItem$"
+      [serverDocType]="serverDocType"
+      ></app-util-line-item-serial-number>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="subItemType === 'BATCH_NUMBER'">
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+            Batch Number
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-line-item-add-batch-number [editMode]="false"></app-line-item-add-batch-number>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="subItemType === SUB_ITEM_TYPE.binNumber && !appletSettings.HIDE_BIN_NUMBER">
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span [style.color]="binNumberTabInvalid ? 'red' : 'inherit'" 
+            [style.font-weight]="binNumberTabInvalid ? 'bold' : 'normal'">
+              Bin Number
+            </span>
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-line-item-add-bin-number [editMode]="false"></app-line-item-add-bin-number>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="!appletSettings.HIDE_COSTING_DETAILS || showCostingDetails">
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+            Costing Details
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-line-item-costing-details></app-line-item-costing-details>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+          Issue Link
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-line-item-issue-link-listing (editIssueLink)="goToEditIssueLink()"></app-line-item-issue-link-listing>
+</mat-expansion-panel>
+</mat-accordion>

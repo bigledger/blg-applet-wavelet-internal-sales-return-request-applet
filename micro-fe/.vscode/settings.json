@@ -1,0 +1,9 @@
+{
+  "angular.enable-strict-mode-prompt": false,
+  "diffEditor.codeLens": true,
+  "files.exclude": {
+    "*.spec.ts": true,
+    "**/*.spec.ts": true
+  },
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}

@@ -1,0 +1,150 @@
+
+<div class="view-col-table" fxLayout="column" [formGroup]="form">
+  <form
+    [formGroup]="form"
+    fxLayout="row wrap"
+    style="
+      width: 500px !important;
+      height: 100px !important;
+      margin-bottom: 5px !important;
+    "
+  >
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="16px">
+      <mat-form-field
+        appearance="outline"
+        style="width: 170px !important; height: 50px !important"
+      >
+        <input
+          id="trackingID"
+          matInput
+          type="text"
+          placeholder="Tracking ID"
+          formControlName="trackingID"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        style="width: 150px; height: 50px"
+        (click)="addTrackingIDToSelectedLines()"
+      >
+        Apply to Lines
+      </button>
+
+      <mat-form-field
+        appearance="outline"
+        style="width: 170px !important; height: 50px !important"
+      >
+        <mat-select
+          placeholder="Delivery Branch"
+          formControlName="shippingBranch"
+        >
+          <mat-option>
+            <ngx-mat-select-search
+              (keyup)="applyBranchFilter($event.target.value)"
+              [noEntriesFoundLabel]="'No matching records found'"
+              placeholderLabel="Search branch..."
+              ngDefaultControl
+            ></ngx-mat-select-search>
+          </mat-option>
+          <mat-option
+            (onSelectionChange)="onSelectedBranch($event)"
+            *ngFor="let item of newBranchArr"
+            [value]="item.code"
+            >{{ item.code }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        style="width: 150px; height: 50px"
+        (click)="addShippingBranchToSelectedLines()"
+      >
+        Apply to Lines
+      </button>
+    </div>
+
+    <div
+      fxLayout="row"
+      fxLayout.lt-sm="column"
+      fxLayoutGap="16px"
+      style="margin-top: 5px"
+    >
+      <mat-form-field
+        appearance="outline"
+        style="width: 170px !important; height: 50px !important"
+      >
+        <mat-select placeholder="Delivery Type" formControlName="deliveryType">
+          <mat-option value="INTERNAL_DELIVERY">INTERNAL_DELIVERY</mat-option>
+          <mat-option value="EXTERNAL_DELIVERY">EXTERNAL_DELIVERY</mat-option>
+          <mat-option value="PICKUP">PICKUP</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        style="width: 150px; height: 50px"
+        (click)="addDeliveryTypeToSelectedLines()"
+      >
+        Apply to Lines
+      </button>
+
+      <mat-form-field
+        appearance="outline"
+        style="width: 170px !important; height: 50px !important"
+      >
+        <mat-select
+          placeholder="Delivery Location"
+          formControlName="shippingLocation"
+        >
+          <mat-option>
+            <ngx-mat-select-search
+              (keyup)="applyLocationFilter($event.target.value)"
+              [noEntriesFoundLabel]="'No matching records found'"
+              placeholderLabel="Search location..."
+              ngDefaultControl
+            ></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let item of newLocationArr" [value]="item.code">{{
+            item.code
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        style="width: 150px; height: 50px"
+        (click)="addShippingLocationToSelectedLines()"
+      >
+        Apply to Lines
+      </button>
+    </div>
+  </form>
+  <div style="height: 100%">
+    <ag-grid-angular
+      #agGrid
+      style="height: 100%"
+      class="ag-theme-balham"
+      rowSelection="single"
+      animateRows="true"
+      suppressRowClickSelection="false"
+      (cellValueChanged)="onCellValueChanged($event)"
+      [rowHeight]="40"
+      [sideBar]="true"
+      [columnDefs]="columnsDefs"
+      [rowData]="rowData"
+      [rowSelection]="'multiple'"
+      [defaultColDef]="defaultColDef"
+      [frameworkComponents]="frameworkComponents"
+      (gridReady)="onGridReady($event)"
+    >
+    </ag-grid-angular>
+  </div>
+</div>
+
+  

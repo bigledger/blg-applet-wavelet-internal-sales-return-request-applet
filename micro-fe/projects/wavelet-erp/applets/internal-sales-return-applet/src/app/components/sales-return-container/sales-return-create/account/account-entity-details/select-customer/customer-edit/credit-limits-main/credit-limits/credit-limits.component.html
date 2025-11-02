@@ -1,0 +1,130 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div> <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+        [disabled]="deactivateReturn$ | async" (click)="onReturn()"> <img
+          [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px"> </button> <span> Credit Limit Create </span> </div>
+    <button mat-raised-button color="primary" type="button" (click)="onSave()" [disabled]="!form.valid"> Add </button>
+  </div>
+</mat-card-title>
+
+<div fxLayout="column">
+  <form [formGroup]="form">
+    <mat-tab-group [dynamicHeight]="true">
+      <mat-tab label="Main">
+        <div fxLayout="row wrap" fxFlexAlign="center">
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Customer Name</mat-label> <input maxlength="100" matInput formControlName="custname"
+                style="color: grey" readonly>
+              <mat-hint *ngIf="form.controls['custname'].value?.length === 100" class="text-danger font-14">
+                Customer Name
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Customer Code</mat-label> <input maxlength="100" matInput formControlName="custcode"
+                style="color: grey" readonly>
+              <mat-hint *ngIf="form.controls['custcode'].value?.length === 100" class="text-danger font-14">
+                Customer Code
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-divider> </mat-divider>
+      </mat-tab>
+    </mat-tab-group>
+  </form>
+  <div fxLayout="row wrap" fxFlexAlign="center" style="margin: 20px 10px">
+    <mat-radio-group [(ngModel)]="selection">
+      <mat-radio-button [value]="2" style="margin-right: 20px;">
+        Existing Credit Limit</mat-radio-button>
+      <mat-radio-button [value]="1">New Credit Limit</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+
+  <!-- form 1 New Form-->
+  <form [formGroup]="form1" style="width: 100%">
+    <div *ngIf="selection==1" fxLayout="row wrap" fxFlexAlign="center">
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Credit Limit Code </mat-label>
+          <input matInput placeholder="Credit Limit Code" formControlName="code" (blur)="onCheck()" required
+            maxlength="255" required maxlength="255" oninput="this.value = this.value.toUpperCase()">
+          <mat-hint *ngIf="form1.controls['code'].hasError('required') && form1.controls['code'].touched"
+            class="text-danger font-14">Please insert credit limit code</mat-hint>
+          <mat-error *ngIf="form1.controls['code'].hasError('exist')" class="text-danger font-14">{{message}}
+          </mat-error>
+          <!-- <mat-hint *ngIf="haveError" style="color: red;">{{message}}</mat-hint> -->
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Credit Limit Name </mat-label>
+          <input matInput placeholder="Credit Limit Name" formControlName="name" required maxlength="255">
+          <mat-hint *ngIf="form1.controls['name'].hasError('required') && form1.controls['name'].touched"
+            class="text-danger font-14">Please insert credit limit name</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Status </mat-label>
+          <mat-select placeholder="Status" formControlName="status" required>
+            <mat-option *ngFor="let s of newStatus" [value]="s.value"> {{s.viewValue}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label> Currency </mat-label>
+          <mat-select placeholder="Currency" formControlName="currency" required>
+            <mat-option>
+              <ngx-mat-select-search (keyup)="applyCurrencyFilter($event.target.value)" [placeholderLabel]="'Currency'"
+                [noEntriesFoundLabel]="'No matching records found'" formControlName="currentCurrency" ngDefaultControl>
+              </ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let item of newCurrency" [value]="item.display_short">
+              {{item.display_short}} - {{ item.display_main }} </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="form1.controls['currency'].hasError('required') && form1.controls['currency'].touched"
+            class="text-danger font-14">Please choose currency </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label> Credit Limit Amount </mat-label> <input matInput placeholder="xx.xx " type="number"
+            [formControl]="form1.controls['amount']" matInput class="right" ng-pattern="/^[0-9]{1,2})?$/" step="0.01" />
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+
+  <!-- form 2  Existing Limit -->
+  <form [formGroup]="form2" style="width: 100%">
+    <div *ngIf="selection==2" fxLayout="row wrap" fxFlexAlign="center">
+      <div class="p-10" fxFlex.gt-sm="50" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Credit Limit</mat-label>
+          <mat-select placeholder="Credit Limit" required formControlName="limit">
+            <mat-option>
+              <ngx-mat-select-search (keyup)="applyCreditLimitFilter($event.target.value)"
+                [placeholderLabel]="'Credit Limit'" [noEntriesFoundLabel]="'No matching records found'"
+                formControlName="currentLimitName" ngDefaultControl>
+              </ngx-mat-select-search>
+            </mat-option>
+
+            <mat-option *ngFor="let item of newCreditLimitArr" [value]="item">{{item.name}} - {{item.code}}</mat-option>
+          </mat-select>
+          <mat-hint *ngIf="form2.controls['limit'].hasError('required') && form2.controls['limit'].touched"
+            class="text-danger font-14">You must insert Credit Limit</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>

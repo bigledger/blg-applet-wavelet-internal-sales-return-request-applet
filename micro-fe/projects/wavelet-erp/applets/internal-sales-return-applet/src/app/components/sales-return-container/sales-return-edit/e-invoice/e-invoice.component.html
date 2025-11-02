@@ -1,0 +1,59 @@
+<div class="view-col-table no-tab" fxLayout="column" *ngIf="!showPanels()">
+  <mat-tab-group>
+    <mat-tab label="Submission">
+      <app-submission></app-submission>
+    </mat-tab>
+
+    <mat-tab label="Progress" *ngIf="eInvoiceEnabled && postingStatus=='FINAL'">
+      <ng-template matTabContent>
+        <app-progress></app-progress>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Notification">
+      <ng-template matTabContent>
+        <app-notification-queue-listing></app-notification-queue-listing>
+      </ng-template>
+    </mat-tab>
+    
+    <mat-tab label="Cancellation" *ngIf="eInvoiceEnabled && postingStatus=='FINAL'">
+      <app-cancellation></app-cancellation>
+    </mat-tab>
+  </mat-tab-group>
+
+</div>
+
+<mat-accordion *ngIf="showPanels()">
+  <mat-expansion-panel *ngFor="let panel of getFilteredPanels(); let i = index"
+                           [expanded]="i === expandedPanelIndex"
+                           (opened)="onPanelOpened(i)"
+                           [ngClass]="{'expanded-subpanel': expandedPanelIndex === i}">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ panel.title }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <!-- Submission Panel Content -->
+    <ng-container *ngIf="panel.content === 'submission'">
+      <app-submission [isInExpansionPanel]="true"></app-submission>
+    </ng-container>
+
+        <!-- Progress Panel Content -->
+    <ng-container *ngIf="panel.content === 'progress'">
+      <ng-template matExpansionPanelContent>
+        <app-progress></app-progress>
+      </ng-template>
+    </ng-container>
+
+        <!-- Communication Panel Content -->
+    <ng-container *ngIf="panel.content === 'communication'">
+      <app-communication></app-communication>
+    </ng-container>
+
+        <!-- Cancellation Panel Content -->
+    <ng-container *ngIf="panel.content === 'cancellation'">
+      <app-cancellation></app-cancellation>
+    </ng-container>
+  </mat-expansion-panel>
+</mat-accordion>

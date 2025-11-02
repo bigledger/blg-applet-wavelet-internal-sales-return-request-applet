@@ -1,0 +1,43 @@
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div style="margin-top: 20px">
+      Generic Listing
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div fxFlex="3 0 0">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+          <button ngClass.xs="blg-button-mobile" #navBtn class="blg-button-icon" mat-button matTooltip="Create" type="button"
+            [disabled]="deactivateAdd$ | async"
+            (click)="onNext()">
+            <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="assets/images/add.png" alt="add" width="40px" height="40px">
+          </button>
+          <app-advanced-search class="mobile" fxFlex fxFlex.lt-sm="100" [id]="'generic-doc'" [advSearchModel]="searchModel"></app-advanced-search>
+          <app-column-toggle [currentToggle]="toggleColumn$ | async" (toggleColumn)="onToggle($event)" fxHide.lt-sm></app-column-toggle>
+        </div>
+      </div>
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+        <app-grid-toggle class="blg-button-icon"></app-grid-toggle>
+      </div>
+    </div>
+  </mat-card-title>
+  <div style="height: 80%;">
+    <ag-grid-angular #agGrid
+    style="height: 100%;"
+    class="ag-theme-balham"
+    [getRowClass]="pagination.getRowClass"
+    [columnDefs]="columnsDefs"
+    [rowData]="[]"
+    [paginationPageSize]="pagination.rowPerPage"
+    [cacheBlockSize]="pagination.rowPerPage"
+    [pagination]="true"
+    [animateRows]="true"
+    [defaultColDef]="defaultColDef"
+    [suppressRowClickSelection]="true"
+    [sideBar]="true"
+    [rowModelType]="'serverSide'"
+    (rowClicked)="onRowClicked($event.data)"
+    (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

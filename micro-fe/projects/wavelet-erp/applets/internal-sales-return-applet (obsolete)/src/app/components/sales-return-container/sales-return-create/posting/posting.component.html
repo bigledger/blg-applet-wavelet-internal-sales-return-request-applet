@@ -1,0 +1,26 @@
+<form [formGroup]="form">
+    <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+      <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Journal Posting Status</mat-label>
+          <input matInput placeholder="Journal Posting Status" [formControl]="form.controls['journalStatus']" type="text" (change)="updatePosting.emit(form.value)">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Inventory Posting Status</mat-label>
+          <input matInput placeholder="Inventory Posting Status" [formControl]="form.controls['inventoryStatus']" type="text" (change)="updatePosting.emit(form.value)">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Membership Points Posting Status</mat-label>
+            <input matInput placeholder="Membership Points Posting Status" [formControl]="form.controls['membershipStatus']" type="text" (change)="updatePosting.emit(form.value)">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Cashbook Posting Status</mat-label>
+        <input matInput placeholder="Cashbook Posting Status" [formControl]="form.controls['cashbookStatus']" type="text" (change)="updatePosting.emit(form.value)">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Tax Posting Status</mat-label>
+        <input matInput placeholder="Tax Posting Status" [formControl]="form.controls['taxStatus']" type="text" (change)="updatePosting.emit(form.value)">
+        </mat-form-field>
+      </div>
+    </div>
+  </form>

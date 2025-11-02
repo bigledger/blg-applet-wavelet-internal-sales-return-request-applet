@@ -1,0 +1,260 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+      <div>
+          <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+              [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+              <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null"
+                  src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+          </button>
+          <span>
+              Select Item
+          </span>
+      </div>
+  </div>
+</mat-card-title>
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async" *ngIf="!showPanels()">
+
+  <mat-tab label="Search Item">
+      <app-line-search-item-listing [localState]="localState$ | async" (addLineItem)="goToAddLineItem($event)">
+      </app-line-search-item-listing>
+  </mat-tab>
+
+  <!-- <mat-tab label="KO By Sales Order Item">
+      <app-line-container-ko-by
+        [localState]="localState$ | async"
+        [hdr]="draft$ | async"
+        [searchModel]="salesLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalSalesOrderService"
+        [serverDocTypeDoc2]="'INTERNAL_SALES_ORDER'"
+        [itemType]="'sales'"
+      ></app-line-container-ko-by>
+    </mat-tab> -->
+    <mat-tab label="KO For Sales Order" *ngIf="koSO">
+      <app-line-container-ko-for-queue
+        [localState]="localState$ | async"
+        [hdr]="( mode$ | async) ? (hdrdraft$ | async) : (draft$ | async)"
+        [searchModel]="salesLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalSalesOrderService"
+        [serverDocTypeDoc1]="'INTERNAL_SALES_ORDER'"
+        [serverDocTypeDoc2]="'INTERNAL_SALES_RETURN'"
+        [itemType]="'salesOrder'"
+        [draftStore]="draftStore"
+        [LinkActions]="LinkActions"
+        [LinkSelectors]="LinkSelectors"
+        [PNSActions]="( mode$ | async) ? PNSEditActions : PNSActions"
+        [PNSSelectors]="( mode$ | async) ? PNSEditSelectors : PNSSelectors"
+        [AppletConstants]="AppletConstants"
+        (addLineItem)="onAdd($event)"
+        (onReturn)="onReturn()">
+      </app-line-container-ko-for-queue>
+    </mat-tab>
+
+    <!-- <mat-tab label="KO By Jobsheet Item">
+      <app-line-container-ko-by
+        [localState]="localState$ | async"
+        [hdr]="draft$ | async"
+        [searchModel]="jobsheetLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalJobsheetService"
+        [serverDocTypeDoc2]="'INTERNAL_JOBSHEET'"
+        [itemType]="'jobsheet'"
+      ></app-line-container-ko-by>
+    </mat-tab> -->
+    <mat-tab label="KO For Jobsheet" *ngIf="koJS">
+      <app-line-container-ko-for-queue
+        [localState]="localState$ | async"
+        [hdr]="( mode$ | async) ? (hdrdraft$ | async) : (draft$ | async)"
+        [searchModel]="jobsheetLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalJobsheetService"
+        [serverDocTypeDoc1]="'INTERNAL_JOBSHEET'"
+        [serverDocTypeDoc2]="'INTERNAL_SALES_RETURN'"
+        [itemType]="'jobsheet'"
+        [draftStore]="draftStore"
+        [LinkActions]="LinkActions"
+        [LinkSelectors]="LinkSelectors"
+        [PNSActions]="( mode$ | async) ? PNSEditActions : PNSActions"
+        [PNSSelectors]="( mode$ | async) ? PNSEditSelectors : PNSSelectors"
+        [AppletConstants]="AppletConstants"
+        (addLineItem)="onAdd($event)"
+        (onReturn)="onReturn()">
+      </app-line-container-ko-for-queue>
+    </mat-tab>
+
+    <!-- <mat-tab label="KO By Delivery Order Item">
+      <app-line-container-ko-by
+        [localState]="localState$ | async"
+        [hdr]="draft$ | async"
+        [searchModel]="deliveryOrderLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalOutboundDeliveryOrderService"
+        [serverDocTypeDoc2]="'INTERNAL_OUTBOUND_DELIVERY_ORDER'"
+        [itemType]="'deliveryOrder'"
+      ></app-line-container-ko-by>
+    </mat-tab> -->
+    <mat-tab label="KO For Delivery Order" *ngIf="koDO">
+      <app-line-container-ko-for-queue
+        [localState]="localState$ | async"
+        [hdr]="( mode$ | async) ? (hdrdraft$ | async) : (draft$ | async)"
+        [searchModel]="deliveryOrderLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalOutboundDeliveryOrderService"
+        [serverDocTypeDoc1]="'INTERNAL_OUTBOUND_DELIVERY_ORDER'"
+        [serverDocTypeDoc2]="'INTERNAL_SALES_RETURN'"
+        [itemType]=""
+        [draftStore]="draftStore"
+        [LinkActions]="LinkActions"
+        [LinkSelectors]="LinkSelectors"
+        [PNSActions]="( mode$ | async) ? PNSEditActions : PNSActions"
+        [PNSSelectors]="( mode$ | async) ? PNSEditSelectors : PNSSelectors"
+        [AppletConstants]="AppletConstants"
+        (addLineItem)="onAdd($event)"
+        (onReturn)="onReturn()">
+      </app-line-container-ko-for-queue>
+    </mat-tab>
+
+    <mat-tab label="KO For Sales Invoice" *ngIf="koSI">
+      <app-line-container-ko-for-queue
+        [localState]="localState$ | async"
+        [hdr]="( mode$ | async) ? (hdrdraft$ | async) : (draft$ | async)"
+        [searchModel]="salesInvoiceLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalSalesInvoiceService"
+        [serverDocTypeDoc1]="'INTERNAL_SALES_INVOICE'"
+        [serverDocTypeDoc2]="'INTERNAL_SALES_RETURN'"
+        [itemType]=""
+        [draftStore]="draftStore"
+        [LinkActions]="LinkActions"
+        [LinkSelectors]="LinkSelectors"
+        [PNSActions]="( mode$ | async) ? PNSEditActions : PNSActions"
+        [PNSSelectors]="( mode$ | async) ? PNSEditSelectors : PNSSelectors"
+        [AppletConstants]="AppletConstants"
+        (addLineItem)="onAdd($event)"
+        (onReturn)="onReturn()">
+      </app-line-container-ko-for-queue>
+    </mat-tab>
+
+    <!-- <mat-tab label="Copy Quotation Item">
+      <app-copy-quotation-item [localState]="localState$ | async" (addLineItem)="goToAddLineItem($event)"></app-copy-quotation-item>
+    </mat-tab> -->
+
+</mat-tab-group>
+
+<mat-accordion *ngIf="showPanels()" [multi]="true">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Search Item
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-template matExpansionPanelContent>
+      <app-line-search-item-listing [localState]="localState$ | async" (addLineItem)="goToAddLineItem($event)" (addSerialNumber)="saveSerialNumber($event)"></app-line-search-item-listing>
+    </ng-template>
+  </mat-expansion-panel>
+  
+  <mat-expansion-panel *ngIf="koSO">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        KO For Sales Order
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-line-container-ko-for-queue
+        [localState]="localState$ | async"
+        [hdr]="( mode$ | async) ? (hdrdraft$ | async) : (draft$ | async)"
+        [searchModel]="salesLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalSalesOrderService"
+        [serverDocTypeDoc1]="'INTERNAL_SALES_ORDER'"
+        [serverDocTypeDoc2]="'INTERNAL_SALES_RETURN'"
+        [itemType]="'salesOrder'"
+        [draftStore]="draftStore"
+        [LinkActions]="LinkActions"
+        [LinkSelectors]="LinkSelectors"
+        [PNSActions]="( mode$ | async) ? PNSEditActions : PNSActions"
+        [PNSSelectors]="( mode$ | async) ? PNSEditSelectors : PNSSelectors"
+        [AppletConstants]="AppletConstants"
+        (addLineItem)="onAdd($event)"
+        (onReturn)="onReturn()">
+      </app-line-container-ko-for-queue>
+  </mat-expansion-panel>
+  
+  <mat-expansion-panel *ngIf="koJS">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        KO For Jobsheet
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-line-container-ko-for-queue
+        [localState]="localState$ | async"
+        [hdr]="( mode$ | async) ? (hdrdraft$ | async) : (draft$ | async)"
+        [searchModel]="jobsheetLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalJobsheetService"
+        [serverDocTypeDoc1]="'INTERNAL_JOBSHEET'"
+        [serverDocTypeDoc2]="'INTERNAL_SALES_RETURN'"
+        [itemType]="'jobsheet'"
+        [draftStore]="draftStore"
+        [LinkActions]="LinkActions"
+        [LinkSelectors]="LinkSelectors"
+        [PNSActions]="( mode$ | async) ? PNSEditActions : PNSActions"
+        [PNSSelectors]="( mode$ | async) ? PNSEditSelectors : PNSSelectors"
+        [AppletConstants]="AppletConstants"
+        (addLineItem)="onAdd($event)"
+        (onReturn)="onReturn()">
+      </app-line-container-ko-for-queue>
+  </mat-expansion-panel>
+  
+  <mat-expansion-panel *ngIf="koDO">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        KO For Delivery Order
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-line-container-ko-for-queue
+        [localState]="localState$ | async"
+        [hdr]="( mode$ | async) ? (hdrdraft$ | async) : (draft$ | async)"
+        [searchModel]="deliveryOrderLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalOutboundDeliveryOrderService"
+        [serverDocTypeDoc1]="'INTERNAL_OUTBOUND_DELIVERY_ORDER'"
+        [serverDocTypeDoc2]="'INTERNAL_SALES_RETURN'"
+        [itemType]=""
+        [draftStore]="draftStore"
+        [LinkActions]="LinkActions"
+        [LinkSelectors]="LinkSelectors"
+        [PNSActions]="( mode$ | async) ? PNSEditActions : PNSActions"
+        [PNSSelectors]="( mode$ | async) ? PNSEditSelectors : PNSSelectors"
+        [AppletConstants]="AppletConstants"
+        (addLineItem)="onAdd($event)"
+        (onReturn)="onReturn()">
+      </app-line-container-ko-for-queue>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="koSI">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        KO For Sales Invoice
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-line-container-ko-for-queue
+        [localState]="localState$ | async"
+        [hdr]="( mode$ | async) ? (hdrdraft$ | async) : (draft$ | async)"
+        [searchModel]="salesInvoiceLineItemSearchModel"
+        [advSearchId]=""
+        [service]="InternalSalesInvoiceService"
+        [serverDocTypeDoc1]="'INTERNAL_SALES_INVOICE'"
+        [serverDocTypeDoc2]="'INTERNAL_SALES_RETURN'"
+        [itemType]=""
+        [draftStore]="draftStore"
+        [LinkActions]="LinkActions"
+        [LinkSelectors]="LinkSelectors"
+        [PNSActions]="( mode$ | async) ? PNSEditActions : PNSActions"
+        [PNSSelectors]="( mode$ | async) ? PNSEditSelectors : PNSSelectors"
+        [AppletConstants]="AppletConstants"
+        (addLineItem)="onAdd($event)"
+        (onReturn)="onReturn()">
+      </app-line-container-ko-for-queue>
+  </mat-expansion-panel>
+</mat-accordion>

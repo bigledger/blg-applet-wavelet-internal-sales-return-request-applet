@@ -1,0 +1,263 @@
+<form [formGroup]="form">
+  <div view-col-table no-tab fxLayout="column">
+    <mat-card-title class="column-title" style="padding: 5px">
+      <div fxLayout="row" fxLayoutAlign="space-between end">
+        <div>
+          <button
+            #navBtn
+            mat-button
+            class="blg-button-icon"
+            matTooltip="Back"
+            type="button"
+            (click)="onReturn()"
+            [disabled]="deactivateReturn$ | async"
+          >
+            <img
+              [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null"
+              src="../../../../assets/images/backbutton.png"
+              alt="add"
+              width="40px"
+              height="40px"
+            />
+          </button>
+          <span> File Details </span>
+        </div>
+      </div>
+    </mat-card-title>
+
+    <mat-tab-group
+      [ngStyle]="
+        (toggleColumn$ | async)
+          ? { 'max-width': '95vw' }
+          : { 'max-width': '43vw' }
+      "
+      [dynamicHeight]="true"
+      [selectedIndex]="selectedIndex$ | async"
+      *ngIf="!showPanels()"
+    >
+      <mat-tab label="Details">
+        <div
+          fxLayout="row wrap"
+          fxFlexAlign="center"
+          style="height: 80%; margin-top: 20px; padding: 5px"
+        >
+          <div fxLayout="row wrap" fxFlexAlign="center">
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>File Name</mat-label>
+                <input
+                  matInput
+                  formControlName="file_name"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>File Size</mat-label>
+                <input
+                  matInput
+                  formControlName="file_size"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Import Format</mat-label>
+                <input
+                  matInput
+                  formControlName="import_format"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Process Status</mat-label>
+                <input
+                  matInput
+                  formControlName="process_status"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Error Message</mat-label>
+                <input
+                  matInput
+                  formControlName="error_message"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+
+            <div
+              class="p-10"
+              fxFlex.gt-sm="100"
+              fxFlex.gt-xs="100"
+              fxFlex="100"
+            >
+              <mat-divider
+                class="mat-divider"
+                style="height: 5px; border-top-width: 3px"
+              ></mat-divider>
+              <br />
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Created By</mat-label>
+                <input
+                  matInput
+                  placeholder="Created By"
+                  readonly
+                  formControlName="createdBy"
+                  style="color: grey"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Creation Date</mat-label>
+                <input
+                  matInput
+                  placeholder="Creation Date"
+                  readonly
+                  formControlName="created_date"
+                  style="color: grey"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Checking"><app-helper-checking-listing></app-helper-checking-listing></mat-tab>
+    </mat-tab-group>
+
+    <mat-accordion *ngIf="showPanels()" [multi]="true">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+              Details
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div
+          fxLayout="row wrap"
+          fxFlexAlign="center"
+          style="height: 80%; margin-top: 20px; padding: 5px"
+        >
+          <div fxLayout="row wrap" fxFlexAlign="center">
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>File Name</mat-label>
+                <input
+                  matInput
+                  formControlName="file_name"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>File Size</mat-label>
+                <input
+                  matInput
+                  formControlName="file_size"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Import Format</mat-label>
+                <input
+                  matInput
+                  formControlName="import_format"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Process Status</mat-label>
+                <input
+                  matInput
+                  formControlName="process_status"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Error Message</mat-label>
+                <input
+                  matInput
+                  formControlName="error_message"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+
+            <div
+              class="p-10"
+              fxFlex.gt-sm="100"
+              fxFlex.gt-xs="100"
+              fxFlex="100"
+            >
+              <mat-divider
+                class="mat-divider"
+                style="height: 5px; border-top-width: 3px"
+              ></mat-divider>
+              <br />
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Created By</mat-label>
+                <input
+                  matInput
+                  placeholder="Created By"
+                  readonly
+                  formControlName="createdBy"
+                  style="color: grey"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Creation Date</mat-label>
+                <input
+                  matInput
+                  placeholder="Creation Date"
+                  readonly
+                  formControlName="created_date"
+                  style="color: grey"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+            Checking
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-helper-checking-listing></app-helper-checking-listing>
+    </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</form>

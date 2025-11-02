@@ -1,0 +1,35 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+      [disabled]="deactivateReturn$ | async"
+      (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+      </button>
+      <span>
+        Add Line Item
+      </span>
+    </div>
+    <button mat-raised-button color="primary" type="button" [disabled]="disableAdd()" (click)="onAdd()">ADD</button>
+  </div>
+</mat-card-title>
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async">
+  <mat-tab label="Item Details">
+    <app-add-line-item-item-details [childSelectedIndex$]="itemDetailsSelectedIndex$" [item$]="item$" [tax$]="tax$" [dept$]="dept$" [line$]="line$"></app-add-line-item-item-details>
+  </mat-tab>
+  <mat-tab label="Serial Number">
+    <app-add-line-item-serial-number [childSelectedIndex$]="serialNumberSelectedIndex$"></app-add-line-item-serial-number>
+  </mat-tab>
+  <mat-tab label="Stock Availability">
+    <app-internal-sales-proforma-invoice-add-line-item-optional [item]="item$ | async" (bin)="onBin($event)"></app-internal-sales-proforma-invoice-add-line-item-optional>
+  </mat-tab>
+  <mat-tab label="Costing Details">
+    <app-add-line-item-costing-details></app-add-line-item-costing-details>
+  </mat-tab>
+  <mat-tab label="Pricing Details">
+    <app-add-line-item-pricing-details></app-add-line-item-pricing-details>
+  </mat-tab>
+  <mat-tab label="Issue Link">
+    <app-add-line-item-issue-link (issue)="onIssueLink($event)"></app-add-line-item-issue-link>
+  </mat-tab>
+</mat-tab-group>

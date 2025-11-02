@@ -1,0 +1,39 @@
+<div class="view-col-table no-tab" fxLayout="column">
+    <mat-card-title class="column-title">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+            <div fxFlex="3 0 0">
+              <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+                <button ngClass.xs="blg-button-mobile" #navBtn class="blg-button-icon" mat-button matTooltip="Create" type="button"
+                  (click)="onAdd()">
+                  <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="assets/images/add.png" alt="add" width="40px" height="40px">
+                </button>
+              
+              </div>
+            </div>
+            <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+              <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+            </div>
+          </div>
+    </mat-card-title>
+    <div style="height: 100%;">
+      <ag-grid-angular #agGrid
+    style="height: 100%;"
+    class="ag-theme-balham"
+    rowSelection="single"
+    rowModelType="serverSide"
+    serverSideStoreType="partial"
+    [getRowClass]="pagination.getRowClass"
+    [columnDefs]="columnsDefs"
+    [rowData]="[]"
+    [paginationPageSize]="pagination.rowPerPage"
+    [cacheBlockSize]="pagination.rowPerPage"
+    [pagination]="true"
+    [animateRows]="true"
+    [suppressRowClickSelection]="false"
+    [sideBar]="true"
+    [rowSelection]="'single'" 
+    (gridReady)="onGridReady($event)"
+    (rowClicked)="onRowClicked($event.data)">
+    </ag-grid-angular>
+    </div>
+  </div>

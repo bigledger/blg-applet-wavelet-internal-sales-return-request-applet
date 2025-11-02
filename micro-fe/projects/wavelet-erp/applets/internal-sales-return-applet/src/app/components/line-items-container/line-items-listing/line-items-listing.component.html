@@ -1,0 +1,29 @@
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div style="margin-top: 20px">
+      {{ compName }}
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div fxFlex="3 0 0">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+          <app-advanced-search-general class="mobile" fxFlex fxFlex.lt-sm="100" [id]="compId" [advSearchModel]="searchModel" [readPermissionDefintion]="readPermissionDefintion" (search)="onSearch($event)"></app-advanced-search-general>
+          <app-column-toggle [currentToggle]="toggleColumn$ | async" (toggleColumn)="onToggle($event)" fxHide.lt-sm></app-column-toggle>
+       </div>
+      </div>
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+      </div>
+    </div>
+  </mat-card-title>
+  <div style="height: 100%;">
+    <app-ag-grid-custom
+      [id]="compId+'Listing'"
+      [title]="compName"
+      [columnDefs]="columnsDefs"
+      [gridOptions]="gridOptions"
+      [getRowStyle]="getRowStyle"
+      (onMorePageClick)="onMorePage()"
+      (onAllPageClick)="onAllPage()"
+      (gridReady)="onGridReady($event)"
+    ></app-ag-grid-custom>
+  </div>
+</div>

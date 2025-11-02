@@ -1,0 +1,215 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { bl_fi_generic_doc_line_RowClass, GenericDocHdrService, BranchService, GenericDocLineService, DocumentShortCodesClass } from 'blg-akaun-ts-lib';
+import moment from 'moment';
+import { AppConfig } from 'projects/shared-utilities/visa';
+import { Observable, combineLatest, of, iif, forkJoin } from 'rxjs';
+import { mergeMap, map, exhaustMap, catchError } from 'rxjs/operators';
+import { SubSink } from 'subsink2';
+import { LinkSelectors } from '../../../../../state-controllers/draft-controller/store/selectors';
+import { DraftStates } from '../../../../../state-controllers/draft-controller/store/states';
+
+@Component({
+  selector: 'app-from',
+  templateUrl: './from.component.html',
+  styleUrls: ['./from.component.css']
+})
+export class FromComponent implements OnInit {
+
+  protected subs = new SubSink();
+
+  @Input() pns$: Observable<bl_fi_generic_doc_line_RowClass[]>;
+  readonly links$ = this.draftStore.select(LinkSelectors.selectAll);
+
+  lineItem: bl_fi_generic_doc_line_RowClass;
+  gridApi;
+  relatedLinks = [];
+  apiVisa = AppConfig.apiVisa;
+  rowData = [];
+
+  defaultColDef = {
+    filter: "agTextColumnFilter",
+    floatingFilterComponentParams: { suppressFilterButton: true },
+    minWidth: 200,
+    flex: 2,
+    sortable: true,
+    resizable: true,
+    suppressCsvExport: true,
+  };
+
+  columnsDefs = [
+    {
+      headerName: "Doc Short Code",
+      field: "bl_fi_generic_doc_hdr.server_doc_type",
+      minWidth: 100,
+      cellStyle: () => ({ "text-align": "left" }),
+      valueFormatter: (params) =>
+        params.value
+          ? DocumentShortCodesClass.serverDocTypeToShortCodeMapper(params.value)
+          : "",
+    },
+    {
+      headerName: "Doc No",
+      field: "bl_fi_generic_doc_hdr.server_doc_1",
+      minWidth: 100,
+      cellStyle: () => ({ "text-align": "left" }),
+    },
+    {
+      headerName: "Branch",
+      field: "branchName",
+      cellStyle: () => ({ "text-align": "left" }),
+    },
+    {
+      headerName: "Server Doc Type",
+      field: "bl_fi_generic_doc_hdr.server_doc_type",
+      cellStyle: () => ({ "text-align": "left" }),
+    },
+    {
+      headerName: "Item Code",
+      field: "itemCode",
+      cellStyle: () => ({ "text-align": "left" }),
+    },
+    {
+      headerName: "Quantity",
+      field: "qty",
+      cellStyle: () => ({ "text-align": "left" }),
+    },
+    {
+      headerName: "Status",
+      field: "bl_fi_generic_doc_hdr.status",
+      cellStyle: () => ({ "text-align": "left" }),
+    },
+    {
+      headerName: "Date",
+      field: "bl_fi_generic_doc_hdr.created_date",
+      valueFormatter: (params) => moment(params.value).format("YYYY-MM-DD"),
+    },
+  ];
+
+  constructor(
+    private readonly draftStore: Store<DraftStates>,
+    private genDocHdrService: GenericDocHdrService,
+    private brnchService: BranchService,
+    private genDocLineService: GenericDocLineService
+  ) {}
+
+  ngOnInit() {
+    this.pns$.subscribe(pns=>{
+      console.log("pns",pns)
+    })
+
+    this.links$.subscribe(link=>{
+      console.log("link",link)
+    })
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridApi.closeToolPanel();
+    this.setGridData();
+  }
+
+  setGridData() {
+    const datasource = {
+      getRows: (grid) => {
+        this.subs.sink = combineLatest([this.pns$, this.links$])
+          .pipe(
+            mergeMap(([a, b]) => {
+              const source: Observable<any>[] = [];
+              let match = false;
+              a.forEach((line) => {
+                b.forEach((link) => {
+                  if (link.guid_doc_2_line === line.guid) {
+                    match = true;
+                    source.push(
+                      this.genDocHdrService
+                        .getByGuid(
+                          link.guid_doc_1_hdr?.toString(),
+                          this.apiVisa
+                        )
+                        .pipe(
+                          map((b) => b.data),
+                          exhaustMap((c) =>
+                            this.brnchService
+                              .getByGuid(
+                                c.bl_fi_generic_doc_hdr.guid_branch?.toString(),
+                                this.apiVisa
+                              )
+                              .pipe(
+                                catchError((err) => of(err)),
+                                map((c_inner) =>
+                                  Object.assign(
+                                    {
+                                      branchName:
+                                        c_inner.data?.bl_fi_mst_branch?.name,
+                                    },
+                                    c
+                                  )
+                                )
+                              )
+                          ),
+                          exhaustMap((c) =>
+                            this.genDocLineService
+                              .getByGuid(
+                                link.guid_doc_2_line?.toString(),
+                                this.apiVisa
+                              )
+                              .pipe(
+                                catchError((err) => of(err)),
+                                map((c_inner) =>
+                                  Object.assign(
+                                    {
+                                      itemCode:
+                                        c_inner.data?.bl_fi_generic_doc_line
+                                          ?.item_code,
+                                      qty: link.quantity_contra,
+                                    },
+                                    c
+                                  )
+                                )
+                              )
+                          )
+                        )
+                    );
+                  }
+                });
+              });
+              return iif(
+                () => match,
+                forkJoin(source).pipe(
+                  map((b_inner) => {
+                    b = b_inner;
+                    return b;
+                  })
+                ),
+                of([])
+              );
+            })
+          )
+          .subscribe(
+            (resolved) => {
+              console.log("related", resolved);
+              grid.success({
+                rowData: resolved,
+                rowCount: resolved.length,
+              });
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
+      },
+    };
+    this.gridApi.setServerSideDatasource(datasource);
+  }
+
+  onRowClicked(e) {
+    // this.lineItem.emit(e);
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
+  }
+
+
+}

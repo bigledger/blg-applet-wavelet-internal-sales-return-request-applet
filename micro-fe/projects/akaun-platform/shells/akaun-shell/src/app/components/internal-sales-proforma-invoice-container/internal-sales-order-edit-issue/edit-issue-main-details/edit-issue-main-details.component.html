@@ -1,0 +1,27 @@
+<div>
+    <form [formGroup]="form" #formDirectives="ngForm">
+      <div *ngFor="let x of leftColControls; let i = index">
+        <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+          <mat-label>{{x.label}}</mat-label>
+          <input matInput readonly [formControl]="form.controls[x.formControl]" autocomplete="off">
+          <mat-hint>{{x.hint}}</mat-hint>
+        </mat-form-field>
+        <ng-template #input>
+          <ng-container [ngSwitch]="x.type">
+            <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [formControl]="form.controls[x.formControl]" [formControl]="form.controls[x.formControl]" autocomplete="off" type="text">
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'select'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <mat-select [formControl]="form.controls[x.formControl]" >
+                <mat-option [value]="'NULL'">NULL</mat-option>
+              </mat-select>
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+            </mat-form-field>
+          </ng-container>
+        </ng-template>
+      </div>
+    </form>
+  </div>

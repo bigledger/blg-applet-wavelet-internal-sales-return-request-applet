@@ -1,0 +1,100 @@
+<mat-form-field #trigger="cdkOverlayOrigin" cdkOverlayOrigin appearance="outline" class="search-box">
+  <mat-label>Search...</mat-label>
+  <mat-icon matPrefix>search</mat-icon>
+  <input #basic matInput type="text" [(ngModel)]="basicSearchQuery"
+    (keyup.enter)="basicSearch(basic.value)" />
+  <div role="group" fxLayout="row wrap" matSuffix>
+    <div matSuffix>
+      <button class="blg-small-button-icon" mat-icon-button (click)="searchToggle()">
+        <mat-icon>filter_list</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-form-field>
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger" [cdkConnectedOverlayOpen]="isAdvanced">
+  <div [id]="id" class="advanced-search-container">
+    <form [formGroup]="advForm" (ngSubmit)="advancedSearch()">
+      <div class="advanced-search-form" fxLayout="column" fxFlexAlign="space-between center">
+        <ng-container *ngFor="let x of inputArray">
+          <div [ngSwitch]="x[1]">
+
+            <mat-form-field *ngSwitchCase="'string'" appearance="outline" type="text">
+              <mat-label>{{advSearchModel.label[x[0]]}}</mat-label>
+              <input matInput [formControl]="advForm.controls[x[0]]" />
+            </mat-form-field>
+
+            <mat-form-field *ngSwitchCase="'number'" appearance="outline">
+              <mat-label>{{advSearchModel.label[x[0]]}}</mat-label>
+              <input matInput [formControl]="advForm.controls[x[0]]" type="number" />
+            </mat-form-field>
+
+<!--            <div *ngSwitchCase="'select_company'" appearance="outline">-->
+<!--              <blg-select-company-drop-down [apiVisa]="apiVisa" [(company)]="advForm.controls[x[0]]"></blg-select-company-drop-down>-->
+<!--            </div>-->
+
+            <mat-form-field *ngSwitchCase="'select'" appearance="outline" type="text">
+              <mat-label>{{advSearchModel.label[x[0]]}}</mat-label>
+              <mat-select [placeholder]="advSearchModel.label[x[0]]" [formControl]="advForm.controls[x[0]]">
+                <mat-option>
+                  <ngx-mat-select-search [id]="x[0]" (keyup)="optionSearchFilter($event)"
+                    [placeholderLabel]="advSearchModel.label[x[0]]" [noEntriesFoundLabel]="'No matching records found'"
+                    [(ngModel)]='filter' [ngModelOptions]="{standalone: true}">
+                  </ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let item of optionArray[x[0]]" [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngSwitchCase="'selectEntity'" appearance="outline" type="text">
+              <mat-label>{{advSearchModel.label[x[0]]}}</mat-label>
+              <mat-select [placeholder]="advSearchModel.label[x[0]]" [formControl]="advForm.controls[x[0]]" multiple>
+                <mat-option *ngFor="let item of optionArray[x[0]]" [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div *ngSwitchCase="'date'" fxLayout="row wrap" fxLayoutGap="10%">
+              <mat-form-field fxFlex="45" appearance="outline">
+                <mat-label>{{advSearchModel.label[x[0]]}} From</mat-label>
+                <input matInput [matDatepicker]="start_modified_range"
+                  [formControl]="advForm.controls[x[0]].controls.from" readonly (click)="start_modified_range.open()" />
+                <mat-datepicker-toggle matSuffix [for]="start_modified_range"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #start_modified_range></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field fxFlex="45" appearance="outline">
+                <mat-label>{{advSearchModel.label[x[0]]}} To</mat-label>
+                <input matInput [matDatepicker]="end_modified_range" [formControl]="advForm.controls[x[0]].controls.to"
+                  readonly (click)="end_modified_range.open()" />
+                <mat-datepicker-toggle matSuffix [for]="end_modified_range"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #end_modified_range></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div *ngSwitchCase="'numberRange'" fxLayout="row wrap" fxLayoutGap="10%">
+              <mat-form-field fxFlex="45" appearance="outline">
+                <mat-label>{{advSearchModel.label[x[0]]}} Start Range</mat-label>
+                <input matInput [formControl]="advForm.controls[x[0]].controls.from"/>
+              </mat-form-field>
+              <mat-form-field fxFlex="45" appearance="outline">
+                <mat-label>{{advSearchModel.label[x[0]]}} End Range</mat-label>
+                <input matInput [formControl]="advForm.controls[x[0]].controls.to"/>
+              </mat-form-field>
+            </div>
+
+          </div>
+        </ng-container>
+      </div>
+      <div style="padding-top: 15px;" fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="5px">
+        <button color="basic" mat-raised-button type="button" (click)="reset()">
+          RESET
+        </button>
+        <button color="primary" mat-raised-button type="submit">
+          SEARCH
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

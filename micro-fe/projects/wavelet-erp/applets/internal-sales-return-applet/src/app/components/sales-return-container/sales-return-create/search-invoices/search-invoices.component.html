@@ -1,0 +1,63 @@
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" *ngIf="!showPanels()" [selectedIndex]="selectedIndex">
+  <mat-tab label="Search By Customer">
+    <ng-template matTabContent>
+      <app-search-by-customer></app-search-by-customer>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Search By Invoice">
+    <ng-template matTabContent>
+      <app-search-by-invoice [docType]="'internal-sales-invoices'"></app-search-by-invoice>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Search By Cashbill">
+    <ng-template matTabContent>
+      <app-search-by-invoice [docType]="'internal-sales-cashbills'"></app-search-by-invoice>
+    </ng-template>
+  </mat-tab>
+  <!-- please dont add back this tab -->
+<!--   <mat-tab label="Search By Serial Number">
+    <ng-template matTabContent>
+      <app-search-by-serial-number></app-search-by-serial-number>
+    </ng-template>
+  </mat-tab> -->
+</mat-tab-group>
+
+<mat-accordion *ngIf="showPanels()" [multi]="true">
+  <mat-expansion-panel *ngFor="let panel of panels; let i = index"
+                           [expanded]="i === expandedPanelIndex"
+                           (opened)="onPanelOpened(i)"
+                           [ngClass]="{'expanded-subpanel': expandedPanelIndex === i}">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ panel.title }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <!-- Search by Customer Panel Content -->
+    <ng-container *ngIf="panel.content === 'search-by-customer'">
+      <ng-template matExpansionPanelContent>
+        <app-search-by-customer></app-search-by-customer>
+      </ng-template>
+    </ng-container>
+
+    <!-- Search by Invoice Panel Content -->
+    <ng-container *ngIf="panel.content === 'search-by-invoice'">
+      <ng-template matExpansionPanelContent>
+        <app-search-by-invoice [docType]="'internal-sales-invoices'"></app-search-by-invoice>
+      </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="panel.content === 'search-by-cashbill'">
+      <ng-template matExpansionPanelContent>
+        <app-search-by-invoice [docType]="'internal-sales-cashbills'"></app-search-by-invoice>
+      </ng-template>
+    </ng-container>
+  <!-- please dont add back this tab -->
+    <!-- Search by Serial Number Panel Content -->
+   <!--  <ng-container *ngIf="panel.content === 'search-by-serial-number'">
+      <ng-template matExpansionPanelContent>
+        <app-search-by-serial-number></app-search-by-serial-number>
+      </ng-template>
+    </ng-container> -->
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,57 @@
+<form [formGroup]="form">
+  <div fxLayout="column" class="view-col-forms">
+    <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+      <div class="border">
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>E-Invoice Status</mat-label>
+          <input matInput placeholder="E-Invoice Status" formControlName="einvoiceStatus" readonly>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>Cancellation Date</mat-label>
+          <input matInput placeholder="Cancellation Date" formControlName="cancellationDateTime" readonly>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="alreadyCancellationRequestMade" fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>Cancellation Request Status</mat-label>
+          <input matInput placeholder="Cancellation Request Status" formControlName="cancellationRequestStatus" readonly>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="alreadyCancellationRequestMade" fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>Cancellation Request Approval Status</mat-label>
+          <input matInput placeholder="Cancellation Request Approval Status" readonly formControlName="cancellationRequestApprovalStatus">
+        </mat-form-field>
+
+        <mat-form-field *ngIf="alreadyCancellationRequestMade" fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>Cancellation Request Processing Status</mat-label>
+          <input matInput placeholder="Cancellation Request Processing Status" readonly formControlName="cancellationRequestProcessingStatus">
+        </mat-form-field>
+
+        <mat-form-field *ngIf="alreadyCancellationRequestMade" fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>Cancellation Request Date</mat-label>
+          <input matInput placeholder="Cancellation Request Date" readonly formControlName="cancellationRequestSubmittedDatetime">
+        </mat-form-field>
+
+        <mat-form-field *ngIf="alreadyCancellationRequestMade" fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>Cancellation Reason</mat-label>
+          <input matInput placeholder="Cancellation Reason" readonly formControlName="cancellationReason">
+        </mat-form-field>
+
+        <mat-form-field *ngIf="showRemainingTimeForCancellation" fxFlex.gt-sm="50" fxFlex="100" class="p-10 uneditable" appearance="outline">
+          <mat-label>Available Hour For Cancellation</mat-label>
+          <input matInput placeholder="Available Hour For Cancellation" readonly formControlName="availableTime">
+        </mat-form-field>
+      </div>
+      <br>
+      <mat-divider class="mat-divider" style="height: 5px; border-top-width: 3px;" [inset]="true"></mat-divider>
+      <br>
+      <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+      </div>
+
+    </div>
+    
+    <div class="button">
+      <button [disabled]="!isEligibleToMakeRejectionRequest || alreadyCancellationRequestMade" mat-raised-button color="accent" type="button" (click)="requestForRejection()">Request for Rejection</button>
+    </div>
+  </div>
+</form>

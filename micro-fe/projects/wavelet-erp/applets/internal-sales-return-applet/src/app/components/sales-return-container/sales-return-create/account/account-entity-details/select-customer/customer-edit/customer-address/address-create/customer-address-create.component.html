@@ -1,0 +1,174 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div> <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+        [disabled]="deactivateReturn$ | async" (click)="onReturn()"> <img
+          [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px"> </button> <span> Address Create </span> </div> <button mat-raised-button
+      type="button" (click)="onSave()" [disabled]="!addressInfo.valid" color={{isClicked}}>{{addSuccess}}</button>
+  </div>
+</mat-card-title>
+<form [formGroup]="addressInfo" #formDirectives="ngForm">
+  <mat-tab-group [dynamicHeight]="true">
+    <mat-tab label="Main">
+      <div fxLayout="column" class="view-col-forms">
+        <div fxLayout="raw wrap" fxFlexAlign="center" class="row">
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Address Name</mat-label> <input maxlength="255" matInput formControlName="name" required>
+              <mat-hint *ngIf="addressInfo.controls['name'].value?.length === 255" class="text-danger font-14">
+                Please
+                insert
+                no
+                more than 255
+              </mat-hint>
+              <mat-hint
+                *ngIf="addressInfo.controls['name'].hasError('required') && addressInfo.controls['name'].touched"
+                class="text-danger font-14">You must insert Address Name. </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Address Type</mat-label>
+              <mat-select placeholder="Address Type" [formControl]="addressInfo.controls['addressType']" required>
+                <mat-option>
+                  <ngx-mat-select-search [placeholderLabel]="'Address Type'"
+                    [noEntriesFoundLabel]="'No matching records found'" formControlName="currentAddressType"
+                    ngDefaultControl></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let item of address" [value]="item.value">{{item.viewValue}}</mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="addressInfo.controls['addressType'].hasError('required') && addressInfo.controls['addressType'].touched"
+                class="text-danger font-14">You must insert Address Type. </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Address Line 1</mat-label> <input maxlength="255" matInput formControlName="address_line_1"
+                required>
+              <mat-hint *ngIf="addressInfo.controls['address_line_1'].value?.length === 255"
+                class="text-danger font-14">
+                Please
+                insert no
+                more than 255
+              </mat-hint>
+              <mat-hint
+                *ngIf="addressInfo.controls['address_line_1'].hasError('required') && addressInfo.controls['address_line_1'].touched"
+                class="text-danger font-14">You must insert Address Line 1. </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Address Line 2</mat-label> <input maxlength="255" matInput formControlName="address_line_2">
+              <mat-hint *ngIf="addressInfo.controls['address_line_2'].value?.length === 255"
+                class="text-danger font-14">
+                Please
+                insert no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Address Line 3</mat-label> <input maxlength="255" matInput formControlName="address_line_3">
+              <mat-hint *ngIf="addressInfo.controls['address_line_3'].value?.length === 255"
+                class="text-danger font-14">
+                Please
+                insert no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Address Line 4</mat-label> <input maxlength="255" matInput formControlName="address_line_4">
+              <mat-hint *ngIf="addressInfo.controls['address_line_4'].value?.length === 255"
+                class="text-danger font-14">
+                Please
+                insert no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Address Line 5</mat-label> <input maxlength="255" matInput formControlName="address_line_5">
+              <mat-hint *ngIf="addressInfo.controls['address_line_5'].value?.length === 255"
+                class="text-danger font-14">
+                Please
+                insert no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <mat-select placeholder="Country" [formControl]="addressInfo.controls['country']" required>
+                <mat-option>
+                  <ngx-mat-select-search (keyup)="applyCountryFilter($event.target.value)"
+                    [placeholderLabel]="'Country'" [noEntriesFoundLabel]="'No matching records found'"
+                    formControlName="currentCountry" ngDefaultControl>
+                  </ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let item of newCountryArr" [value]="item.country_name"
+                  (click)="selectCountry(item.state, item.country_code)"> {{ item.country_name }}</mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="addressInfo.controls['country'].hasError('required') && addressInfo.controls['country'].touched"
+                class="text-danger font-14">You must insert Country. </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>State</mat-label>
+              <mat-select placeholder="State" [formControl]="addressInfo.controls['state']" required (selectionChange)="onStateSelection($event.value)">
+                <mat-option>
+                  <ngx-mat-select-search (keyup)="applyStateFilter($event.target.value)" [placeholderLabel]="'State'"
+                    [noEntriesFoundLabel]="'No matching records found'" formControlName="currentState" ngDefaultControl>
+                  </ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let item of newStateArr" [value]="item.state_name"> {{ item.state_name }}
+                </mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="addressInfo.controls['country'].hasError('required') && addressInfo.controls['country'].touched"
+                class="text-danger font-14">You must insert Country first. </mat-hint> <br>
+              <mat-hint
+                *ngIf="addressInfo.controls['state'].hasError('required') && addressInfo.controls['state'].touched"
+                class="text-danger font-14">You must select State. </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label> <input maxlength="255" matInput formControlName="city" required>
+              <mat-hint *ngIf="addressInfo.controls['city'].value?.length === 255" class="text-danger font-14">Please
+                insert no
+                more than 255
+              </mat-hint>
+              <mat-hint
+                *ngIf="addressInfo.controls['city'].hasError('required') && addressInfo.controls['city'].touched"
+                class="text-danger font-14">You must insert City. </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Postcode</mat-label> <input matInput type="number" formControlName="postal_code" required>
+              <mat-hint
+                *ngIf="addressInfo.controls['postal_code'].hasError('required') && addressInfo.controls['postal_code'].touched"
+                class="text-danger font-14">You must insert Postcode. </mat-hint>
+              <mat-hint *ngIf="addressInfo.controls['postal_code'].value?.length === 255" class="text-danger font-14">
+                Please
+                insert no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <div>
+          <mat-checkbox formControlName = "default_address_status">Set as default</mat-checkbox>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</form>

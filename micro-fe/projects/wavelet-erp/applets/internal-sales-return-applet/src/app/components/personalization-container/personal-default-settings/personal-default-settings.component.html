@@ -1,0 +1,62 @@
+<div style="text-align: right; margin-top: 16px;">
+    <button mat-raised-button color="primary" (click)="onSave()">SAVE</button>
+</div>
+<mat-card>
+    <mat-accordion>
+        <mat-expansion-panel expanded="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <span class="field-header">User Default Settings</span>
+                </mat-panel-title>
+                <mat-panel-description>
+                    This will override Applet Default Settings
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ul>
+                <li>
+                    Default Branch:
+                    <blg-select-branch-drop-down-v2 [apiVisa]="apiVisa" [(branch)]="form.controls['DEFAULT_BRANCH']"
+                    (branchSelected)="onBranchSelected($event)" [branchGuids]="branchGuids"></blg-select-branch-drop-down-v2>
+                </li>
+                <li>
+                    Default Location:
+                    <blg-select-location-drop-down-v2 [branchSelectedGuid]="selectedBranch" [apiVisa]="apiVisa"
+                    [(location)]="form.controls['DEFAULT_LOCATION']"></blg-select-location-drop-down-v2>
+                </li>
+                <li>
+                    Default Delivery Branch:
+                    <blg-select-branch-drop-down-v2 [apiVisa]="apiVisa" [(branch)]="form.controls['DEFAULT_DELIVERY_BRANCH']"
+                    (branchSelected)="onDeliveryBranchSelected($event)" [branchGuids]="deliveryBranchGuids"></blg-select-branch-drop-down-v2>
+                </li>
+                <li>
+                    Default Delivery Location:
+                    <blg-select-location-drop-down-v2 [branchSelectedGuid]="selectedDeliveryBranch"
+                    [apiVisa]="apiVisa" [(location)]="form.controls['DEFAULT_DELIVERY_LOCATION']"></blg-select-location-drop-down-v2>
+                </li>
+                <li>
+                    Default Toggle Column: 
+                    <mat-form-field appearance="outline">
+                        <mat-label>Toggle Column</mat-label>
+                        <mat-select [formControl]="form.controls['DEFAULT_TOGGLE_COLUMN']">
+                            <mat-option value="SINGLE">SINGLE</mat-option>
+                            <mat-option value="DOUBLE">DOUBLE</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </li>
+                <li>
+                    Default Tab Orientation: 
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tab Orientation</mat-label>
+                        <mat-select [formControl]="form.controls['DEFAULT_ORIENTATION']">
+                            <mat-option value="HORIZONTAL">HORIZONTAL</mat-option>
+                            <mat-option value="VERTICAL">VERTICAL</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                  </li>
+            </ul>
+        </mat-expansion-panel>
+    </mat-accordion>
+</mat-card>
+<div style="display: flex; justify-content: center; align-items: center">
+    <button mat-raised-button color="warn" (click)="onReset()">RESET</button>
+</div>

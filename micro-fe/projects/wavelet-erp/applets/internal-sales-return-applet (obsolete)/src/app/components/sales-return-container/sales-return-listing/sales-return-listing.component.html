@@ -1,0 +1,52 @@
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div style="margin-top: 20px">
+      Sales Return Listing
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div fxFlex="3 0 0">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+          <button ngClass.xs="blg-button-mobile" #navBtn class="blg-button-icon" mat-button matTooltip="Create" type="button"
+            [disabled]="deactivateAdd$ | async"
+            (click)="onAdd()">
+            <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="assets/images/add.png" alt="add" width="40px" height="40px">
+          </button>
+          <app-advanced-search-purchase fxFlex fxFlex.lt-sm="100" [id]="'po'" [advSearchModel]="searchModel" (search)="onSearch($event)"></app-advanced-search-purchase>
+          <app-column-toggle [currentToggle]="toggleColumn$ | async" (toggleColumn)="onToggle($event)" fxHide.lt-sm></app-column-toggle>
+        </div>
+      </div>
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+        <app-grid-toggle class="blg-button-icon"></app-grid-toggle>
+      </div>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px" [style.padding]="'5px'">
+      <button mat-raised-button color="primary" type="button"
+        (click)="onPostToFinal()">FINAL
+      </button>
+  </div>
+  
+  </mat-card-title>
+  <div style="height: 80%;">
+    <ag-grid-angular #agGrid
+    style="height: 100%;"
+    class="ag-theme-balham"
+    rowModelType="serverSide"
+    serverSideStoreType="partial"
+    [getRowClass]="pagination.getRowClass"
+    [columnDefs]="columnsDefs"
+    [rowData]="[]"
+    [paginationPageSize]="pagination.rowPerPage"
+    [cacheBlockSize]="pagination.rowPerPage"
+    [pagination]="true"
+    [animateRows]="true"
+    [defaultColDef]="defaultColDef"
+    [suppressRowClickSelection]="false"
+    [rowSelection]="'multiple'"
+    [sideBar]="true"
+    (rowClicked)="onRowClicked($event.data)"
+    (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

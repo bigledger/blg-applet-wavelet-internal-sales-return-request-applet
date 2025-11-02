@@ -1,0 +1,68 @@
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div fxLayout="row" fxLayoutAlign="space-between end">
+      <div>
+        <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button" [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+          <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+        </button>
+        <span>
+          Select Document to Contra With
+        </span>
+      </div>
+      <button *ngIf='gridApi' mat-raised-button color="primary" type="button" [disabled]="onDisableAdd()" (click)="onAdd()">ADD</button>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div fxFlex="3 0 0">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+          <ng-container *ngIf="searchModel">
+            <app-advanced-search-general fxFlex fxFlex.lt-sm="100" [id]="'contraSelectDocument'"
+                                         [advSearchModel]="searchModel" (search)="onSearch($event)"></app-advanced-search-general>
+          </ng-container>
+        </div>
+      </div>
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-pagination-v2 fxFlex #pagination
+                           [agGridReference]="agGrid"
+                           [rowPerPage]="limit"
+                           (onMorePageClick)="onMorePage()"
+                           [showAll] = "true"
+                           (onAllPageClick)="onAllPage()">
+        </app-pagination-v2>
+      </div>
+    </div>
+  </mat-card-title>
+  <div style="text-align: right">
+    Total Contra:
+    <strong style="color: {{ getTotalContraColor() }}">{{ getTotalContra() }}</strong>
+  </div>
+
+  <div style="text-align: right">
+    Doc Open Amount: <strong style="color: #1e88e5">{{ getOpenAmount()}} </strong>
+  </div>
+  <div style="text-align: right">
+    Doc ARAP Balance: <strong style="color: #1e88e5">{{ getARAP() }} </strong>
+  </div>
+  <div style="text-align: left" *ngIf="AUTO_SETTLE_CONTRA">
+    <mat-form-field appearance="outline" style="width: 150px;">
+      <mat-label>Total Amount</mat-label>
+      <input matInput [formControl]="form.controls['totalAmountContra']" autocomplete="off" type="number" />
+    </mat-form-field>&nbsp;
+    <button mat-raised-button color="primary" type="button" (click)="onAutoSettle()">AUTO SETTLE</button>&nbsp;
+    <button mat-raised-button color="primary" type="button" (click)="onReset()">RESET</button>
+  </div>
+  <div style="height: 100%;">
+    <ag-grid-angular #agGrid
+                     style="width: 100%; height: 100%;"
+                     class="ag-theme-balham"
+                     [gridOptions]="gridOptions"
+                     [rowSelection] = "'multiple'"
+                     [paginationPageSize]="pagination.rowPerPage"
+                     [rowData]="[]"
+                     [pagination]="true"
+                     [columnDefs]="columnsDefs"
+                     (gridReady)="onGridReady($event)"
+                     [frameworkComponents]="frameworkComponents"
+                     (rowSelected)="onRowSelected($event)">
+    </ag-grid-angular>
+  </div>
+</div>

@@ -1,0 +1,132 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+        [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px">
+      </button>
+      <span> Edit Issue </span>
+    </div>
+    <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+      <button mat-raised-button color="primary" type="button" (click)="onSave()">SAVE</button>
+    </div>
+  </div>
+</mat-card-title>
+
+<form [formGroup]="form">
+  <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+    <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Issue Number</mat-label>
+        <input matInput placeholder="Issue Number" [formControl]="form.controls['issueNumber']" type="text">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Summary</mat-label>
+        <input matInput placeholder="Summary" [formControl]="form.controls['summary']" type="text">
+      </mat-form-field>
+    </div>
+  </div>
+</form>
+
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async" *ngIf="!showPanels()">
+  <mat-tab label="Details">
+    <app-edit-issue-link-edit-details></app-edit-issue-link-edit-details>
+  </mat-tab>
+  <mat-tab label="Planning">
+    <app-edit-issue-link-edit-planning></app-edit-issue-link-edit-planning>
+  </mat-tab>
+  <mat-tab label="Attachment">
+    <app-edit-issue-link-edit-attachment></app-edit-issue-link-edit-attachment>
+  </mat-tab>
+  <mat-tab label="Comment">
+    <app-edit-issue-link-edit-comment></app-edit-issue-link-edit-comment>
+  </mat-tab>
+  <mat-tab label="Subtasks">
+    <app-edit-issue-link-edit-subtasks></app-edit-issue-link-edit-subtasks>
+  </mat-tab>
+  <mat-tab label="Linked Issues">
+    <app-edit-issue-link-edit-linked-issues></app-edit-issue-link-edit-linked-issues>
+  </mat-tab>
+  <mat-tab label="Worklogs">
+    <app-edit-issue-link-edit-worklog [localState]="localState$ | async" (addLog)="goToLogTime()">
+    </app-edit-issue-link-edit-worklog>
+  </mat-tab>
+  <mat-tab label="Activity">
+    <app-edit-issue-link-edit-activity></app-edit-issue-link-edit-activity>
+  </mat-tab>
+</mat-tab-group>
+
+<mat-accordion *ngIf="showPanels()">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Details
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-issue-link-edit-details></app-edit-issue-link-edit-details>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Planning
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-issue-link-edit-planning></app-edit-issue-link-edit-planning>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Attachment
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-issue-link-edit-attachment></app-edit-issue-link-edit-attachment>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Comment
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-issue-link-edit-comment></app-edit-issue-link-edit-comment>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Subtasks
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-issue-link-edit-subtasks></app-edit-issue-link-edit-subtasks>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+          Linked Issues
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-issue-link-edit-linked-issues></app-edit-issue-link-edit-linked-issues>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+          Worklogs
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-issue-link-edit-worklog [localState]="localState$ | async" (addLog)="goToLogTime()"></app-edit-issue-link-edit-worklog>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+          Activity
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-edit-issue-link-edit-activity></app-edit-issue-link-edit-activity>
+  </mat-expansion-panel>
+</mat-accordion>

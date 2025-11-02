@@ -1,0 +1,46 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div> <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+        [disabled]="deactivateReturn$ | async" (click)="onReturn()"> <img
+          [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px"> </button> <span> {{bread}} </span> </div> <button mat-raised-button
+      type="button" (click)="onSave()" [disabled]="!form.valid" color={{isClicked}}>{{addSuccess}}</button>
+  </div>
+</mat-card-title>
+<form [formGroup]="form" #formDirectives="ngForm">
+  <mat-tab-group [dynamicHeight]="true">
+    <mat-tab label="Main">
+      <div fxLayout="column" class="view-col-forms">
+        <div fxLayout="raw wrap" fxFlexAlign="center" class="row">
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Category Code</mat-label>
+              <input matInput placeholder="Category Code" [formControl]="form.controls['CategoryCode']">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Category Name</mat-label>
+              <input matInput placeholder="Category Name" [formControl]="form.controls['CategoryName']">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline" readonly="true">
+              <mat-label>Description</mat-label>
+              <input matInput placeholder="Description" [formControl]="form.controls['Description']">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Status</mat-label>
+              <input matInput placeholder="Status" [formControl]="form.controls['status']">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class=" center" style="margin-top: 10px; width: 50px;">
+          <button mat-raised-button color="warn" type="button" (click)="onRemove()">Remove </button>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</form>

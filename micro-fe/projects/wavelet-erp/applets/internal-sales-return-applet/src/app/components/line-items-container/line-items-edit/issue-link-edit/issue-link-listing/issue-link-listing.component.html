@@ -1,0 +1,25 @@
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div fxFlex="3 0 0">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+          <app-advanced-search fxFlex fxFlex.lt-sm="100" [id]="'internal-isSalesReturn-line-item'"
+            [advSearchModel]="searchModel"></app-advanced-search>
+        </div>
+      </div>
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+
+      </div>
+    </div>
+  </mat-card-title>
+  <div style="height: 80%;">
+    <ag-grid-angular #agGrid style="height: 100%;" class="ag-theme-balham" rowSelection="single"
+      rowModelType="serverSide" serverSideStoreType="partial" [getRowClass]="pagination.getRowClass"
+      [columnDefs]="columnsDefs" [rowData]="[]" [paginationPageSize]="pagination.rowPerPage"
+      [cacheBlockSize]="pagination.rowPerPage" [pagination]="true" [animateRows]="true" [defaultColDef]="defaultColDef"
+      [suppressRowClickSelection]="false" [sideBar]="true" (rowClicked)="onRowClicked($event.data)"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

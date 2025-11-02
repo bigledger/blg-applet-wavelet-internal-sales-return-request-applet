@@ -1,0 +1,26 @@
+<div class="view-col-table" fxLayout="column">
+  <div fxLayout="row wrap" fxLayoutAlign="end">
+    <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center"> <button
+        ngClass.xs="blg-button-mobile" #navBtn class="blg-button-icon" mat-button matTooltip="Create Tax" type="button"
+        [disabled]="deactivateAdd$ | async" (click)="onNext()"> <img
+          [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="assets/images/add.png" alt="add" width="40px"
+          height="40px"> </button>
+
+      <mat-form-field appearance="outline" class="search-ag mobile">
+        <mat-label>Search</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput type="text" (keyup)="quickSearch()" [(ngModel)]="searchValue" placeholder="Search" />
+      </mat-form-field>
+      <!-- <app-advanced-search class="mobile" fxFlex [id]="'internal-po'" [advSearchModel]="searchModel"
+        (search)="onSearch($event)"> </app-advanced-search> -->
+      <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+    </div>
+  </div>
+  <div style="height: 100%;">
+    <ag-grid-angular #agGrid style="height: 100%;" class="ag-theme-balham" [columnDefs]="columnsDefs"
+      [rowData]="rowData" [paginationPageSize]="pagination.rowPerPage" [animateRows]="true"
+      [defaultColDef]="defaultColDef" [suppressRowClickSelection]="true" [sideBar]="true" [pagination]="true"
+      (rowClicked)="onRowClicked($event.data)" (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

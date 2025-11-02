@@ -1,0 +1,26 @@
+<div style="text-align: right; margin-top: 16px;">
+  <button mat-raised-button color="primary" (click)="save.emit(appletContainer)">SAVE</button>
+</div>
+<mat-card>
+  <mat-accordion>
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span class="field-header">User Default Settings</span>
+        </mat-panel-title>
+        <mat-panel-description>
+          This will override Applet Default Settings
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ul>
+        <li>
+          Default Branch: <blg-select-branch-drop-down [apiVisa]="apiVisa" [(branch)]="branch"></blg-select-branch-drop-down>
+        </li>
+        <li>
+          Default Location: <blg-select-location-drop-down [apiVisa]="apiVisa" [(location)]="location"></blg-select-location-drop-down>
+        </li>
+      </ul>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>
+

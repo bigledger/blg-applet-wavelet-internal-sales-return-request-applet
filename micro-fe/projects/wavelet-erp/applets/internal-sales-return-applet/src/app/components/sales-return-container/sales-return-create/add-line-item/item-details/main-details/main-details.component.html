@@ -1,0 +1,316 @@
+<form [formGroup]="form">
+  <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+    <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+      <ng-container *ngIf="itemType" [ngSwitch]="itemType">
+        <mat-form-field *ngSwitchCase="'sales'" class="example-full-width" appearance="outline">
+          <mat-label>Sales Order No.</mat-label>
+          <input matInput readonly placeholder="Sales Order No." [formControl]="form.controls['orderNo']" type="text">
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'purchQuotation'" class="example-full-width" appearance="outline">
+          <mat-label>Purchase Quotation No.</mat-label>
+          <input matInput readonly placeholder="Purchase Quotation No." [formControl]="form.controls['orderNo']"
+            type="text">
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'purchRequisition'" class="example-full-width" appearance="outline">
+          <mat-label>Purchase Requistion No.</mat-label>
+          <input matInput readonly placeholder="Purchase Requistion No." [formControl]="form.controls['orderNo']"
+            type="text">
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'jobsheet'" class="example-full-width" appearance="outline">
+          <mat-label>Jobsheet No.</mat-label>
+          <input matInput readonly placeholder="Jobsheet No." [formControl]="form.controls['orderNo']" type="text">
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'purchOrder'" class="example-full-width" appearance="outline">
+          <mat-label>Purchase Order No.</mat-label>
+          <input matInput readonly placeholder="Purchase Order No." [formControl]="form.controls['orderNo']"
+            type="text">
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'deliveryOrder'" class="example-full-width" appearance="outline">
+          <mat-label>Delivery Order No.</mat-label>
+          <input matInput readonly placeholder="Delivery Order No." [formControl]="form.controls['orderNo']"
+            type="text">
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'purchaseInvoice'" class="example-full-width" appearance="outline">
+          <mat-label>Purchase Invoice No.</mat-label>
+          <input matInput readonly placeholder="Purchase Invoice No." [formControl]="form.controls['orderNo']"
+            type="text">
+        </mat-form-field>
+      </ng-container>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Item Code</mat-label>
+        <input matInput readonly placeholder="Item Code" [formControl]="form.controls['itemCode']" type="text">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Item Name</mat-label>
+        <textarea #itemName matInput placeholder="Item Name" [formControl]="form.controls['itemName']"
+          [attr.maxlength]="appletSettings?.ENABLE_ITEM_NAME_MAX_LIMIT ? appletSettings.ITEM_NAME_MAX_LIMIT : null"></textarea>
+        <mat-hint align="end">
+          {{ itemName.value?.length || 0 }}
+          <ng-container *ngIf="appletSettings?.ENABLE_ITEM_NAME_MAX_LIMIT && appletSettings?.ITEM_NAME_MAX_LIMIT > 0" > / {{ appletSettings.ITEM_NAME_MAX_LIMIT }}</ng-container>
+          characters
+        </mat-hint>
+        <mat-error *ngIf="form.controls['itemName'].hasError('maxlength')">
+          Maximum character limit reached!
+        </mat-error>
+      </mat-form-field>
+
+       <mat-form-field  *ngIf="itemTxnType==='NSTI'" class="example-full-width" appearance="outline">
+        <mat-label>Trade-in Serial Number</mat-label>
+        <input matInput placeholder="Trade-in Serial Number" [formControl]="form.controls['tradeInSerial']" type="text" required>
+      </mat-form-field>
+
+      <app-sales-man [(salesAgent)]="form.controls['salesAgent']" [labels]="this.appletSettings.salesManLabels" *ngIf="!appletSettings.HIDE_SALES_AGENT || SHOW_SALES_AGENT">
+      </app-sales-man>
+
+      <app-uom-v2 [(uom)]="form.controls['uom']" *ngIf="!appletSettings.HIDE_UNIT_PRICE_STD_PRICING_SCHEME || SHOW_UNIT_PRICE_STD_PRICING_SCHEME" (selectedUomModel)="onSelectedUomModel($event)" [viewModelStore]="viewModelStore" [ColumnViewActions]="ColumnViewActions" [ColumnViewSelectors]="ColumnViewSelectors">
+      </app-uom-v2>
+      <app-pricing-scheme-access-v2 *ngIf="!appletSettings.HIDE_UNIT_PRICE_STD_PRICING_SCHEME || SHOW_UNIT_PRICE_STD_PRICING_SCHEME" [unitPriceType]="'SALES'"
+      (selectedPricingScheme)="onPriceSelected($event)" [viewModelStore]="viewModelStore" [ColumnViewActions]="ColumnViewActions" [ColumnViewSelectors]="ColumnViewSelectors" [customerGuid]="customerGuid"></app-pricing-scheme-access-v2>
+
+      <app-einvoice-uom [(uom)]="form.controls['einvoice_uom']" *ngIf="!appletSettings.HIDE_UNIT_PRICE_STD_PRICING_SCHEME || SHOW_UNIT_PRICE_STD_PRICING_SCHEME" (selectedUomModel)="onSelectedEInvoiceUomModel($event)" [viewModelStore]="viewModelStore" [ColumnViewActions]="ColumnViewActions" [ColumnViewSelectors]="ColumnViewSelectors">
+      </app-einvoice-uom>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UNIT_PRICE_STD_EXCL_TAX || SHOW_UNIT_PRICE_STD_EXCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>Unit Price STD (Exclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Unit Price (Exclusive of tax)" [formControl]="form.controls['unitPriceStdWithoutTax']"
+          type="number" step=".01" [readonly]="!appletSettings.ENABLE_EDITING_UNIT_PRICE_STD" (change)="nullHandler('unitPriceStdWithoutTax', $event.target.value);" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('unitPriceStdWithoutTax') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UNIT_PRICE_STD_INCL_TAX  || SHOW_UNIT_PRICE_STD_INCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>Unit Price STD (Inclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Unit Price (Inclusive of tax)" [formControl]="form.controls['unitPriceStdWithTax']"
+          type="number" step=".01" [readonly]="!appletSettings.ENABLE_EDITING_UNIT_PRICE_STD" (change)="nullHandler('unitPriceStdWithTax', $event.target.value); calculatePriceFromWithTax($event.target.value)"  style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('unitPriceStdWithTax') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UNIT_DISCOUNT || SHOW_UNIT_DISCOUNT" class="example-full-width" appearance="outline">
+        <mat-label>Unit Discount</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Unit Discount" [formControl]="form.controls['unitDiscount']" type="number"
+          step=".01" (change)="nullHandler('unitDiscount', $event.target.value); onCalculateFromUnitDisc()" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('unitDiscount') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_QTY_BASE || SHOW_QTY_BASE" class="example-full-width" appearance="outline">
+        <mat-label>Quantity Base</mat-label>
+        <input matInput placeholder="Quantity" [formControl]="form.controls['qty']" type="number" [readonly]="isQtyBaseReadOnly()"
+          (change)="nullHandler('qty', $event.target.value); onCalculate()">
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_QTY_UOM || SHOW_QTY_UOM" class="example-full-width" appearance="outline">
+        <mat-label>Quantity by UOM</mat-label>
+        <input matInput placeholder="Quantity by UOM" [formControl]="form.controls['qtyUom']" type="number"
+          (change)="nullHandler('qtyUom', $event.target.value); onCalculateFromQtyByUom()">
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UOM_TO_BASE_RATIO || SHOW_UOM_TO_BASE_RATIO" class="example-full-width" appearance="outline">
+        <mat-label>UOM to Base Ratio</mat-label>
+        <input matInput placeholder="UOM to Base Ratio" [formControl]="form.controls['uomBaseRatio']" type="number"
+           readonly>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UNIT_PRICE_STD_UOM_EXCL_TAX || SHOW_UNIT_PRICE_STD_UOM_EXCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>Unit Price STD by UOM (Exclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Unit Price STD by UOM (Exclusive of tax)" [formControl]="form.controls['unitPriceStdUom']"
+          type="number" step=".01" readonly (change)="nullHandler('unitPriceStdUom', $event.target.value);" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('unitPriceStdUom') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UNIT_PRICE_STD_UOM_INCL_TAX || SHOW_UNIT_PRICE_STD_UOM_INCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>Unit Price STD by UOM (Inclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Unit Price STD by UOM (Inclusiveof tax)" [formControl]="form.controls['unitPriceStdUomWithTax']"
+          type="number" step=".01" readonly (change)="nullHandler('unitPriceStdUomWithTax', $event.target.value);" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('unitPriceStdUomWithTax') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UNIT_DISCOUNT_UOM_EXCL_TAX || SHOW_UNIT_DISCOUNT_UOM_EXCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>Unit Discount by UOM (Exclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Unit Discount by UOM" [formControl]="form.controls['unitDiscountUom']"
+          type="number" step=".01"
+          (change)="nullHandler('unitDiscountUom', $event.target.value); onCalculateFromUnitDiscountUom()" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('unitDiscountUom') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UNIT_PRICE_NET_UOM_EXCL_TAX || SHOW_UNIT_PRICE_NET_UOM_EXCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>Unit Price Net by UOM (Exclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Unit Price by UOM (Exclusive of tax)"
+          [formControl]="form.controls['unitPriceNetUom']" type="number" step=".01" readonly
+          (change)="nullHandler('unitPriceNetUom', $event.target.value);" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('unitPriceNetUom') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UNIT_PRICE_TXN_UOM_INCL_TAX || SHOW_UNIT_PRICE_TXN_UOM_INCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>Unit Price Transaction by UOM (Inclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Unit Price by UOM (Inclusive of tax)"
+          [formControl]="form.controls['unitPriceTxnUom']" type="number" step=".01"
+          (change)="nullHandler('unitPriceTxnUom', $event.target.value); onCalculateFromUnitPriceTxnUom()" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('unitPriceTxnUom') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UNIT_PRICE_NET_EXCL_TAX || SHOW_UNIT_PRICE_NET_EXCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>Unit Price Net (Exclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Unit Price (Exclusive of tax)" [formControl]="form.controls['unitPriceNet']"
+          type="number" step=".01"
+          (change)="nullHandler('unitPriceNet', $event.target.value); onCalculateFromUnitPriceNet()" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('unitPriceNet') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_AMOUNT_STD_EXCL_TAX || SHOW_AMOUNT_STD_EXCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>STD Amount(Unit Price x Quantity)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="STD Amount" [formControl]="form.controls['stdAmt']" type="number" step=".01" readonly style="flex: 1;">
+        <div *ngIf="isForex()" style="margin-left: 8px;">
+          {{ getForexAmt('stdAmt') }}
+        </div>
+      </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_DISCOUNT_AMOUNT_EXCL_TAX || SHOW_DISCOUNT_AMOUNT_EXCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>Discount Amount(Exclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Discount Amount" [formControl]="form.controls['discountAmt']" type="number"
+          step=".01" (change)="nullHandler('discountAmt', $event.target.value); onCalculateFromAmountDisc()" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('discountAmt') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_AMOUNT_NET_EXCL_TAX || SHOW_AMOUNT_NET_EXCL_TAX" class="example-full-width" appearance="outline">
+        <mat-label>Amount Net (Exclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput [formControl]="form.controls['netAmt']" type="number" step=".01"
+          (change)="nullHandler('netAmt', $event.target.value); onCalculateFromAmountNet()" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('netAmt') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>E-Invoice Tax Type Code</mat-label>
+        <mat-select [formControl]="form.controls['einvoiceTaxTypeCode']" #matSelect (selectionChange)="updateEInvoiceTaxTypeDescription($event)">
+          <mat-option>
+            <ngx-mat-select-search [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'No matching records found'"
+              [formControl]="searchText"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let option of filteredOptions" [value]="option.Code">
+            {{ option.Code }} | {{ option.Description }}
+          </mat-option>
+        </mat-select>
+        <mat-error>
+          E-Invoice Tax Type Code <strong>not valid</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <app-sst  [txnType]="'SALES'" [taxType]="taxType" *ngIf="!appletSettings.HIDE_TAX_CONFIG_SELECTION || SHOW_TAX_CONFIG_SELECTION"
+       [(sst)]="form.controls['taxCode']" (sstContainer)="onSST($event)"></app-sst>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_TAX_CONFIG_SELECTION || SHOW_TAX_CONFIG_SELECTION" class="example-full-width" appearance="outline">
+        <mat-label>SST/GST/VAT</mat-label>
+        <input matInput readonly placeholder="SST/GST/VAT" [formControl]="form.controls['taxPercent']" type="number"
+          step=".01" (change)="nullHandler('taxPercent', $event.target.value); onCalculate()" >
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" *ngIf="!appletSettings.HIDE_TAX_CONFIG_SELECTION || SHOW_TAX_CONFIG_SELECTION" appearance="outline">
+        <mat-label>Tax Amount</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput readonly placeholder="Tax Amount" [formControl]="form.controls['taxAmt']" type="number"
+          step=".01" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('taxAmt') }}
+          </div>
+        </div>
+      </mat-form-field>
+      <app-select-tariff-code [(label)]="form.controls['tariffCode']"></app-select-tariff-code>
+
+
+      <app-wht *ngIf="!appletSettings.HIDE_WHT_CONFIG_SELECTION || SHOW_WHT_CONFIG_SELECTION"
+       [(wht)]="form.controls['whtCode']" (whtContainer)="onWHT($event)"></app-wht>
+
+       <mat-form-field *ngIf="!appletSettings.HIDE_WHT_CONFIG_SELECTION || SHOW_WHT_CONFIG_SELECTION" class="example-full-width" appearance="outline">
+        <mat-label>WHT</mat-label>
+        <input matInput readonly placeholder="WHT" [formControl]="form.controls['whtPercent']" type="number" step=".01"
+          (change)="nullHandler('whtPercent', $event.target.value); onCalculate()">
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_WHT_CONFIG_SELECTION || SHOW_WHT_CONFIG_SELECTION" class="example-full-width" appearance="outline">
+        <mat-label>WHT Amount</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput readonly placeholder="WHT Amount" [formControl]="form.controls['whtAmt']" type="number"
+          step=".01" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('whtAmt') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_UNIT_PRICE_TXN || SHOW_UNIT_PRICE_TXN" class="example-full-width" appearance="outline">
+        <mat-label>Unit Price Transaction (Inclusive of tax)</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Unit Price (Inclusive of tax)" [formControl]="form.controls['unitPriceTxn']"
+          type="number" step=".01"
+          (change)="nullHandler('unitPriceTxn', $event.target.value); onCalculateFromUnitPriceTxn()" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('unitPriceTxn') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!appletSettings.HIDE_AMOUNT_TXN || SHOW_AMOUNT_TXN" class="example-full-width" appearance="outline">
+        <mat-label>Txn Amount</mat-label>
+        <div style="display: flex; align-items: center;">
+        <input matInput placeholder="Txn Amount" [formControl]="form.controls['txnAmt']" type="number" step=".01"
+          (change)="nullHandler('txnAmt', $event.target.value); onCalculateFromAmountTxn()" style="flex: 1;">
+          <div *ngIf="isForex()" style="margin-left: 8px;">
+            {{ getForexAmt('txnAmt') }}
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Remarks</mat-label>
+        <textarea #remarks matInput placeholder="Remarks" [formControl]="form.controls['remarks']"></textarea>
+        <mat-hint align="end">{{remarks.value.length}} characters</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+</form>

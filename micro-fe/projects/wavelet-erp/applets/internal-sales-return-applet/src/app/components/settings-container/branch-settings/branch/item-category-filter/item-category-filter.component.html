@@ -1,0 +1,15 @@
+<div fxLayout="column" class="p-10">
+    <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" (click)="onSubmit()">SAVE</button>
+    </div>
+     
+    <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+        <app-select-multi-item-category-level-drop-down
+          [apiVisa]="apiVisa"
+          [itemCategoryLevel]="form.controls['ITEM_CATEGORY_' + i]"
+          [label]="'Category ' + i"
+          [options]="{ 'level': i, 'multiple': true }"
+        ></app-select-multi-item-category-level-drop-down>
+      </ng-container>
+      
+  </div>

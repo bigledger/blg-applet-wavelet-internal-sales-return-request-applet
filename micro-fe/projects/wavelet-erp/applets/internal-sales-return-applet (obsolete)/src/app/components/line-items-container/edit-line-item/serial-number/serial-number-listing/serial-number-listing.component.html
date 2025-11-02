@@ -1,0 +1,30 @@
+<div class="view-col-table" style="max-height: 50vh;" fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+    <button mat-raised-button color="primary" type="button" (click)="onAdd()">ADD</button>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="end">
+    <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+      <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+      <app-grid-toggle class="blg-button-icon"></app-grid-toggle>
+    </div>
+  </div>
+  <div style="height: 100%;">
+    <ag-grid-angular #agGrid
+      style="height: 100%;"
+      class="ag-theme-balham"
+      rowSelection="multiple"
+      [getRowClass]="pagination.getRowClass"
+      [columnDefs]="columnsDefs"
+      rowModelType="serverSide"
+      serverSideStoreType="partial"
+      [rowData]="[]"
+      [paginationPageSize]="pagination.rowPerPage"
+      [pagination]="true"
+      [animateRows]="true"
+      [defaultColDef]="defaultColDef"
+      [suppressRowClickSelection]="false"
+      [sideBar]="true"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

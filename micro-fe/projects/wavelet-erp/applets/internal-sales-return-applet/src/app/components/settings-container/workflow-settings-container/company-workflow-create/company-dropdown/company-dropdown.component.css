@@ -1,0 +1,9 @@
+.mat-chip {
+    font-size: 11px;
+}
+
+/** No CSS for this example */
+::ng-deep .custom-mat-option .mat-option-text {
+    overflow: auto;
+    text-overflow: unset;
+  }

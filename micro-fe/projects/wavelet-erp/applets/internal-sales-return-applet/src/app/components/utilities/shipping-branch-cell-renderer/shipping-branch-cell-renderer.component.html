@@ -1,0 +1,20 @@
+<mat-form-field class="example-full-width" appearance="outline">
+    <mat-select
+      name="inputBranch"
+      [(ngModel)]="inputBranch"
+      (selectionChange)="onBranchSelection($event.value)"
+    >
+      <mat-option>
+        <ngx-mat-select-search
+          (keyup)="applyBranchFilter($event.target.value)"
+          [noEntriesFoundLabel]="'No matching records found'"
+          placeholderLabel="Search branch..."
+          ngDefaultControl
+        ></ngx-mat-select-search>
+      </mat-option>
+      <mat-option *ngFor="let item of newBranchArr" [value]="item.code">{{
+        item.code
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  

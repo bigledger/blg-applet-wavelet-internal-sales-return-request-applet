@@ -1,0 +1,41 @@
+
+
+<mat-card-title class="column-title">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between end">
+    <div>
+      <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+        [disabled]="deactivateReturn$ | async" (click)="onReturn()">
+        <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+      </button>
+      <span>
+        Edit Company Workflow Link
+      </span>
+    </div>
+    <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+      <button mat-raised-button color="primary" type="button" [disabled]="disableButton()" (click)="onSave()">SAVE</button>
+    </div>
+  </div>
+</mat-card-title>
+<form [formGroup]="form" #formDirectives="ngForm">
+  <div fxLayout="column" class="view-col-forms">
+    <company-dropdown [(company)] = "form.controls['companyGuid']"></company-dropdown>    
+    <app-workflow-process [(process)]="form.controls['processGuid']"></app-workflow-process>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Description</mat-label>
+      <input matInput placeholder="Description" [formControl]="form.controls['description']" type="text" >
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Server Doc type</mat-label>
+      <input matInput placeholder="Server Doc type" [formControl]="form.controls['serverDoc']" type="text" readonly>
+    </mat-form-field>
+  </div>
+</form>
+
+<div style="padding: 5px;">
+  <button mat-raised-button color="warn" type="button" (click)="onDelete()">
+    <span>{{ (deleteConfirmation$ | async) ? 'CLICK AGAIN TO CONFIRM' : 'DELETE'}}</span>
+  </button>
+</div>
+

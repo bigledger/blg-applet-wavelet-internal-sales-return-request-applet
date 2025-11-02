@@ -1,0 +1,63 @@
+<form [formGroup]="form">
+  <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+    <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+      <blg-select-branch-drop-down [apiVisa]="apiVisa" [(branch)]="form.controls['branch']" (branchSelected)="onBranchSelected($event); updateMain.emit(form.value)"></blg-select-branch-drop-down>
+      <blg-select-location-drop-down [branchSelectedGuid]="selectedBranch" [apiVisa]="apiVisa" [(location)]="form.controls['location']" (locationSelected)="updateMain.emit(form.value)"></blg-select-location-drop-down>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Sales Agent*</mat-label>
+        <input style="cursor: pointer" readonly matInput placeholder="Sales Agent" [formControl]="form.controls['salesAgent']" type="text" autocomplete="off" (click)="goToSelectSalesAgent()" >
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <input matInput [matDatepicker]="datepicker" [formControl]="form.controls['transactionDate']" autocomplete="off" readonly (click)="datepicker.open()" (change)="updateMain.emit(form.value)">
+        <mat-error>Transaction date is <strong>not valid</strong></mat-error>
+        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #datepicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Credit Terms</mat-label>
+        <mat-select [formControl]="form.controls['creditTerms']" (selectionChange)="updateMain.emit(form.value)">
+          <mat-option *ngFor="let terms of creditTermsList" [value]="terms.value_json.name">
+            {{terms.value_json.code}} | {{terms.value_json.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error>Credit Terms is <strong>not valid</strong></mat-error>
+        <mat-hint><strong>Entity ID</strong> must be selected first</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Reference</mat-label>
+        <input matInput placeholder="Reference" [formControl]="form.controls['reference']" type="text" (change)="updateMain.emit(form.value)">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Remarks</mat-label>
+        <textarea #remarks matInput placeholder="Remarks" [formControl]="form.controls['remarks']" (change)="updateMain.emit(form.value)"></textarea>
+        <mat-hint align="end">{{remarks.value.length}} characters</mat-hint>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Permit No</mat-label>
+        <input matInput placeholder="Permit No" [formControl]="form.controls['permitNo']" type="text" (change)="updateMain.emit(form.value)">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>CRM Contact</mat-label>
+        <input matInput placeholder="CRM Contact" [formControl]="form.controls['crmContact']" type="text" (change)="updateMain.emit(form.value)">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>MemberCard</mat-label>
+        <input style="cursor: pointer" readonly matInput placeholder="MemberCard" [formControl]="form.controls['membercard']" type="text" autocomplete="off" (click)="goToSelectMember()" >
+      </mat-form-field>
+      <app-currency [(currency)]="form.controls['currency']" (change)="updateMain.emit(form.value)"></app-currency>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Sales Lead</mat-label>
+        <mat-select [formControl]="form.controls['salesLead']" (selectionChange)="updateMain.emit(form.value)">
+          <mat-option value="Corporate">Corporate</mat-option>
+          <mat-option value="Non-Corporate">Non-Corporate</mat-option>
+        </mat-select>
+        <mat-error>Sales Lead is <strong>not valid</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Tracking ID</mat-label>
+        <input matInput placeholder="Tracking ID" [formControl]="form.controls['trackingID']" type="text" (change)="updateMain.emit(form.value)">
+      </mat-form-field>
+    </div>
+  </div>
+</form>

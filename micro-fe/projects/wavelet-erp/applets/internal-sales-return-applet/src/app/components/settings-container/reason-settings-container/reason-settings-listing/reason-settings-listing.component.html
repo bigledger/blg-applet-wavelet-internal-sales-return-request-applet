@@ -1,0 +1,37 @@
+<div class="view-col-table" fxLayout="column">
+    <div fxLayout="row wrap" fxLayoutAlign="end">
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+        <button ngClass.xs="blg-button-mobile" #navBtn class="blg-button-icon" mat-button matTooltip="Create"
+          type="button" [disabled]="deactivateAdd$ | async" (click)="onNext()">
+          <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="assets/images/add.png" alt="add"
+            width="40px" height="40px">
+        </button>
+        <app-pagination fxFlex #pagination></app-pagination>
+
+      </div>
+    </div>
+    <div style="height: 80%;">
+      <ag-grid-angular style="height: 100%"
+      id="grid"
+      style="height: 100%;"
+      class="ag-theme-balham"
+      [getRowClass]="pagination.getRowClass"
+      [columnDefs]="columnsDefs"
+      [rowData]="[]"
+      [paginationPageSize]="pagination.rowPerPage"
+      [cacheBlockSize]="pagination.rowPerPage"
+      [pagination]="true"
+      [animateRows]="true"
+      [defaultColDef]="defaultColDef"
+      [suppressRowClickSelection]="false"
+      [rowSelection]="'single'"
+      [sideBar]="true"
+      [rowModelType]="'serverSide'"
+      [serverSideStoreType]="'partial'"
+      (rowClicked)="onRowClicked($event.data)"
+      (gridReady)="onGridReady($event)"
+
+        >
+      </ag-grid-angular>
+    </div>
+  </div>

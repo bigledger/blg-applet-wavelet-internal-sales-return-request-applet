@@ -1,0 +1,121 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between end">
+    <div>
+      <button
+        #navBtn
+        mat-button
+        class="blg-button-icon"
+        matTooltip="Back"
+        type="button"
+        [disabled]="deactivateReturn$ | async"
+        (click)="onReturn()"
+      >
+        <img
+          [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null"
+          src="../../../assets/images/backbutton.png"
+          alt="add"
+          width="40px"
+          height="40px"
+        />
+      </button>
+      <span>Create Internal Sales Return</span>
+    </div>
+    <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="onReset()"
+      >
+        RESET
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        [disabled]="disableCreate()"
+        (click)="onCreate()"
+      >
+        CREATE
+      </button>
+    </div>
+  </div>
+</mat-card-title>
+<br />
+<mat-tab-group
+  mat-stretch-tabs
+  [dynamicHeight]="true"
+  [selectedIndex]="selectedIndex"
+>
+  <mat-tab label="Search" *ngIf="!appletSettinsgMain.HIDE_SEARCH_TAB">
+    <app-search-invoices
+    [localState]="localState$ | async"></app-search-invoices>
+  </mat-tab>
+  <mat-tab label="Main Details">
+    <!-- <ng-template matTabContent> -->
+      <app-internal-sales-return-main-details
+        [draft$]="draft$"
+        (updateMain)="onUpdateMain($event)"
+        (selectMember)="goToSelectMember()"
+      >
+      </app-internal-sales-return-main-details>
+    <!-- </ng-template> -->
+  </mat-tab>
+
+  <mat-tab label="Account">
+    <app-internal-sales-return-account
+      [draft$]="draft$"
+      [selectedIndex]="accountSelectedIndex$"
+      (selectEntity)="goToSelectEntity()"
+      (selectBilling)="goToSelectBilling()"
+      (selectShipping)="goToSelectShipping()"
+      (updateShipTo)="onUpdateShippingInfo($event)"
+      (updateShippingAddress)="onUpdateShippingAddress($event)"
+      (updateBillTo)="onUpdateBillingInfo($event)"
+      (updateBillingAddress)="onUpdateBillingAddress($event)"
+    >
+    </app-internal-sales-return-account>
+  </mat-tab>
+
+  <mat-tab label="Lines">
+    <app-internal-sales-return-line-item-listing
+      [localState]="localState$ | async"
+      [draft$]="draft$"
+      (itemCreate)="goToLineItemCreate()"
+      (itemEdit)="goToLineItemEdit($event)"
+    >
+    </app-internal-sales-return-line-item-listing>
+  </mat-tab>
+
+  <mat-tab label="Delivery Details" *ngIf="!appletSettinsgMain.HIDE_DELIVERY_DETAILS_TAB">
+    <ng-template matTabContent>
+      <app-delivery-details [pns$]="pns$" [draft$]="draft$"></app-delivery-details>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="Payment" *ngIf="!appletSettinsgMain.HIDE_MAIN_PAYMENT_TAB">
+    <app-internal-sales-return-payment-listing
+      [localState]="localState$ | async"
+      [draft$]="draft$"
+      (settlementCreate)="goToSettlementCreate()"
+      (settlementEdit)="goToSettlementEdit($event)"
+    >
+    </app-internal-sales-return-payment-listing>
+  </mat-tab>
+
+  <mat-tab label="Department Hdr" *ngIf="!appletSettinsgMain.HIDE_DEPARTMENT_HDR_TAB">
+    <ng-template matTabContent>
+      <app-internal-sales-return-department
+        [draft$]="draft$"
+        (updateDepartment)="onUpdateDepartmentInfo($event)"
+      >
+      </app-internal-sales-return-department>
+    </ng-template>
+  </mat-tab>
+
+  <!-- <mat-tab label="KO For">
+    <ng-template matTabContent>
+      <app-import-knock-off></app-import-knock-off>
+    </ng-template>
+  </mat-tab> -->
+</mat-tab-group>

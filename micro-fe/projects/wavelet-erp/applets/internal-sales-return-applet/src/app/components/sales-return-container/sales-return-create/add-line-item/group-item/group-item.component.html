@@ -1,0 +1,16 @@
+<div class="view-col-table" fxLayout="column">
+  <div fxLayout="row wrap" fxLayoutAlign="end">
+    <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+      <span style="margin-left: 20px;"><b>Total Quantity: {{totalEnteredQty}} </b></span> 
+    </div>
+  </div>
+  <div style="height: 100%;">
+
+    <ag-grid-angular class="ag-theme-balham" style="width: 100%; height: 600px;" [rowData]="rowDataFlat"
+      [columnDefs]="columnDefs" [groupDefaultExpanded]="1" [treeData]="true" [getDataPath]="getDataPath"
+      [autoGroupColumnDef]="autoGroupColumnDef" [frameworkComponents]="frameworkComponents"
+      (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+
+  </div>
+</div>

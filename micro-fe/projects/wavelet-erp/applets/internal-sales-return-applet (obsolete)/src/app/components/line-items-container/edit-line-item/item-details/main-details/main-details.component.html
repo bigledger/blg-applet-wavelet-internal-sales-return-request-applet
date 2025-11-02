@@ -1,0 +1,113 @@
+<form [formGroup]="form">
+  <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+    <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+      <!-- <ng-container *ngIf="itemType" [ngSwitch]="itemType">
+        <mat-form-field *ngSwitchCase="'blanket'" class="example-full-width" appearance="outline">
+          <mat-label>Blanket Purchase Order</mat-label>
+          <input matInput readonly placeholder="Blanket Purchase Order" [formControl]="form.controls['orderNo']" type="text">
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'sales'" class="example-full-width" appearance="outline">
+          <mat-label>Sales Order No.</mat-label>
+          <input matInput readonly placeholder="Sales Order No." [formControl]="form.controls['orderNo']" type="text">
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'purchQuotation'" class="example-full-width" appearance="outline">
+          <mat-label>Purchase Quotation No.</mat-label>
+          <input matInput readonly placeholder="Purchase Quotation No." [formControl]="form.controls['orderNo']" type="text">
+        </mat-form-field>
+        <mat-form-field *ngSwitchCase="'purchRequisition'" class="example-full-width" appearance="outline">
+          <mat-label>Purchase Requistion No.</mat-label>
+          <input matInput readonly placeholder="Purchase Requistion No." [formControl]="form.controls['orderNo']" type="text">
+        </mat-form-field>
+      </ng-container> -->
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Item Code</mat-label>
+        <input matInput readonly placeholder="Item Code" [formControl]="form.controls['itemCode']" type="text">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Item Name</mat-label>
+        <input matInput readonly placeholder="Item Name" [formControl]="form.controls['itemName']" type="text">
+      </mat-form-field>
+
+      <app-pricing-scheme [(uom)]="form.controls['uom']" [(pricingScheme)]="form.controls['pricingScheme']" 
+        [item$]="item$" (uomToBaseRatio)="onUOMSelected($event)"></app-pricing-scheme>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Quantity Base</mat-label>
+        <input matInput placeholder="Quantity" [formControl]="form.controls['qty']" type="number" (change)="nullHandler('qty', $event.target.value); onCalculate()">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Qty by UOM</mat-label>
+        <input matInput placeholder="Qty by UOM" [formControl]="form.controls['qtyUom']" type="number" (change)="nullHandler('qtyUom', $event.target.value); onCalculateFromQtyByUom()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>UOM to Base Ratio</mat-label>
+        <input matInput placeholder="UOM to Base Ratio" [formControl]="form.controls['uomBaseRatio']" type="number" (change)="nullHandler('uomBaseRatio', $event.target.value); onCalculateFromUomBaseRatio()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Unit Price by UOM</mat-label>
+        <input matInput placeholder="Unit Price by UOM" [formControl]="form.controls['unitPriceUom']" type="number" step=".01" (change)="nullHandler('unitPriceUom', $event.target.value); onCalculateFromUnitPriceUom()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Unit Discount by UOM</mat-label>
+        <input matInput placeholder="Unit Discount by UOM" [formControl]="form.controls['unitDiscountUom']" type="number" step=".01" (change)="nullHandler('unitPriceUom', $event.target.value); onCalculateFromUnitDiscountUom()">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Unit Price</mat-label>
+        <input matInput placeholder="Unit Price" [formControl]="form.controls['unitPrice']" type="number" step=".01" (change)="nullHandler('unitPrice', $event.target.value); onCalculateFromUnitPrice()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Unit Discount</mat-label>
+        <input matInput placeholder="Unit Discount" [formControl]="form.controls['unitDiscount']" type="number" step=".01" (change)="nullHandler('unitDiscount', $event.target.value); onCalculateFromUnitDisc()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Discount Amount</mat-label>
+        <input matInput placeholder="Discount Amount" [formControl]="form.controls['discountAmt']" type="number" step=".01" (change)="nullHandler('discountAmt', $event.target.value); onCalculateFromAmountDisc()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>STD Amount(Unit Price x Quantity)</mat-label>
+        <input matInput placeholder="STD Amount" [formControl]="form.controls['stdAmt']" type="number" step=".01" (change)="nullHandler('stdAmt', $event.target.value); onCalculateFromAmountStd()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Net Amount(STD Amount - Discount Amount)</mat-label>
+        <input matInput [formControl]="form.controls['netAmt1']" type="number" step=".01" (change)="nullHandler('netAmt1', $event.target.value); onCalculateFromAmountNet()">
+      </mat-form-field>  
+
+      <app-sst [(sst)]="form.controls['taxCode']" (sstContainer)="onSST($event)"></app-sst>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>SST/GST/VAT</mat-label>
+        <input matInput placeholder="SST/GST/VAT" [formControl]="form.controls['taxPercent']" type="number" step=".01" (change)="nullHandler('taxPercent', $event.target.value); onCalculate()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Tax Amount</mat-label>
+        <input matInput readonly placeholder="Tax Amount" [formControl]="form.controls['taxAmt']" type="number" step=".01" (change)="nullHandler('taxPercent', $event.target.value); onCalculate()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Net Amount(SST/GST/VAT x Net Amount)</mat-label>
+        <input matInput readonly [formControl]="form.controls['netAmt2']" type="number">
+      </mat-form-field>
+
+      <app-wht [(wht)]="form.controls['whtCode']" (whtContainer)="onWHT($event)"></app-wht>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>WHT</mat-label>
+        <input matInput placeholder="WHT" [formControl]="form.controls['whtPercent']" type="number" step=".01" (change)="nullHandler('whtPercent', $event.target.value); onCalculate()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>WHT Amount</mat-label>
+        <input matInput readonly placeholder="WHT Amount" [formControl]="form.controls['whtAmt']" type="number" step=".01">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Txn Amount</mat-label>
+        <input matInput placeholder="Txn Amount" [formControl]="form.controls['txnAmt']" type="number" step=".01" (change)="nullHandler('txnAmt', $event.target.value); onCalculateFromAmountTxn()">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Remarks</mat-label>
+        <textarea #remarks matInput placeholder="Remarks" [formControl]="form.controls['remarks']"></textarea>
+        <mat-hint align="end">{{remarks.value.length}} characters</mat-hint>
+      </mat-form-field>    
+    </div>
+  </div>
+</form>

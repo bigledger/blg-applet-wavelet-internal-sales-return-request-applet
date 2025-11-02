@@ -1,0 +1,43 @@
+<div class="view-col-table no-tab" fxLayout="column" style="margin: 10px">
+    <mat-card-title class="column-title" style="margin-bottom: 10px;">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+        <div fxFlex="3 0 0">
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="6px">
+            <mat-form-field appearance="outline" class="search-box">
+              <mat-label>Search Branch...</mat-label>
+              <mat-icon matPrefix>search</mat-icon>
+              <input matInput type="text" (keyup.enter)="onSearch()" [(ngModel)]="searchValue" placeholder="Search name or code..." />
+              <div role="group" matSuffix>
+                <button class="inline blg-small-button-icon" mat-icon-button (click)="reset()">
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </div>
+            </mat-form-field>
+           
+          </div>
+        </div>
+        <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+          <app-pagination fxFlex #pagination [agGridReference]="agGrid" (onMorePageClick)="onMorePage()"></app-pagination>
+        </div>
+      </div>
+    </mat-card-title>
+    <div style="height: 90%">
+      <ag-grid-angular #agGrid
+      id="grid"
+      style="height: 100%;"
+      class="ag-theme-balham"
+      [rowData]="rowData"
+      [getRowClass]="pagination.getRowClass"
+      [columnDefs]="columnsDefs"
+      [paginationPageSize]="pagination.rowPerPage"
+      [cacheBlockSize]="pagination.rowPerPage"
+      [pagination]="true"
+      [animateRows]="true"
+      [defaultColDef]="defaultColDef"
+      [sideBar]="sideBar"
+      [rowSelection]="'single'"
+      (rowClicked)="onRowClicked($event.data)"
+      (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
+</div>

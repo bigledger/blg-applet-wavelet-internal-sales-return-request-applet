@@ -1,0 +1,61 @@
+<mat-card-title class="column-title">
+	<div fxLayout="row" fxLayoutAlign="space-between end">
+		<div>
+			<button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+							[disabled]="deactivateReturn$ | async" (click)="onReturn()">
+					<img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+			</button>
+			<span>Edit Knockoff For {{ getType((listingConfig$ | async).serverDocTypeDoc1) }}</span>
+		</div>
+		<div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
+			<button mat-raised-button color="primary" type="button" [disabled]="disableSave()" (click)="onSave()">SAVE</button>
+		</div>
+	</div>
+</mat-card-title>
+<br>
+<!-- Content here -->
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true">
+    <mat-tab label="Details">
+        <form [formGroup]="form">
+            <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+                <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>{{ getType((listingConfig$ | async).serverDocTypeDoc1) }} Doc No.</mat-label>
+                        <input matInput readonly placeholder="" [formControl]="form.controls['doc_number']" type="text">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Date Txn.</mat-label>
+                        <input matInput readonly placeholder="" [formControl]="form.controls['date_txn']" type="text">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>UOM</mat-label>
+                        <input matInput readonly placeholder="" [formControl]="form.controls['uom']" type="text">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>Unit Price</mat-label>
+                        <input matInput readonly placeholder="" [formControl]="form.controls['unit_price_txn']" type="text">
+                    </mat-form-field>
+            
+                    <div fxLayout="row wrap" fxLayoutAlign="space-between" >
+                        <mat-form-field appearance="outline" fxFlex="45">
+                            <mat-label>Knocked off Qty.</mat-label>
+                            <input matInput placeholder="" [formControl]="form.controls['ko_qty']"  type="number" [min]="1" [max]="maxQty">
+                            <mat-error>Knocked off Qty. should <strong>more than zero</strong> and <strong>less than or equal to</strong> Balance Qty.</mat-error>
+                            <mat-hint>Knocked off Qty. must be <strong>more than zero</strong></mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="45">
+                            <mat-label>Balance Qty.</mat-label>
+                            <input matInput readonly placeholder="" [formControl]="form.controls['open_qty']"  type="number">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </form>    
+    </mat-tab>
+</mat-tab-group>
+
+<!-- <div style="padding: 5px;">
+    <button mat-raised-button color="warn" type="button" (click)="onDelete()">
+        <span>{{ (deleteConfirmation$ | async) ? 'CLICK AGAIN TO CONFIRM' : 'DELETE' }}</span>
+    </button>
+</div> -->

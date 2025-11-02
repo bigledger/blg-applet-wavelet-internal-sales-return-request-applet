@@ -1,0 +1,62 @@
+<!--<h1>launchpad-applet Container </h1>-->
+<div class="launchpad-container">
+
+  <!--Container Head-->
+  <!--
+  <mat-toolbar color="primary">
+    &lt;!&ndash; left sidebar toggle &ndash;&gt;
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span fxFlex></span>
+
+    &lt;!&ndash; Right sidebar toggle &ndash;&gt;
+    <button (click)="end.toggle()" mat-icon-button>
+      <mat-icon>settings</mat-icon>
+    </button>
+  </mat-toolbar>
+  -->
+
+  <!-- Container Content -->
+  <mat-sidenav-container>
+    <!-- Left Sidebar content -->
+    <mat-sidenav #snav id="snav">
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
+    <!-- Right Sidebar -->
+    <mat-sidenav #end position="end" mode="over" opened="false">
+      <div>
+        <mat-nav-list>
+
+          <h3 mat-subheader class="text-uppercase font-weight-bold">Panels</h3>
+          <mat-list-item>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              (change)="changeLaunchpadPanal()"
+              [(ngModel)]="launchpadPanal">
+              <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
+                {{season}} Panel
+
+              </mat-radio-button>
+            </mat-radio-group>
+          </mat-list-item>
+          <br>
+          <mat-divider></mat-divider>
+          <h3 mat-subheader class="text-uppercase font-weight-bold">Settings</h3>
+          <mat-list-item>
+            Launchpad Container Setting
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </mat-sidenav>
+
+    <!-- Launchpad Page container -->
+    <mat-sidenav-content>
+      <router-outlet>
+      </router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+

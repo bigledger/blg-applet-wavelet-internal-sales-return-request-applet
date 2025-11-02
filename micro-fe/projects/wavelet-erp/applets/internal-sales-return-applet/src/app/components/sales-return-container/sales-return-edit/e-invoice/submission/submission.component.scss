@@ -1,0 +1,62 @@
+.border {
+    display: flex;
+    flex-wrap: wrap;
+    border: solid 1px grey;
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    margin: 5px;
+    transition: height 0.5s ease, width 0.5s ease, padding 0.5s ease, margin 0.5s ease;
+ }
+
+ .uneditable {
+    color: grey;
+ }
+ .button {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+
+//  .self {
+//     align-self: start;
+//  }
+
+
+.barcode {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px grey;
+  flex: 1;
+  padding: 10px;
+  margin: 5px;
+}
+
+
+.barcodeImg {
+   border: solid 3px brown;
+   padding: 5px;
+}
+
+.bImg{
+  height: 100%;
+  width: 100%;
+}
+
+// custom
+.headercus {
+   display: flex;
+   align-items: center;
+   color: grey;
+ }
+ 
+ .line {
+   flex: 1;
+   border-top: 1px solid rgb(48, 47, 47);
+ }
+ 
+ h2 {
+   margin: 0 10px;
+ }

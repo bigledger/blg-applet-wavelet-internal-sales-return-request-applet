@@ -1,0 +1,41 @@
+<form [formGroup]="form">
+    <mat-card-title class="column-title">
+      <div fxLayout="row" fxLayoutAlign="space-between end" style="margin-top: 10px; margin-left: 10px; margin-right: 20px;">
+        <div>  
+        </div>
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">SAVE</button>
+      </div>
+    </mat-card-title>
+    <div fxLayout="column">
+      <div fxLayout="row wrap" fxFlexAlign="left">
+        <div class="p-l-10 p-r-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Branch Name</mat-label>
+            <input matInput placeholder="Branch Name" [formControl]="form.controls['name']" type="text"  style="color: grey" readonly>
+          </mat-form-field>
+        </div>
+        <div class="p-l-10 p-r-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Branch Code</mat-label>
+              <input matInput placeholder="Branch Code" [formControl]="form.controls['code']" type="text" style="color: grey" readonly>
+            </mat-form-field>
+        </div>
+        <div class="p-l-10 p-r-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Company</mat-label>
+            <input matInput placeholder="Company" [formControl]="form.controls['company']" type="text" style="color: grey" readonly>
+          </mat-form-field>
+        </div>
+        <div class="p-l-10 p-r-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <app-sales-man [(salesAgent)]="form.controls['salesAgent']"></app-sales-man>
+        </div>
+        <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100" style="text-align: left;">
+          <mat-checkbox (change)="enableRounding()" [formControl]="form.controls['rounding_five_cent']">Rounding Five Cent</mat-checkbox>
+        </div>
+  
+        <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+          <app-select-group-discount-item  [(groupDiscount)]="form.controls['group_discount_item_guid']"></app-select-group-discount-item>  
+        </div>
+      </div>
+    </div>
+  </form>

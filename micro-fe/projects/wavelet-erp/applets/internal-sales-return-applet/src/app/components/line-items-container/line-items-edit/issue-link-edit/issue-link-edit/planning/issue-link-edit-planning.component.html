@@ -1,0 +1,110 @@
+<form [formGroup]="form">
+  <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+    <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Target Start Date</mat-label>
+        <mat-select placeholder="Target Start Date" [formControl]="form.controls['targetStartDate']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Target End Date</mat-label>
+        <mat-select placeholder="Target End Date" [formControl]="form.controls['targetEndDate']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Actual Start Date</mat-label>
+        <mat-select placeholder="Actual Start Date" [formControl]="form.controls['actualStartDate']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Actual End Date</mat-label>
+        <mat-select placeholder="Actual End Date" [formControl]="form.controls['actualEndDate']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="U">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Calculated Start Date</mat-label>
+        <mat-select placeholder="Calculated Start Date" [formControl]="form.controls['calcStartDate']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Calculated End Date</mat-label>
+        <mat-select placeholder="Calculated End Date" [formControl]="form.controls['calcEndDate']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Baseline Start Date</mat-label>
+        <mat-select placeholder="Baseline Start Date" [formControl]="form.controls['baseStartDate']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Basline End Date</mat-label>
+        <mat-select placeholder="Basline End Date" [formControl]="form.controls['baseEndDate']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Billing Currency</mat-label>
+        <mat-select placeholder="Billing Currency" [formControl]="form.controls['billCurrency']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Billing Amount</mat-label>
+        <mat-select placeholder="Billing Amount" [formControl]="form.controls['billAmt']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Cost Currency</mat-label>
+        <mat-select placeholder="Cost Currency" [formControl]="form.controls['costCurrency']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Cost Amount</mat-label>
+        <mat-select placeholder="Cost Amount" [formControl]="form.controls['costAmt']">
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Story Point</mat-label>
+        <input matInput placeholder="Story Point" [formControl]="form.controls['storyPoint']" type="text">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Manday Target</mat-label>
+        <input matInput placeholder="Manday Target" [formControl]="form.controls['mandayTarget']" type="text">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Manday Actual</mat-label>
+        <input matInput placeholder="Manday Actual" [formControl]="form.controls['mandayActual']" type="text">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Manday Allocated</mat-label>
+        <input matInput placeholder="Manday Allocated" [formControl]="form.controls['mandayAlloc']" type="text">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Manday Billing</mat-label>
+        <input matInput placeholder="Manday Billing" [formControl]="form.controls['mandayBilling']" type="text">
+      </mat-form-field>
+    </div>
+  </div>
+</form>

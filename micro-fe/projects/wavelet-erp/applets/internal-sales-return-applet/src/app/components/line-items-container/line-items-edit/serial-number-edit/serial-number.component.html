@@ -1,0 +1,47 @@
+<div>
+  <mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex$ | async" *ngIf="!showPanels()">
+    <mat-tab label="Scan">
+      <app-edit-serial-number-scan (serialNumber)="addSerialNumberFromScan($event)"></app-edit-serial-number-scan>
+    </mat-tab>
+    <mat-tab label="Import">
+      <app-edit-serial-number-import></app-edit-serial-number-import>
+    </mat-tab>
+  </mat-tab-group>
+  <div style="text-align: right;">
+    <mat-checkbox [formControl]="selectAll" (click)="onSelectAll()">Select All</mat-checkbox>
+  </div>
+
+  <mat-accordion *ngIf="showPanels()">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+            Scan
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-edit-serial-number-scan (serialNumber)="addSerialNumberFromScan($event)"></app-edit-serial-number-scan>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+          <mat-panel-title>
+            Import
+          </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-edit-serial-number-import></app-edit-serial-number-import>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <fieldset>
+    <legend>Serial Numbers</legend>
+    <mat-selection-list #matList style="text-align: left; max-height: 30vh; overflow: auto;">
+      <ng-container *ngFor="let s of serialNumbers">
+        <mat-list-option [value]="s" (click)="onSelect($event)">{{s}}</mat-list-option>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-selection-list>
+  </fieldset>
+
+  <div style="text-align: right; margin-top: 10px;">
+    <button mat-raised-button color="warn" type="button" (click)="onRemove()">REMOVE</button>
+  </div>
+</div>

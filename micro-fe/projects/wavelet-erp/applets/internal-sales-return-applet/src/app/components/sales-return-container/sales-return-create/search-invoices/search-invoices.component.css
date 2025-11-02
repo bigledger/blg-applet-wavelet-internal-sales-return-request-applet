@@ -1,0 +1,4 @@
+/* Style for expanded panel */
+.expanded-subpanel {
+    border: 2px solid rgb(53, 202, 247); /* Blue border for expanded panel */
+  }

@@ -1,0 +1,35 @@
+<form [formGroup]="form">
+    <mat-card-title class="column-title">
+      <div fxLayout="row" fxLayoutAlign="space-between end">
+        <div>
+          <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+            (click)="onReturn()"
+            [disabled]="deactivateReturn$ | async">
+            <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+          </button>
+          <span style="font-size: 15px; margin-top: 10px;">
+            Edit Settlement
+          </span>
+        </div>
+        <!-- <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || formDisabled" (click)="onSubmit()">SAVE</button> -->
+      </div>
+    </mat-card-title>
+    <mat-tab-group [selectedIndex]="selectedIndex$ | async">
+      <mat-tab label="Details">
+        <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms" style="margin-left: 10px; margin-right: 10px;">
+            <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" [formControl]="form.controls['name']" type="text">
+              </mat-form-field>
+            </div>
+            <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="formDisabled"
+                type="button">
+                DELETE
+                </button>
+            </div>
+          </div>
+      </mat-tab>
+    </mat-tab-group>
+</form>

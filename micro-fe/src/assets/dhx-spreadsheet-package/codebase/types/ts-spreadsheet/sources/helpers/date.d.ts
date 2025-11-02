@@ -1,0 +1,14 @@
+import { IFormats } from "../types";
+export declare function getExcelDateFromJs(jsDate: Date): number;
+export declare function excelDateToJSDate(number: number): Date;
+export declare function addDay(d: Date, count?: number): Date;
+export declare function addTime(d: Date, count?: number): Date;
+export declare function dateDiff(d1: Date, d2: Date): number;
+export declare function timeDiff(d1: Date, d2: Date): number;
+export declare function timeStringToJS(value: string): Date | string;
+export declare function isTimeCheck(value: any): boolean;
+export declare function getExcelDateFromString(value: string | number, format: IFormats): string | number;
+export declare function getDHXDateFormat(format: string): string;
+export declare function getExcelFormatFromDHX(format: string): string;
+export declare function isDHXFormat(format: string): boolean;
+export declare function isDateFormat(mask: string): boolean | string;

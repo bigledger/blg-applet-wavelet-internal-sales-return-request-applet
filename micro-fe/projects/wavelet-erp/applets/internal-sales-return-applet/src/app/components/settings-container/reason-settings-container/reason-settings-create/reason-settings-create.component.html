@@ -1,0 +1,39 @@
+<form [formGroup]="form">
+  <mat-card-title class="column-title">
+    <div fxLayout="row" fxLayoutAlign="space-between end" style="margin-left: 10px; margin-right: 20px;">
+      <div>
+        <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button"
+          (click)="onReturn()">
+          <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px">
+        </button>
+        <span style="font-size: 15px; margin-top: 10px;">
+          Add Return Reason
+        </span>
+      </div>
+      <button mat-raised-button color="primary" type="submit" (click)="onSave()">ADD</button>
+    </div>
+  </mat-card-title>
+    <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+      <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100"> 
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Reason Code</mat-label>
+            <input #remarks matInput placeholder="Reason Code" [formControl]="form.controls['reasonCode']">
+            <mat-hint 
+              *ngIf="form.controls['reasonCode'].hasError('required') && form.controls['reasonCode'].touched"
+              class="text-danger font-14">Please enter reason code
+            </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100"> 
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Reason Name</mat-label>
+            <input #remarks matInput placeholder="Reason Name" [formControl]="form.controls['reasonName']">
+            <mat-hint 
+              *ngIf="form.controls['reasonName'].hasError('required') && form.controls['reasonName'].touched"
+              class="text-danger font-14">Please enter reason name
+            </mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+</form>

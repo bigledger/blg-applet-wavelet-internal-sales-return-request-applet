@@ -1,0 +1,23 @@
+<div class="row">
+  <button type="button" class="close" aria-label="Close" (click)="onNoClick()">
+    <span style="font-size: 200%"  aria-hidden="true">&times;</span>
+  </button>
+  <div class="header">
+    <h3>Attention!</h3>
+  </div>
+  <hr>
+  <div class="col-12 cen">
+    <p>
+      {{confirmMessage}}
+    </p>
+  </div>
+  <hr>
+  <div class="col-12">
+    <button class="yesButton" mat-stroked-button (click)="dialogRef.close(true)">Yes</button>
+    <button class="noButton" mat-stroked-button (click)="dialogRef.close(false)">No</button>
+  </div>
+  <!--<div class="col-6">
+    <button class="noButton" mat-stroked-button (click)="dialogRef.close(false)">No</button>
+  </div>-->
+</div>
+

@@ -1,0 +1,48 @@
+<form [formGroup]="form">
+  <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+    <mat-form-field appearance="outline" *ngIf="(!appletSettings.HIDE_ARAP_PNS || SHOW_ARAP_PNS)">
+      <mat-label>Product & Services</mat-label>
+      <input
+        matInput
+        [formControl]="form.controls['totalPNS']"
+        readonly
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="(!appletSettings.HIDE_ARAP_SETTLEMENT || SHOW_ARAP_SETTLEMENT)">
+      <mat-label>Settlement</mat-label>
+      <input
+        matInput
+        [formControl]="form.controls['totalSettlement']"
+        readonly
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="(!appletSettings.HIDE_ARAP_DOC_OPEN || SHOW_ARAP_DOC_OPEN)">
+      <mat-label>Doc Open Amount</mat-label>
+      <input
+        matInput
+        [formControl]="form.controls['docOpenAmount']"
+        readonly
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="(!appletSettings.HIDE_ARAP_CONTRA || SHOW_ARAP_CONTRA)">
+      <mat-label>Contra</mat-label>
+      <input
+        matInput
+        [formControl]="form.controls['totalContra']"
+        readonly
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="(!appletSettings.HIDE_ARAP_BAL || SHOW_ARAP_BAL)">
+      <mat-label>Outstanding</mat-label>
+      <input
+        matInput
+        [formControl]="form.controls['totalOutstanding']"
+        readonly
+      />
+    </mat-form-field>
+  </div>
+</form>

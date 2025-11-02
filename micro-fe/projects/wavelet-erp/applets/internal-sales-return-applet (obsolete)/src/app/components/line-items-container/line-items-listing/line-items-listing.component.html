@@ -1,0 +1,42 @@
+<div class="view-col-table no-tab" fxLayout="column">
+  <mat-card-title class="column-title">
+    <div style="margin-top: 20px">
+      Line Items Listing
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+      <div fxFlex="3 0 0">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+          <app-advanced-search-purchase class="mobile" fxFlex fxFlex.lt-sm="100" [id]="'lineItem'" [advSearchModel]="searchModel" (search)="onSearch($event)"></app-advanced-search-purchase>
+          <app-column-toggle [currentToggle]="toggleColumn$ | async" (toggleColumn)="onToggle($event)" fxHide.lt-sm></app-column-toggle>
+        </div>
+      </div>
+      <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+        <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+        <app-grid-toggle class="blg-button-icon"></app-grid-toggle>
+      </div>
+    </div>
+  </mat-card-title>
+  <div style="height: 80%;">
+    <ag-grid-angular #agGrid
+    id="grid"
+    style="height: 100%;"
+    class="ag-theme-balham"
+    [getRowClass]="pagination.getRowClass"
+    [columnDefs]="columnsDefs"
+    [rowData]="[]"
+    [paginationPageSize]="pagination.rowPerPage"
+    [cacheBlockSize]="pagination.rowPerPage"
+    [pagination]="true"
+    [animateRows]="true"
+    [defaultColDef]="defaultColDef"
+    [suppressRowClickSelection]="false"
+    [rowSelection]="'single'"
+    [sideBar]="true"
+    [rowModelType]="'serverSide'"
+    [serverSideStoreType]="'partial'"
+    [frameworkComponents]="frameworkComponents"
+    (rowClicked)="onRowClicked($event.data)"
+    (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+  </div>
+</div>

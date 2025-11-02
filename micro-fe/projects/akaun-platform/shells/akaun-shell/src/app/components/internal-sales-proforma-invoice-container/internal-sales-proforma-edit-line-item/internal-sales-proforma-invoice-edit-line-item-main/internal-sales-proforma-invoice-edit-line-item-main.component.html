@@ -1,0 +1,102 @@
+
+<form [formGroup]="form" #formDirectives="ngForm">
+  <div class="view-col-forms">
+    <div>
+      <div *ngFor="let x of leftColControls; let i = index">
+        <mat-form-field *ngIf="x.readonly;else input" appearance="outline">
+          <mat-label>{{x.label}}</mat-label>
+          <input matInput readonly [formControl]="form.controls[x.formControl]" autocomplete="off">
+          <mat-hint>{{x.hint}}</mat-hint>
+        </mat-form-field>
+        <ng-template #input>
+          <ng-container [ngSwitch]="x.type">
+            <mat-form-field *ngSwitchCase="'text'" appearance="outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="text">
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'number'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number">
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'money'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number" step=".01" (change)="nullHandler(x.formControl, $event.target.value)">
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+              <mat-hint>{{x.hint}}</mat-hint>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'text-area'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <textarea #remarks matInput [formControl]="form.controls[x.formControl]"></textarea>
+              <mat-hint align="end">{{remarks.value.length}} characters</mat-hint>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'date'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [matDatepicker]="datepicker" [formControl]="form.controls[x.formControl]" autocomplete="off" readonly (click)="datepicker.open()">
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+              <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #datepicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'quantity'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number" (change)="nullHandler(x.formControl, $event.target.value); onCalculate()">
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'unitPrice'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input type="number" step=".01" matInput [formControl]="form.controls[x.formControl]" [matAutocomplete]="unitPrice"
+              (change)="onParseDelay(form.controls[x.formControl], $event.target.value); onCalculate()">
+              <mat-autocomplete #unitPrice (optionSelected)="nullHandler(x.formControl, $event.option.value)">
+                <mat-option *ngFor="let option of filteredUnitPrice | async" [value]="option.price_amount">
+                  {{option.price_code}} | {{option.price_name}} : {{option.price_amount}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'sstCode'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input type="text" matInput [formControl]="form.controls[x.formControl]" [matAutocomplete]="sstCode">
+              <mat-autocomplete #sstCode (optionSelected)="onSST($event.option.value)">
+                <mat-option *ngFor="let tax of filteredSST | async" [value]="tax.bl_fi_cfg_tax_code.tax_code">{{tax.bl_fi_cfg_tax_code.tax_code}}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'whtCode'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input type="text" matInput [formControl]="form.controls[x.formControl]" [matAutocomplete]="sstCode">
+              <mat-autocomplete #sstCode (optionSelected)="onWHT($event.option.value)">
+                <mat-option *ngFor="let tax of filteredWHT | async" [value]="tax.bl_fi_cfg_tax_code.tax_code">{{tax.bl_fi_cfg_tax_code.tax_code}}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'unitDiscount'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number" step=".01"
+              (change)="nullHandler(x.formControl, $event.target.value); onCalculateFromUnitDisc()">
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'discountAmount'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number" step=".01"
+              (change)="nullHandler(x.formControl, $event.target.value); onCalculateFromAmountDisc()">
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'netAmount'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number" step=".01"
+              (change)="nullHandler(x.formControl, $event.target.value); onCalculateFromAmountNet()">
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'txnAmount'" appearance = "outline">
+              <mat-label>{{x.label}}</mat-label>
+              <input matInput [formControl]="form.controls[x.formControl]" autocomplete="off" type="number" step=".01"
+              (change)="nullHandler(x.formControl, $event.target.value); onCalculateFromAmountTxn()">
+              <mat-error>{{x.label}} is <strong>not valid</strong></mat-error>
+            </mat-form-field>
+          </ng-container>
+        </ng-template>
+      </div>
+    </div>
+    <mat-form-field appearance = "outline">
+      <mat-label>Remarks</mat-label>
+      <textarea #remarks matInput [formControl]="form.controls['remarks']"></textarea>
+      <mat-hint align="end">{{remarks.value.length}} characters</mat-hint>
+    </mat-form-field>
+  </div>
+</form>

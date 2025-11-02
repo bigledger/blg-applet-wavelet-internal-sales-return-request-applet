@@ -1,0 +1,45 @@
+<div class="view-col-table no-tab" fxLayout="column" style="margin: 10px">
+    <mat-card-title class="column-title" style="padding: 10px">
+      <div style="margin-top: 20px">
+        Sales Return File Export Listing
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+        <div fxFlex="3 0 0">
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="6px">
+
+            <form [formGroup]="form" class="date-picker-form">
+              <!-- date_txn_from and date_txn_to -->
+              <div class="date-picker-group">
+                <mat-form-field appearance="outline" class="date-picker-field">
+                  <input matInput formControlName="date_txn_from" [matDatepicker]="txnDateFrom" placeholder="Choose Txn Date From">
+                  <mat-datepicker-toggle matSuffix [for]="txnDateFrom"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi="true" #txnDateFrom></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="date-picker-field">
+                  <input matInput formControlName="date_txn_to" [matDatepicker]="txnDateTo" placeholder="Choose Txn Date To">
+                  <mat-datepicker-toggle matSuffix [for]="txnDateTo"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi="true" #txnDateTo></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <button mat-raised-button color="primary" type="button" (click)="generateCSV()">Generate CSV</button>
+            </form>            
+          </div>
+        </div>
+        <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+          <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+        </div>
+      </div>
+    </mat-card-title>
+  
+  
+    <div style="height: 100%;"> 
+      <ag-grid-angular #agGrid style="height: 100%; width: 100%" class="ag-theme-balham"
+        [getRowClass]="pagination.getRowClass" [columnDefs]="columnsDefs" [rowData]="[]"
+        [paginationPageSize]="pagination.rowPerPage" [cacheBlockSize]="pagination.rowPerPage" [pagination]="true"
+        [animateRows]="true" [defaultColDef]="defaultColDef" [rowSelection]="'single'"
+        [sideBar]="true" [rowModelType]="'serverSide'" serverSideStoreType="partial"  
+        [suppressRowClickSelection]="true"  [frameworkComponents]="frameworkComponents"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
+  </div>

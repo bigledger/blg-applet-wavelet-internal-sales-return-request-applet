@@ -1,0 +1,48 @@
+<div class="view-col-table no-tab" fxLayout="column">
+    <mat-card-title class="column-title">
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.gt-md="100">
+          <div fxLayout="row" fxLayoutAlign="space-around center" class="fade-in">
+          </div>
+        </div>
+      </div>
+      <div class="p-5" [ngStyle.gt-md]="{'flex-flow': 'row'}" [ngStyle.lt-lg]="{'flex-flow': 'row wrap'}"
+        fxLayoutAlign="space-between end" fxLayoutGap="10px">
+        <div fxFlex="60" fxFlex.lt-lg="100">
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+            <app-advanced-search class="mobile" fxFlex fxFlex.lt-sm="100" [id]="'company'"
+              [advSearchModel]="searchModel"></app-advanced-search>
+          </div>
+        </div>
+        <div class="blg-accent" fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="space-between center">
+          <app-pagination fxFlex #pagination [agGridReference]="agGrid"></app-pagination>
+
+        </div>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between" fxLayoutGap="10px" style="margin: 5px;">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px" style="margin: 5px;">
+          <button mat-raised-button color="primary" (click)="postToProcess()">Send</button>
+        </div>
+      </div>
+    </mat-card-title>
+    <div style="height: 80%;">
+      <ag-grid-angular
+        #agGrid id="grid"
+        style="height: 100%;"
+        class="ag-theme-balham"
+        [getRowClass]="pagination.getRowClass"
+        [columnDefs]="columnsDefs"
+        [rowData]="[]"
+        [paginationPageSize]="pagination.rowPerPage"
+        [cacheBlockSize]="pagination.rowPerPage"
+        [pagination]="true"
+        [animateRows]="true"
+        [defaultColDef]="defaultColDef"
+        [suppressRowClickSelection]="false"
+        [sideBar]="true"
+        [rowModelType]="'serverSide'"
+        [serverSideStoreType]="'partial'"
+        (gridReady)="onGridReady($event)">
+      </ag-grid-angular>
+    </div>
+  </div>

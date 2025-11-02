@@ -1,0 +1,47 @@
+
+  <div class="view-col-table no-tab" fxLayout="column">
+    <mat-card-title class="column-title">
+      <div style="margin-top: 20px">Intercompany Transaction Listing</div>
+    </mat-card-title>
+    <div style="height: 80%">
+      <mat-tab-group [dynamicHeight]="true" *ngIf="!showPanels()">
+        <mat-tab label="UNPROCESSED">
+          <ng-template matTabContent>
+            <intercompany-processing-queue-listing></intercompany-processing-queue-listing>
+          </ng-template>
+  
+        </mat-tab>
+        
+        <mat-tab label="PROCESSED">
+          <ng-template matTabContent>
+            <generic-doc-intercompany-link-listing></generic-doc-intercompany-link-listing>
+          </ng-template>
+        </mat-tab>
+  
+      </mat-tab-group>
+
+      <mat-accordion *ngIf="showPanels()" [multi]="true">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+              <mat-panel-title>
+                UNPROCESSED
+              </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <intercompany-processing-queue-listing></intercompany-processing-queue-listing>
+          </ng-template>
+        </mat-expansion-panel>
+        
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+              <mat-panel-title>
+                PROCESSED
+              </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <generic-doc-intercompany-link-listing></generic-doc-intercompany-link-listing>
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>

@@ -1,0 +1,26 @@
+<app-breadcrumb fxHide.gt-sm [breadCrumbs]="breadCrumbs" (crumb)="goToIndex($event)"></app-breadcrumb>
+<table fxLayout="row" ngClass.lt-sm="card-table-mobile" class="card-table">
+  <ng-container *ngIf="leftDrawer.length > 0" >
+    <th fxHide.lt-md (click)="goBackIndex(col.index)" class="collapse-cols-header view-col" *ngFor="let col of leftDrawer; let i = index">
+      <span class="collapsed-col-container">
+        <p class="collapse-cols-index">{{i+1}}</p>
+        <p class="collapse-cols-text">{{col.compName}}</p>
+      </span>
+    </th>
+  </ng-container>
+  <th [fxFlex]="!secondCol ? 100 : 50 - (leftDrawer.length * 2)" ngClass.lt-sm="view-col-mobile" class="view-col">
+    <ng-template firstColumnHost></ng-template>
+  </th>
+  <th fxFlex [@openClose]="secondCol ? 'open' : 'close'" class="view-col">
+    <ng-template secondColumnHost></ng-template>
+  </th>
+  <ng-container *ngIf="rightDrawer.length > 0" >
+    <th fxHide.lt-md (click)="goForwardIndex(col.index)" class="collapse-cols-header view-col" *ngFor="let col of rightDrawer; let i = index">
+      <span class="collapsed-col-container">
+        <p class="collapse-cols-index">{{i + 1 + leftDrawer.length + (secondCol ? 2 : 1)}}</p>
+        <p class="collapse-cols-text">{{col.compName}}</p>
+      </span>
+    </th>
+  </ng-container>
+</table>
+

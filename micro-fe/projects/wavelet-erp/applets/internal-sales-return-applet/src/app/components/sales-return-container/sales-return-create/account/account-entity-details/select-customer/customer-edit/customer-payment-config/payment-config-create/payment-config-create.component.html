@@ -1,0 +1,158 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div> <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button" (click)="onReturn()"> <img
+          [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px"> </button> <span> Payment Config Create </span> </div>
+    <button mat-raised-button type="button" (click)="onSave()" [disabled]="!priceConfigInfo.valid"
+      color={{isClicked}}>{{addSuccess}}</button>
+  </div>
+</mat-card-title>
+<form [formGroup]="priceConfigInfo" #formDirectives="ngForm">
+  <mat-tab-group [dynamicHeight]="true">
+    <mat-tab label="Main">
+      <div fxLayout="column" class="view-col-forms">
+        <div fxLayout="raw wrap" fxFlexAlign="center" class="row">
+
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Payee Residential Status</mat-label>
+              <mat-select placeholder="Payee Residential Status" [formControl]="priceConfigInfo.controls['residentialStatus']"
+                required>
+                <mat-option *ngFor="let item of payeeType" [value]="item.value">{{item.viewValue}}</mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="priceConfigInfo.controls['residentialStatus'].hasError('required') && priceConfigInfo.controls['residentialStatus'].touched"
+                class="text-danger font-14">You must select Payee Residential Status </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Payment Type</mat-label>
+              <mat-select placeholder="Payment Type" [formControl]="priceConfigInfo.controls['paymentType']" (selectionChange)='onPaymentMethodChange($event.value)' required>
+                <!-- <mat-option value="None">None</mat-option>
+                <mat-option value="Jompay">Jompay</mat-option>
+                <mat-option value="Telegraphic Transfer">Telegraphic Transfer</mat-option>
+                <mat-option value="Giro">Giro</mat-option> -->
+                <mat-option *ngFor="let item of newSettlement" [value]="item.settlement_name">{{item.settlement_name}}
+                </mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="priceConfigInfo.controls['paymentType'].hasError('required') && priceConfigInfo.controls['paymentType'].touched"
+                class="text-danger font-14">You must select Payment Type </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <mat-select placeholder="Country" [formControl]="priceConfigInfo.controls['country']" required>
+                <mat-option>
+                  <ngx-mat-select-search (keyup)="applyCountryFilter($event.target.value)"
+                    [placeholderLabel]="'Country'" [noEntriesFoundLabel]="'No matching records found'"
+                    formControlName="currentCountry" ngDefaultControl>
+                  </ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let item of newCountryArr" [value]="item.country_code"> {{ item.country_name }}
+                </mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="priceConfigInfo.controls['country'].hasError('required') && priceConfigInfo.controls['country'].touched"
+                class="text-danger font-14">You must insert Country. </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Bank</mat-label>
+              <mat-select placeholder="Bank" [formControl]="priceConfigInfo.controls['bank']">
+                <mat-option>
+                  <ngx-mat-select-search (keyup)="applyBankFilter($event.target.value)" [placeholderLabel]="'Bank'"
+                    [noEntriesFoundLabel]="'No matching records found'" formControlName="currentBank" ngDefaultControl>
+                  </ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let item of bankType" [value]="item.value">{{item.viewValue}}</mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="priceConfigInfo.controls['bank'].hasError('required') && priceConfigInfo.controls['bank'].touched"
+                class="text-danger font-14">You must select Bank. </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Bank Identifier Code</mat-label> 
+              <!-- <input maxlength="255" matInput formControlName="bankCode"> -->
+              <!-- <mat-hint
+                *ngIf="priceConfigInfo.controls['bankCode'].hasError('required') && priceConfigInfo.controls['bankCode'].touched"
+                class="text-danger font-14">You must insert Bank Identifier Code. </mat-hint>
+              <mat-hint *ngIf="priceConfigInfo.controls['bankCode'].value?.length === 255" class="text-danger font-14">
+                Please
+                insert
+                no
+                more than 255
+              </mat-hint> -->
+              <mat-select placeholder="Bank Identifier Code" [formControl]="priceConfigInfo.controls['bankCode']">
+                <mat-option>
+                  <ngx-mat-select-search (keyup)="applySettlementIdentifierFilter($event.target.value)" [placeholderLabel]="'Bank Identifier Code'"
+                    [noEntriesFoundLabel]="'No matching records found'" formControlName="currentBankIdentifier" ngDefaultControl>
+                  </ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let item of settlementIdentifierCodeList" [value]="item.value">{{item.viewValue}}</mat-option>
+              </mat-select>
+              <mat-hint
+                *ngIf="priceConfigInfo.controls['bankCode'].hasError('required') && priceConfigInfo.controls['bankCode'].touched"
+                class="text-danger font-14">You must select Bank Identifier Code. </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Bank Acc No.</mat-label> <input maxlength="255" matInput formControlName="bankAccNo">
+              <mat-hint
+                *ngIf="priceConfigInfo.controls['bankAccNo'].hasError('required') && priceConfigInfo.controls['bankAccNo'].touched"
+                class="text-danger font-14">You must insert Bank Acc No. </mat-hint>
+              <mat-hint *ngIf="priceConfigInfo.controls['bankAccNo'].value?.length === 255" class="text-danger font-14">
+                Please
+                insert
+                no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Bank Acc Holder Name</mat-label> <input maxlength="255" matInput formControlName="bankAccName">
+              <mat-hint
+                *ngIf="priceConfigInfo.controls['bankAccName'].hasError('required') && priceConfigInfo.controls['bankAccName'].touched"
+                class="text-danger font-14">You must insert Bank Acc Holder Name. </mat-hint>
+              <mat-hint *ngIf="priceConfigInfo.controls['bankAccName'].value?.length === 255"
+                class="text-danger font-14">Please
+                insert
+                no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>IBN Number</mat-label> <input maxlength="255" matInput formControlName="IBN_No">
+              <mat-hint
+                *ngIf="priceConfigInfo.controls['IBN_No'].hasError('required') && priceConfigInfo.controls['IBN_No'].touched"
+                class="text-danger font-14">You must insert IBN Number </mat-hint>
+              <mat-hint *ngIf="priceConfigInfo.controls['IBN_No'].value?.length === 255" class="text-danger font-14">
+                Please insert
+                no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance = "outline">
+              <mat-label>Account Expiry</mat-label>
+              <input matInput [matDatepicker]="datepicker" [formControl]="priceConfigInfo.controls['expiryDate']" autocomplete="off" readonly (click)="datepicker.open()">
+              <mat-error>Account Expiry is <strong>not valid</strong></mat-error>
+              <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #datepicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</form>

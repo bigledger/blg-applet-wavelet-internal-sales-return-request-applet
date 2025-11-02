@@ -1,0 +1,100 @@
+<mat-card-title class="column-title">
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div> <button #navBtn mat-button class="blg-button-icon" matTooltip="Back" type="button" (click)="onReturn()"> <img
+          [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null" src="../../../assets/images/backbutton.png"
+          alt="add" width="40px" height="40px"> </button> <span> Branch Edit </span> </div> 
+        <!-- <button mat-raised-button
+      type="button" (click)="onSave()" [disabled]="!form.valid" color={{isClicked}}>{{addSuccess}}</button> -->
+  </div>
+</mat-card-title>
+<form [formGroup]="form">
+  <mat-tab-group [dynamicHeight]="true">
+    <mat-tab label="Main">
+      <div fxLayout="column" class="view-col-forms">
+        <div fxLayout="raw wrap" fxFlexAlign="center" class="row">
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Branch Name</mat-label> <input maxlength="255" matInput formControlName="branch_name" required>
+              <mat-hint
+                *ngIf="form.controls['branch_name'].hasError('required') && form.controls['branch_name'].touched"
+                class="text-danger font-14">You must insert Branch Name. </mat-hint>
+              <mat-hint *ngIf="form.controls['branch_name'].value?.length === 255" class="text-danger font-14">
+                Please
+                insert no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Branch Code</mat-label> <input maxlength="255" matInput formControlName="branch_code" required>
+              <mat-hint
+                *ngIf="form.controls['branch_code'].hasError('required') && form.controls['branch_code'].touched"
+                class="text-danger font-14">You must insert Branch Code. </mat-hint>
+              <mat-hint *ngIf="form.controls['branch_code'].value?.length === 255" class="text-danger font-14">
+                Please insert no more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <!-- <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Description</mat-label> <input maxlength="255" matInput formControlName="description">
+              <mat-hint
+                *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched"
+                class="text-danger font-14">You must insert Description. </mat-hint>
+              <mat-hint *ngIf="form.controls['description'].value?.length === 255" class="text-danger font-14">
+                Please
+                insert
+                no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Fax No</mat-label> <input maxlength="255" matInput formControlName="fax_no">
+              <mat-hint *ngIf="form.controls['fax_no'].hasError('required') && form.controls['fax_no'].touched"
+                class="text-danger font-14">You must insert Fax No </mat-hint>
+              <mat-hint *ngIf="form.controls['fax_no'].value?.length === 255" class="text-danger font-14">Please
+                insert no
+                more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label> Phone Number </mat-label>
+              <input matInput placeholder="Phone Number" formControlName="phone" type="text" maxlength="255" />
+              <mat-hint *ngIf="form.controls['phone'].value?.length === 255" class="text-danger font-14">
+                Please insert no more than 255
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+            <mat-form-field appearance="outline">
+              <mat-label> Email </mat-label>
+              <input matInput placeholder="Email" formControlName="email" type="text" maxlength="255" />
+              <mat-hint *ngIf="form.controls['email'].value?.length === 255" class="text-danger font-14">
+                Please insert no more than 255
+              </mat-hint>
+              <mat-hint *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched"
+                class="text-danger font-14"> Please enter valid email </mat-hint>
+            </mat-form-field>
+          </div> -->
+          <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label> Status </mat-label>
+              <mat-select placeholder="Status" formControlName="status" disabled='true'>
+                <mat-option *ngFor="let s of status" [value]="s.value"> {{s.viewValue}} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class=" center" style="margin-top: 10px; width: 50px;">
+          <button mat-raised-button color="warn" type="button" (click)="onRemove()">Remove </button>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</form>

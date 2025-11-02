@@ -1,0 +1,73 @@
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex | async" *ngIf="!showPanels()">
+    <mat-tab label="Main Details">
+        <app-item-details-main-details [editMode]="editMode"></app-item-details-main-details>
+    </mat-tab>
+    <mat-tab label="Delivery Instruction">
+        <app-item-details-delivery-instructions [editMode]="editMode"></app-item-details-delivery-instructions>
+    </mat-tab>
+    <mat-tab label="Department">
+        <app-item-details-department [editMode]="editMode"></app-item-details-department>
+    </mat-tab>
+    <mat-tab label="Doc Link" *ngIf="editMode">
+        <app-item-details-doc-link></app-item-details-doc-link>
+    </mat-tab>
+    <mat-tab label="Delivery Details">
+        <app-item-details-delivery-details></app-item-details-delivery-details>
+    </mat-tab>
+</mat-tab-group>
+
+<mat-accordion *ngIf="showPanels()" [multi]="true">
+    <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+            Main Details
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-item-details-main-details [editMode]="editMode"></app-item-details-main-details>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel *ngIf="!appletSettings.HIDE_MULTI_DISCOUNT">
+        <mat-expansion-panel-header>
+            <mat-panel-title>  
+                Multi Discount
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-util-multi-level-discount [line$]="line$" [unitPriceAfterDisc]="main?.form?.value?.unitPriceTxn" (updateMainPrice)="updateMainPrice($event)"  (resetMainPrice)="resetMainPrice()"></app-util-multi-level-discount>
+    </mat-expansion-panel>
+    
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+            Delivery Instruction
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-item-details-delivery-instructions [editMode]="editMode"></app-item-details-delivery-instructions>
+    </mat-expansion-panel>
+    
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Department
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-item-details-department [editMode]="editMode"></app-item-details-department>
+    </mat-expansion-panel>
+    
+    <mat-expansion-panel *ngIf="editMode">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Doc Link
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-item-details-doc-link></app-item-details-doc-link>
+    </mat-expansion-panel>
+    
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Delivery Details
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-item-details-delivery-details></app-item-details-delivery-details>
+    </mat-expansion-panel>
+</mat-accordion>

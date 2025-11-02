@@ -1,0 +1,52 @@
+<form [formGroup]="form">
+    <div fxLayout="row wrap" fxFlexAlign="center" class="view-col-forms">
+      <div class="p-10" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Selected Branch</mat-label>
+          <input
+            readonly
+            matInput
+            placeholder="Branch"
+            [formControl]="form.controls['selectedBranch']"
+            type="text"
+          />
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Selected Entity</mat-label>
+          <input
+            readonly
+            matInput
+            placeholder="Entity"
+            [formControl]="form.controls['selectedEntity']"
+            type="text"
+          />
+        </mat-form-field>
+        <div>
+            <ng-container *ngIf="(checkforIntercompanyBranches$ | async) as check  ">
+                <div *ngIf="check.show" style="width: 350px;">
+                    <select-intercompany-branch-drop-down 
+                        [(intercompanyBranchControl)]="form.controls['intercompanyBranch']"
+                        [label]="'Intercompany Branch'"
+                        [entityGuid] = "entityGuid"
+                        (selectionChange)="onSelect(form.value)"
+                        >                                    
+                    </select-intercompany-branch-drop-down>
+                    <select-branch-intercompany-config
+                        [(configControl)]="form.controls['intercompanyConfig']"
+                        [branchGuid]="branchGuid"
+                        [configs] = "configs"
+                        (selectionChange)="onConfigSelect(form.value)"
+                        >
+                    </select-branch-intercompany-config>
+                </div>
+            </ng-container>
+        </div>
+  
+  
+  
+      </div>
+    </div>
+  </form>
+  

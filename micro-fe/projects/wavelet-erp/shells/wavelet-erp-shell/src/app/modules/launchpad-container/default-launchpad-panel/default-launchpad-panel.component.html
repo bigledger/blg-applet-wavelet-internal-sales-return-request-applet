@@ -1,0 +1,132 @@
+<!--<h3>Default LaunchPad Panel</h3>-->
+<div fxLayout="row wrap">
+  <mat-form-field appearance="outline" class="searchBar"  >
+    <mat-label>Search</mat-label>
+    <input matInput  [(ngModel)]="searchInput">
+  </mat-form-field>
+</div>
+<!--<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Launchpad</mat-card-title>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>-->
+<div fxLayout="row wrap">
+  <div fxFlex.lg="25%" fxFlex.md ="50%" fxFlex.sm="100%" class="container" *ngFor="let applet  of installedApplets | search: searchInput">
+<!--    <mat-card matBadge="10" matBadgeColor="green" matBadgeSize="medium"><button [routerLink]="applet.property_json.routerLink" style="cursor: pointer; background: none; border: none;">-->
+    <mat-card matBadge="10" matBadgeColor="green" matBadgeSize="medium"><button (click)="routeToApplet(applet.code, applet.property_json.routerLink, applet.property_json.tenantCode)" style="cursor: pointer; background: none; border: none;">
+    <div class="headerText">
+      <h4 style="margin-bottom: 0px">{{applet.property_json.project}}</h4>
+    </div>
+
+      <img *ngIf= "applet.property_json.appletIconUrl" mat-card-image src="{{applet.property_json.appletIconUrl}}" class="image" alt="Photo of a Shiba Inu">
+      <img *ngIf="!applet.property_json.appletIconUrl" mat-card-image src="assets/images/big/img4.jpg" class="image" alt="Photo of a Shiba Inu">
+
+      <h4 class="pictureText">{{applet.description}}</h4>
+<!--      <div class="overlay">
+        <div class="text">
+          <button mat-icon-button style="margin-right: 20px;">
+            <mat-icon>info</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>-->
+    <div class="headerBody">
+      <h4><strong>{{applet.name}}</strong></h4>
+    </div></button>
+    </mat-card>
+  </div>
+</div>
+
+<!--
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Others</mat-card-title>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="25%" fxFlex="100" class="container">
+    <mat-card>
+      <img mat-card-image src="assets/images/big/img4.jpg" class="image" alt="Photo of a Shiba Inu">
+      <div class="overlay">
+        <div class="text">
+          <button mat-icon-button style="margin-right: 20px;">
+            <mat-icon>info</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <mat-card-content align="center">
+        <h4>Applet Name</h4>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  &lt;!&ndash; Card column &ndash;&gt;
+  <div fxFlex.gt-sm="25%" fxFlex="100" class="container">
+    <mat-card>
+      <img mat-card-image src="assets/images/big/img3.jpg" class="image" alt="">
+      <div class="overlay">
+        <div class="text">
+          <button mat-icon-button style="margin-right: 20px;">
+            <mat-icon>info</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <mat-card-content align="center">
+        <h4>Applet Name</h4>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  &lt;!&ndash; Card column &ndash;&gt;
+  <div fxFlex.gt-sm="25%" fxFlex="100" class="container">
+    <mat-card>
+      <img mat-card-image src="assets/images/big/img5.jpg" class="image" alt="">
+      <div class="overlay">
+        <div class="text">
+          <button mat-icon-button style="margin-right: 20px;">
+            <mat-icon>info</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <mat-card-content align="center">
+        <h4>Applet Name</h4>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex.gt-sm="25%" fxFlex="100" class="container">
+    <mat-card>
+      <img mat-card-image src="assets/images/big/img2.jpg" class="image" alt="">
+      <div class="overlay">
+        <div class="text">
+          <button mat-icon-button style="margin-right: 20px;">
+            <mat-icon>info</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <mat-card-content align="center">
+        <h4>Applet Name</h4>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+-->

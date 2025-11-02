@@ -1,0 +1,69 @@
+<div class="card-container">
+
+  <mat-card class="card progress-container">
+    <div class="progress-line-posting-queue" [ngClass]="{'completed': inBatchPool || inInternalSubmissionQueue || inSubmissionHistory }"></div>
+
+    <div class="progress-line-2-posting-queue" [ngClass]="{'completed': inBatchPool || inInternalSubmissionQueue || inSubmissionHistory, 'in-posting-queue': inPostingQueue }"></div>
+
+    <div class="card-header">
+      <div class="left-section">
+        <div class="indicator blue">1</div>
+        <div class="title">Pending In Posting Queue</div>
+        <div class="date">{{allDate}}</div>
+      </div>
+      <div class="right-section">
+        <p class="scrollable-message">{{postingQueueMessage}}</p>
+        <mat-icon class="success">{{postingQueueIcon}}</mat-icon>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="card progress-container">
+    <div class="progress-line-batch-pool" [ngClass]="{'in-batch-pool': inBatchPool, 'completed': inInternalSubmissionQueue || inSubmissionHistory}"></div>
+    <div class="progress-line-2-batch-pool" [ngClass]="{'in-batch-pool': inBatchPool, 'completed': inInternalSubmissionQueue || inSubmissionHistory}"></div>
+
+    <div class="card-header">
+      <div class="left-section">
+        <div class="indicator blue">2</div>
+        <div class="title">In Batch Pool</div>
+        <div class="date">{{allDate}}</div>
+      </div>
+      <div class="right-section">
+        <p class="scrollable-message">{{batchPoolMessage}}</p>
+        <mat-icon class="success">{{batchPoolIcon}}</mat-icon>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="card progress-container">
+    <div class="progress-line-internal-submission-queue" [ngClass]="{'in-internal-submission-queue': inInternalSubmissionQueue, 'completed': inSubmissionHistory}"></div>
+    <div class="progress-line-2-internal-submission-queue" [ngClass]="{'in-internal-submission-queue': inInternalSubmissionQueue, 'completed': inSubmissionHistory}"></div>
+    <div class="card-header">
+      <div class="left-section">
+        <div class="indicator blue">3</div>
+        <div class="title">In Internal Submission Queue</div>
+        <div class="date">{{allDate}}</div>
+      </div>
+      <div class="right-section">
+        <p class="scrollable-message">{{internalSubmissionQueueMessage}}</p>
+        <mat-icon class="success">{{internalSubmissionQueueIcon}}</mat-icon>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="card progress-container">
+    <div class="progress-line-internal-submission-history" [ngClass]="{'in-internal-submission-history': inSubmissionHistory, 'completed': inSubmissionHistory}"></div>
+    <div class="progress-line-2-internal-submission-history" [ngClass]="{'in-internal-submission-history': inSubmissionHistory, 'completed': inSubmissionHistory}"></div>
+    <div class="card-header">
+      <div class="left-section">
+        <div class="indicator blue">4</div>
+        <div class="title">Submitted to IRB</div>
+        <div class="date">{{allDate}}</div>
+      </div>
+      <div class="right-section">
+        <p class="scrollable-message">{{internalSubmissionHistoryMessage}}</p>
+        <mat-icon class="success">{{internalSubmissionHistoryIcon}}</mat-icon>
+      </div>
+    </div>
+  </mat-card>
+</div>

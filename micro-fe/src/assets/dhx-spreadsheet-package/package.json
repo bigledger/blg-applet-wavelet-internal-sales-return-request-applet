@@ -1,0 +1,13 @@
+{
+  "name": "dhx-spreadsheet-package",
+  "version": "5.1.5",
+  "description": "dhtmlxSpreadsheet widget",
+  "homepage": "https://docs.dhtmlx.com/spreadsheet",
+  "private": true,
+  "bugs": {
+    "url": "https://forum.dhtmlx.com",
+    "email": "support@dhtmlx.com"
+  },
+  "main": "codebase/spreadsheet.js",
+  "types": "codebase/spreadsheet.d.ts"
+}

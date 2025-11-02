@@ -1,0 +1,63 @@
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" *ngIf="!showPanels()">
+    <mat-tab label="Delivery Order">
+        <ng-template matTabContent>
+        <app-knock-off-delivery-order></app-knock-off-delivery-order>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Job Sheet">
+        <ng-template matTabContent>
+        <app-knock-off-jobsheet></app-knock-off-jobsheet>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Sales Invoice">
+        <ng-template matTabContent>
+        <app-knock-off-sales-invoice></app-knock-off-sales-invoice>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Sales Order">
+        <ng-template matTabContent>
+        <app-knock-off-sales-order></app-knock-off-sales-order>
+        </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-accordion *ngIf="showPanels()">
+    <mat-expansion-panel *ngFor="let panel of panels; let i = index"
+                             [expanded]="i === expandedPanelIndex"
+                             (opened)="onPanelOpened(i)"
+                             [ngClass]="{'expanded-subpanel': expandedPanelIndex === i}">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ panel.title }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <!-- Delivery Order Panel Content -->
+      <ng-container *ngIf="panel.content === 'delivery-order'">
+        <ng-template matExpansionPanelContent>
+          <app-knock-off-delivery-order></app-knock-off-delivery-order>
+        </ng-template>
+      </ng-container>
+
+          <!-- Job Sheet Panel Content -->
+      <ng-container *ngIf="panel.content === 'job-sheet'">
+        <ng-template matExpansionPanelContent>
+          <app-knock-off-jobsheet></app-knock-off-jobsheet>
+        </ng-template>
+      </ng-container>
+
+          <!-- Sales Invoice Panel Content -->
+      <ng-container *ngIf="panel.content === 'sales-invoice'">
+        <ng-template matExpansionPanelContent>
+          <app-knock-off-sales-invoice></app-knock-off-sales-invoice>
+        </ng-template>
+      </ng-container>
+
+          <!-- Sales Order Panel Content -->
+      <ng-container *ngIf="panel.content === 'sales-order'">
+        <ng-template matExpansionPanelContent>
+          <app-knock-off-sales-order></app-knock-off-sales-order>
+        </ng-template>
+      </ng-container>
+    </mat-expansion-panel>
+  </mat-accordion>
