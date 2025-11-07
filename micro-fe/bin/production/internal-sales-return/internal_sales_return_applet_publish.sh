@@ -12,10 +12,10 @@ ng build --prod --project=internal-sales-return-applet --output-hashing none
 node elements-build-scripts/wavelet-erp/internal-sales-return-applet/internal-sales-return-applet-elements-build.js
 
 # WARNING: Backup first
-aws s3 mv s3://akaun-applets/bigledger/wavelet-erp/internal-sales-return-applet/prod s3://akaun-applets/bigledger/wavelet-erp/internal-sales-return-applet/prod/backups/Backup-`date +%Y-%m-%d:%H:%M:%S` --profile akaun --recursive --exclude "backups/*"
+aws s3 mv s3://akaun-applets-my/bigledger/wavelet-erp/internal-sales-return-applet/prod s3://akaun-applets-my/bigledger/wavelet-erp/internal-sales-return-applet/prod/backups/Backup-`date +%Y-%m-%d:%H:%M:%S` --profile akaun --recursive --exclude "backups/*"
 
 # WARNING: Upload the new  file to s3
-aws s3 cp elements/wavelet-erp/applets/internal-sales-return-applet/ s3://akaun-applets/bigledger/wavelet-erp/internal-sales-return-applet/prod --profile akaun --acl public-read --recursive
+aws s3 cp elements/wavelet-erp/applets/internal-sales-return-applet/ s3://akaun-applets-my/bigledger/wavelet-erp/internal-sales-return-applet/prod --profile akaun --acl public-read --recursive
 
 # === Append Deployment Log as New File ===
 DEPLOYER=$(aws sts get-caller-identity --profile akaun --query 'Arn' --output text)
@@ -25,6 +25,6 @@ BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
 echo "[${TIMESTAMP}] Deployment by ${DEPLOYER} (commit ${COMMIT_HASH}, branch ${BRANCH_NAME}, env: prod)" > /tmp/changelog.txt
 
-aws s3 cp /tmp/changelog.txt s3://akaun-applets/bigledger/wavelet-erp/internal-sales-return-applet/prod/changelog.txt --profile akaun --acl bucket-owner-full-control
+aws s3 cp /tmp/changelog.txt s3://akaun-applets-my/bigledger/wavelet-erp/internal-sales-return-applet/prod/changelog.txt --profile akaun --acl bucket-owner-full-control
 
 rm /tmp/changelog.txt

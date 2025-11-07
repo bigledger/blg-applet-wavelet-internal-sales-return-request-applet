@@ -2,7 +2,8 @@
     "name": "akaun-app",
     "version": "3.6.2",
     "scripts": {
-        "postinstall": "ngcc && git submodule update --init --recursive",
+        "postinstall": "ngcc",
+        "setup": "git submodule update --init --recursive && npm install --legacy-peer-deps",
         "ng": "ng",
         "start:Shell": "ng s akaun-shell",
         "sme": "source-map-explorer",
