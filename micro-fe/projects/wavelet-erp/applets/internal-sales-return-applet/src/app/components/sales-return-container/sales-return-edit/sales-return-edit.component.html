@@ -23,109 +23,119 @@
 <br />
 
 <mat-tab-group mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="selectedIndex" *ngIf="!showPanels()">
-    <mat-tab label="Search">
-        <app-search-invoices [selectedIndex]="selectedSearchIndex$ | async" [orientation]="orientation"></app-search-invoices>
-    </mat-tab>
+    <ng-container *ngFor="let orderedTab of getFilteredPanels()">
+    <!-- Eager Loaded Mat Tabs -->
+    <mat-tab [label]="orderedTab.title" *ngIf="!orderedTab.lazy">
+      <ng-template mat-tab-label>
+        <span [style.color]="orderedTab?.invalid ? 'red' : 'inherit'" [style.font-weight]="orderedTab?.invalid ? 'bold' : 'normal'">
+          {{ orderedTab.title }}
+        </span>
+      </ng-template>
+      <ng-container [ngSwitch]="orderedTab.content">
 
-    <mat-tab label="Main Details">
-        <ng-template mat-tab-label>
-            <span [style.color]="mainTabInvalid ? 'red' : 'inherit'" [style.font-weight]="mainTabInvalid ? 'bold' : 'normal'">Main Details</span>
-        </ng-template>
-        <app-internal-sales-return-main-details [draft$]="draft$" (updateMain)="onUpdateMain($event)"
-            (selectMember)="goToSelectMember()" [pns$]="pns$" (formStatusChange)="onFormStatusChange($event)">
-        </app-internal-sales-return-main-details>
-        <div style="padding: 5px;">
-            <button mat-raised-button color="warn" type="button" (click)="onDiscard()" *ngIf="showDiscard()">
-                DISCARD
-            </button>
-            <button mat-raised-button color="warn" type="button" *ngIf="showVoid()" (click)="onVoid()">
-                VOID
-            </button>
-        </div>
-    </mat-tab>
-
-    <mat-tab label="E-Invoice">
-        <app-e-invoice [orientation]="orientation"></app-e-invoice>
-    </mat-tab>
-
-    <mat-tab label="Account">
-        <ng-template mat-tab-label>
-            <span [style.color]="accountTabInvalid ? 'red' : 'inherit'" [style.font-weight]="accountTabInvalid ? 'bold' : 'normal'">Account</span>
-        </ng-template>
-        <app-internal-sales-return-account [draft$]="draft$" [selectedIndex]="accountSelectedIndex$"
-            (selectEntity)="goToSelectEntity()" (selectBilling)="goToSelectBilling()"
-            (selectShipping)="goToSelectShipping()" (updateShipTo)="onUpdateShippingInfo($event)"
-            (updateShippingAddress)="onUpdateShippingAddress($event)" (updateBillTo)="onUpdateBillingInfo($event)"
-            (updateBillingAddress)="onUpdateBillingAddress($event)" (accountStatusChange)="onAccountStatusChange($event)"
-            [orientation]="orientation">
-        </app-internal-sales-return-account>
-    </mat-tab>
-
-    <mat-tab label="Lines">
-        <ng-template mat-tab-label>
-            <span [style.color]="lineTabInvalid ? 'red' : 'inherit'" [style.font-weight]="lineTabInvalid ? 'bold' : 'normal'">Lines</span>
-        </ng-template>
-        <app-internal-sales-return-line-item-listing [localState]="localState$ | async" [draft$]="draft$"
-            (itemCreate)="goToLineItemCreate()" (itemEdit)="goToLineItemEdit($event)">
-        </app-internal-sales-return-line-item-listing>
-    </mat-tab>
-
-    <mat-tab label="ARAP" *ngIf="!appletSettings.HIDE_MAIN_ARAP_TAB">
-        <app-sales-return-arap [draft$]="draft$"></app-sales-return-arap>
-    </mat-tab>
-
-    <mat-tab label="Delivery Details" *ngIf="!appletSettings.HIDE_DELIVERY_DETAILS_TAB">
-        <app-delivery-details [draft$]="draft$" [pns$]="pns$" [orientation]="orientation"></app-delivery-details>
-    </mat-tab>
-
-    <mat-tab label="Payment" *ngIf="!appletSettings.HIDE_MAIN_PAYMENT_TAB">
-        <ng-template mat-tab-label>
-            <span [style.color]="paymentTabInvalid ? 'red' : 'inherit'" [style.font-weight]="paymentTabInvalid ? 'bold' : 'normal'">Payment</span>
-        </ng-template>
-        <app-internal-sales-return-payment-listing [localState]="localState$ | async" [draft$]="draft$"
-            (settlementCreate)="goToSettlementCreate()" (settlementEdit)="goToSettlementEdit($event)">
-        </app-internal-sales-return-payment-listing>
-    </mat-tab>
-
-  <mat-tab label="Payment Adjustment" *ngIf="showAdjustment">
-    <app-sales-return-settlement-adjustment-listing [localState]="localState$ | async" [draft$]="draft$"
-                                                                (settlementaAdjustmentCreate)="goToAddSettlementAdjustment()" (settlementaAdjustmentEdit)="goToEditSettlementAdjustment($event)">
-    </app-sales-return-settlement-adjustment-listing>
-  </mat-tab>
-
-    <mat-tab label="Department Hdr" *ngIf="!appletSettings.HIDE_DEPARTMENT_HDR_TAB">
-        <ng-template matTabContent>
-            <app-internal-sales-return-department [draft$]="draft$" (updateDepartment)="onUpdateDepartmentInfo($event)">
-            </app-internal-sales-return-department>
-        </ng-template>
-    </mat-tab>
-
-    <mat-tab label="Trace Document" *ngIf="!appletSettings.HIDE_TRACE_DOCUMENT_TAB">
-        <app-generic-document-posting [genericDoc$]="hdr$" [orientation]="orientation$">
-        </app-generic-document-posting>
-    </mat-tab>
-
-    <mat-tab label="Contra" *ngIf="!appletSettings.HIDE_MAIN_CONTRA_TAB">
-        <ng-container #tabContent>
-            <app-internal-sales-return-contra-listing [draft$]="draft$" [localState]="localState$ | async"
-                (selectDocument)="goToSelectDocument()" (contraEdit)="goToEditContra($event)">
-            </app-internal-sales-return-contra-listing>
+        <ng-container *ngSwitchCase="'search'">
+            <app-search-invoices [selectedIndex]="selectedSearchIndex$ | async" [orientation]="orientation"></app-search-invoices>
         </ng-container>
+
+        <ng-container *ngSwitchCase="'main-details'">
+            <app-internal-sales-return-main-details [draft$]="draft$" (updateMain)="onUpdateMain($event)"
+                (selectMember)="goToSelectMember()" [pns$]="pns$" (formStatusChange)="onFormStatusChange($event)">
+            </app-internal-sales-return-main-details>
+            <div style="padding: 5px;">
+                <button mat-raised-button color="warn" type="button" (click)="onDiscard()" *ngIf="showDiscard()">
+                    DISCARD
+                </button>
+                <button mat-raised-button color="warn" type="button" *ngIf="showVoid()" (click)="onVoid()">
+                    VOID
+                </button>
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'e-invoice'">
+            <app-e-invoice [orientation]="orientation"></app-e-invoice>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'account'">
+            <app-internal-sales-return-account [draft$]="draft$" [selectedIndex]="accountSelectedIndex$"
+                (selectEntity)="goToSelectEntity()" (selectBilling)="goToSelectBilling()"
+                (selectShipping)="goToSelectShipping()" (updateShipTo)="onUpdateShippingInfo($event)"
+                (updateShippingAddress)="onUpdateShippingAddress($event)" (updateBillTo)="onUpdateBillingInfo($event)"
+                (updateBillingAddress)="onUpdateBillingAddress($event)" (accountStatusChange)="onAccountStatusChange($event)"
+                [orientation]="orientation">
+            </app-internal-sales-return-account>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'lines'">
+            <app-internal-sales-return-line-item-listing [localState]="localState$ | async" [draft$]="draft$"
+                (itemCreate)="goToLineItemCreate()" (itemEdit)="goToLineItemEdit($event)">
+            </app-internal-sales-return-line-item-listing>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'arap'">
+            <app-sales-return-arap [draft$]="draft$"></app-sales-return-arap>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'delivery-details'">
+            <app-delivery-details [draft$]="draft$" [pns$]="pns$" [orientation]="orientation"></app-delivery-details>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'payment'">
+            <app-internal-sales-return-payment-listing [localState]="localState$ | async" [draft$]="draft$"
+                (settlementCreate)="goToSettlementCreate()" (settlementEdit)="goToSettlementEdit($event)">
+            </app-internal-sales-return-payment-listing>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'payment-adjustment'">
+            <app-sales-return-settlement-adjustment-listing [localState]="localState$ | async" [draft$]="draft$"
+                                                                        (settlementaAdjustmentCreate)="goToAddSettlementAdjustment()" (settlementaAdjustmentEdit)="goToEditSettlementAdjustment($event)">
+            </app-sales-return-settlement-adjustment-listing>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'trace-document'">
+            <app-generic-document-posting [genericDoc$]="hdr$" [orientation]="orientation$">
+            </app-generic-document-posting>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'doc-link'">
+            <app-header-doc-link [pns$]="pns$" [orientation]="orientation"></app-header-doc-link>
+        </ng-container>
+ 
+        <ng-container *ngSwitchCase="'attachments'">
+            <app-internal-sales-return-attachments-listing [localState]="localState$ | async"
+                (addAttachment)="goToAttachmentAdd()" (extItem)="goToAttachmentView()">
+            </app-internal-sales-return-attachments-listing>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'export'">
+            <app-internal-sales-return-edit-export [draft$]="draft$"></app-internal-sales-return-edit-export>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'contra'">
+            <ng-container #tabContent>
+                <app-internal-sales-return-contra-listing [draft$]="draft$" [localState]="localState$ | async"
+                    (selectDocument)="goToSelectDocument()" (contraEdit)="goToEditContra($event)">
+                </app-internal-sales-return-contra-listing>
+            </ng-container>
+        </ng-container>
+
+      </ng-container>
     </mat-tab>
 
-    <mat-tab label="Doc Link" *ngIf="!appletSettings.HIDE_DOC_LINK_TAB">
-        <app-header-doc-link [pns$]="pns$" [orientation]="orientation"></app-header-doc-link>
-    </mat-tab>
+    <!-- Lazy Loaded Mat Tabs -->
+    <mat-tab [label]="orderedTab.title" *ngIf="orderedTab.lazy">
+      <ng-template matTabContent>
+        <ng-container [ngSwitch]="orderedTab.content">
 
-    <mat-tab label="Attachments" *ngIf="!appletSettings.HIDE_ATTACHMENT_TAB">
-        <app-internal-sales-return-attachments-listing [localState]="localState$ | async"
-            (addAttachment)="goToAttachmentAdd()" (extItem)="goToAttachmentView()">
-        </app-internal-sales-return-attachments-listing>
-    </mat-tab>
+            <ng-container *ngSwitchCase="'department-hdr'">
+                <app-internal-sales-return-department [draft$]="draft$" (updateDepartment)="onUpdateDepartmentInfo($event)">
+                </app-internal-sales-return-department>
+            </ng-container>
 
-    <mat-tab label="Export" *ngIf="!appletSettings.HIDE_EXPORT_TAB">
-        <app-internal-sales-return-edit-export [draft$]="draft$"></app-internal-sales-return-edit-export>
+        </ng-container>
+      </ng-template>
     </mat-tab>
+  </ng-container>
+
 </mat-tab-group>
 
 <ng-container *ngIf="showPanels()">
