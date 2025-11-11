@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // api_domain: 'https://api.akaun.cloud/',
-  api_domain: 'https://api.akaun.com/',
+  api_domain: 'https://api.akaun.cloud/',
+  //api_domain: 'https://api.akaun.com/',
   // api_domain: 'http://localhost:5000/',
   // api_domain: 'https://api.senheng.my/',
   // tenantCode: sessionStorage.setItem('tenantCode', 'staging_tenant'),

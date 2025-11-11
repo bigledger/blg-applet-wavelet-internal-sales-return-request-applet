@@ -9,11 +9,11 @@ import { ViewColumnComponent } from 'projects/shared-utilities/view-column.compo
 import { SubSink } from 'subsink2';
 import { C } from '@angular/cdk/keycodes';
 
-import { ViewColumnFacade } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/facades/view-column.facade';
-import { CustomerActions } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/customer-controller/actions';
-import { CustomerSelectors } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/customer-controller/selectors';
-import { CustomerStates } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/customer-controller/states';
-import { CustomerConstants, SettlementTypeOptions } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/models/customer-constants';
+import { ViewColumnFacade } from '../../../../../../../../../facades/view-column.facade';
+import { CustomerActions } from '../../../../../../../../../state-controllers/customer-controller/actions';
+import { CustomerSelectors } from '../../../../../../../../../state-controllers/customer-controller/selectors';
+import { CustomerStates } from '../../../../../../../../../state-controllers/customer-controller/states';
+import { CustomerConstants, SettlementTypeOptions } from '../../../../../../../../../models/customer-constants';
 
 @Component({
   selector: 'app-payment-edit',

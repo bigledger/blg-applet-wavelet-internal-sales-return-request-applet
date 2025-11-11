@@ -3,12 +3,11 @@ import { Injector, NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
 import { createCustomElement } from "@angular/elements";
-import { InternalOutboundStockTransferCreateDetailsComponent } from "./projects/wavelet-erp/applets/stock-transfer-applet/src/app/components/internal-outbound-stock-transfer-container/internal-outbound-stock-transfer-create/internal-outbound-stock-transfer-create-details/internal-outbound-stock-transfer-create-details.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    InternalOutboundStockTransferCreateDetailsComponent,
+    //InternalOutboundStockTransferCreateDetailsComponent,
   ],
   imports: [
     BrowserModule

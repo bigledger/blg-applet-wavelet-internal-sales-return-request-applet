@@ -5,10 +5,10 @@ import { pageFiltering, pageSorting } from 'projects/shared-utilities/listing.ut
 import { SearchQueryModel } from 'projects/shared-utilities/models/query.model';
 import { PaginationComponent } from 'projects/shared-utilities/utilities/pagination/pagination.component';
 import { AppConfig } from 'projects/shared-utilities/visa';
-import { salesLineItemSearchModel } from 'projects/wavelet-erp/applets/internal-purchase-grn-applet/src/app/models/advanced-search-models/line-item.models';
-import { DraftStates } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/draft-controller/store/states';
-import { InternalSalesCreditNoteActions } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/internal-sales-credit-note-controller/store/actions';
-import { InternalSalesCreditNoteStates } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/internal-sales-credit-note-controller/store/states';
+import { salesLineItemSearchModel } from '../../../../../../models/advanced-search-models/line-item.model';
+import { DraftStates } from '../../../../../../state-controllers/draft-controller/store/states';
+//import { InternalSalesCreditNoteActions } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/internal-sales-credit-note-controller/store/actions';
+//import { InternalSalesCreditNoteStates } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/internal-sales-credit-note-controller/store/states';
 import { forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { SubSink } from 'subsink2';
@@ -65,9 +65,7 @@ export class LineSalesOrderItemListingComponent implements OnInit, OnDestroy {
 
   constructor(
     private soService: InternalSalesOrderService,
-    private subQueryService: SubQueryService,
-    private store: Store<InternalSalesCreditNoteStates>,
-    private readonly draftStore: Store<DraftStates>) {
+    private subQueryService: SubQueryService) {
   }
 
   ngOnInit() {
@@ -410,7 +408,7 @@ export class LineSalesOrderItemListingComponent implements OnInit, OnDestroy {
   // }
 
   onRowClicked(item) {
-    this.store.dispatch(InternalSalesCreditNoteActions.selectPricingSchemeLink({ item }));
+    //this.store.dispatch(InternalSalesCreditNoteActions.selectPricingSchemeLink({ item }));
     this.addLineItem.emit(item);
   }
 

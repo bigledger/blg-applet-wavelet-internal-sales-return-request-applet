@@ -17,7 +17,6 @@ import { CustomerStates } from 'projects/wavelet-erp/applets/internal-sales-retu
 import { forkJoin, iif, Observable, of, zip } from 'rxjs';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink2';
-import { customerBranchSearchModel } from 'projects/wavelet-erp/applets/internal-shopping-cart-applet/src/app/models/advanced-search-models/customer-branch.model';
 
 export class LocationContainer {
   id;
@@ -68,7 +67,7 @@ export class CreateBranchComponent extends ViewColumnComponent implements OnInit
   arraySize = [];
   arrayData = [];
   arrayPromise = [];
-  searchModel = customerBranchSearchModel;
+  searchModel;
 
   defaultColDef = {
     filter: 'agTextColumnFilter',

@@ -15,8 +15,6 @@ import { PermissionFacade } from 'projects/shared-utilities/modules/permission/f
 import { BranchSettingsSelectors } from '../../../../../../state-controllers/branch-settings-controller/selectors';
 import { BranchSettingsStates } from '../../../../../../state-controllers/branch-settings-controller/states';
 import { BranchSettingsActions } from '../../../../../../state-controllers/branch-settings-controller/actions';
-import { PosActions } from 'projects/wavelet-erp/applets/pos-general-applet/src/app/state-controllers/pos-controller/store/actions';
-import { InternalSalesReturnActions } from 'projects/wavelet-erp/applets/internal-sales-return-applet/src/app/state-controllers/internal-sales-return-controller/store/actions';
 
 interface LocalState {
   deactivateReturn: boolean;
@@ -56,7 +54,7 @@ export class SettlementEditComponent extends ViewColumnComponent {
 
   form: FormGroup;
   formDisabled: boolean = false;
-  
+
   selectedMember;
   teamGuid: string;
   branch;
@@ -89,7 +87,7 @@ export class SettlementEditComponent extends ViewColumnComponent {
     })
     this.form = this.fb.group({
       name: [''],
-      
+
     })
     /* const selectedMethod$ = this.store.select(BranchSettingsSelectors.selectMember);
 
@@ -109,14 +107,14 @@ export class SettlementEditComponent extends ViewColumnComponent {
     })
   }
 
-  
+
   /**
    * This function is called whe the user clicks on the save button.
    * This will dispatch an NgRx action to update details.
    *
    */
    onSubmit() {
-     
+
   }
 
   /**

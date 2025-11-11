@@ -4,6 +4,121 @@ import { UtilitiesModule } from 'projects/shared-utilities/utilities/utilities.m
 import { SearchModelV2 } from 'projects/shared-utilities/models/search-model-v2';
 import * as moment from "moment";
 
+export const jobsheetLineItemSearchModel: SearchModel = {
+  label: {
+    docNo: 'Jobsheet No.',
+    itemCode: 'Item Code',
+    itemName: 'Item Name',
+  },
+
+  dataType: {
+    docNo: 'string',
+    itemCode: 'string',
+    itemName: 'string',
+  },
+
+  form: new FormGroup({
+    docNo: new FormControl(),
+    itemCode: new FormControl(),
+    itemName: new FormControl(),
+  }),
+
+  joins: [
+    { type: 'INNER JOIN', table: 'bl_fi_generic_doc_hdr', alias: 'hdr', onCondition: 'hdr.guid = line.generic_doc_hdr_guid', joinOnBasic: true },
+  ],
+
+  query: (query) =>
+    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%')
+    AND line.server_doc_type = 'INTERNAL_JOBSHEET' AND line.status = 'ACTIVE'`,
+
+  table: 'bl_fi_generic_doc_line',
+
+  queryCallbacks: {
+    docNo: query => query ? `hdr.server_doc_1 ILIKE '%${query.trim()}%'` : '',
+    itemCode: query => query ? `line.item_code ILIKE '%${query.trim()}%'` : '',
+    itemName: query => query ? `line.item_name ILIKE '%${query.trim()}%'` : '',
+  },
+
+  additionalCondition: ` AND line.server_doc_type = 'INTERNAL_JOBSHEET' AND line.status = 'ACTIVE'`
+}
+
+
+export const deliveryOrderLineItemSearchModel: SearchModel = {
+  label: {
+    docNo: 'Delivery Order No.',
+    itemCode: 'Item Code',
+    itemName: 'Item Name',
+  },
+
+  dataType: {
+    docNo: 'string',
+    itemCode: 'string',
+    itemName: 'string',
+  },
+
+  form: new FormGroup({
+    docNo: new FormControl(),
+    itemCode: new FormControl(),
+    itemName: new FormControl(),
+  }),
+
+  joins: [
+    { type: 'INNER JOIN', table: 'bl_fi_generic_doc_hdr', alias: 'hdr', onCondition: 'hdr.guid = line.generic_doc_hdr_guid', joinOnBasic: true },
+  ],
+
+  query: (query) =>
+    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%')
+    AND line.server_doc_type = 'INTERNAL_OUTBOUND_DELIVERY_ORDER' AND line.status = 'ACTIVE'`,
+
+  table: 'bl_fi_generic_doc_line',
+
+  queryCallbacks: {
+    docNo: query => query ? `hdr.server_doc_1 ILIKE '%${query.trim()}%'` : '',
+    itemCode: query => query ? `line.item_code ILIKE '%${query.trim()}%'` : '',
+    itemName: query => query ? `line.item_name ILIKE '%${query.trim()}%'` : '',
+  },
+
+  additionalCondition: ` AND line.server_doc_type = 'INTERNAL_OUTBOUND_DELIVERY_ORDER' AND line.status = 'ACTIVE'`
+}
+
+export const salesLineItemSearchModel: SearchModel = {
+  label: {
+    docNo: 'Sales Order No.',
+    itemCode: 'Item Code',
+    itemName: 'Item Name',
+  },
+
+  dataType: {
+    docNo: 'string',
+    itemCode: 'string',
+    itemName: 'string',
+  },
+
+  form: new FormGroup({
+    docNo: new FormControl(),
+    itemCode: new FormControl(),
+    itemName: new FormControl(),
+  }),
+
+  joins: [
+    { type: 'INNER JOIN', table: 'bl_fi_generic_doc_hdr', alias: 'hdr', onCondition: 'hdr.guid = line.generic_doc_hdr_guid', joinOnBasic: true },
+  ],
+
+  query: (query) =>
+    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%')
+    AND line.server_doc_type = 'INTERNAL_SALES_ORDER' AND line.status = 'ACTIVE'`,
+
+  table: 'bl_fi_generic_doc_line',
+
+  queryCallbacks: {
+    docNo: query => query ? `hdr.server_doc_1 ILIKE '%${query.trim()}%'` : '',
+    itemCode: query => query ? `line.item_code ILIKE '%${query.trim()}%'` : '',
+    itemName: query => query ? `line.item_name ILIKE '%${query.trim()}%'` : '',
+  },
+
+  additionalCondition: ` AND line.server_doc_type = 'INTERNAL_SALES_ORDER' AND line.status = 'ACTIVE'`
+};
+
 export const salesQuotationLineItemSearchModel: SearchModel = {
   label: {
     orderNo: 'Sales Quotation No.',
@@ -28,7 +143,7 @@ export const salesQuotationLineItemSearchModel: SearchModel = {
   ],
 
   query: (query) =>
-    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%') 
+    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%')
     AND line.server_doc_type = 'INTERNAL_SALES_QUOTATION' AND line.status = 'ACTIVE'`,
 
   table: 'bl_fi_generic_doc_hdr',
@@ -109,7 +224,7 @@ export const blanketLineItemSearchModel: SearchModel = {
   ],
 
   query: (query) =>
-    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%') 
+    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%')
     AND line.server_doc_type = 'INTERNAL_BLANKET_PURCHASE_ORDER' AND line.status = 'ACTIVE'`,
 
   table: 'bl_fi_generic_doc_hdr',
@@ -147,7 +262,7 @@ export const purchReturnLineItemSearchModel: SearchModel = {
   ],
 
   query: (query) =>
-    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%') 
+    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%')
     AND line.server_doc_type = 'INTERNAL_PURCHASE_GOODS_RECEIVED_NOTE' AND line.status = 'ACTIVE'`,
 
   table: 'bl_fi_generic_doc_hdr',
@@ -185,7 +300,7 @@ export const purchQuotationLineItemSearchModel: SearchModel = {
   ],
 
   query: (query) =>
-    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%') 
+    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%')
     AND line.server_doc_type = 'INTERNAL_PURCHASE_QUOTATION' AND line.status = 'ACTIVE'`,
 
   table: 'bl_fi_generic_doc_hdr',
@@ -223,7 +338,7 @@ export const purchRequisitionLineItemSearchModel: SearchModel = {
   ],
 
   query: (query) =>
-    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%') 
+    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%')
     AND line.server_doc_type = 'INTERNAL_PURCHASE_REQUISITION' AND line.status = 'ACTIVE'`,
 
   table: 'bl_fi_generic_doc_hdr',
@@ -261,7 +376,7 @@ export const purchOrderLineItemSearchModel: SearchModel = {
   ],
 
   query: (query) =>
-    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%') 
+    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%')
     AND line.server_doc_type = 'INTERNAL_PURCHASE_ORDER' AND line.status = 'ACTIVE'`,
 
   table: 'bl_fi_generic_doc_hdr',
@@ -299,7 +414,7 @@ export const supplierDeliveryOrderLineItemSearchModel: SearchModel = {
   ],
 
   query: (query) =>
-    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%') 
+    `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%')
     AND line.server_doc_type = 'INTERNAL_OUTBOUND_DELIVERY_ORDER' AND line.status = 'ACTIVE'`,
 
   table: 'bl_fi_generic_doc_hdr',

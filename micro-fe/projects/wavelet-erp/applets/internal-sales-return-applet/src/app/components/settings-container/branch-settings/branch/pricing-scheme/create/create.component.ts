@@ -6,10 +6,9 @@ import { Store } from '@ngrx/store';
 import { ViewColumnComponent } from 'projects/shared-utilities/view-column.component';
 import { SubSink } from 'subsink2';
 import { ViewColumnFacade } from '../../../../../../facades/view-column.facade';
-import { PosStates } from 'projects/wavelet-erp/applets/pos-general-applet/src/app/state-controllers/pos-controller/store/states';
 import { BranchPricingSchemeHdrLinkContainerModel } from 'blg-akaun-ts-lib';
-import { BranchSettingsSelectors } from 'projects/wavelet-erp/applets/pos-general-applet/src/app/state-controllers/branch-settings-controller/selectors';
-import { BranchSettingsStates } from 'projects/wavelet-erp/applets/pos-general-applet/src/app/state-controllers/branch-settings-controller/states';
+import { BranchSettingsSelectors } from '../../../../../../state-controllers/branch-settings-controller/selectors';
+import { BranchSettingsStates } from '../../../../../../state-controllers/branch-settings-controller/states';
 
 
 
@@ -37,15 +36,14 @@ export class BranchPricingSchemeCreateComponent extends ViewColumnComponent {
   protected localState: LocalState;
   readonly localState$ = this.viewColFacade.selectLocalState(this.index);
 
- 
+
   branchGuid;
   form: FormGroup;
   @ViewChild(MatTabGroup) matTab: MatTabGroup;
- 
+
   constructor(
     private branchSettingsStore: Store<BranchSettingsStates>,
     protected viewColFacade: ViewColumnFacade,
-    private readonly store: Store<PosStates>,
     protected readonly componentStore: ComponentStore<LocalState>
     ) {
     super();
@@ -63,7 +61,7 @@ export class BranchPricingSchemeCreateComponent extends ViewColumnComponent {
       pricingScheme: new FormControl(),
       level: new FormControl()
     })
-    
+
   }
 
   onReturn(){
@@ -79,5 +77,5 @@ export class BranchPricingSchemeCreateComponent extends ViewColumnComponent {
     // this.store.dispatch(PosActions.createBranchPricingSchemeInit({container:container}));
     this.onReturn();
   }
-  
+
 }

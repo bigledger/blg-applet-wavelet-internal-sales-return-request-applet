@@ -6,8 +6,8 @@ import { Store } from '@ngrx/store';
 import { ViewColumnComponent } from 'projects/shared-utilities/view-column.component';
 import { SubSink } from 'subsink2';
 import { ViewColumnFacade } from '../../../../facades/view-column.facade';
-import { PrintableFormatStates } from 'projects/wavelet-erp/applets/internal-sales-invoice-applet/src/app/state-controllers/printable-format-controller/store/states';
-import { PrintableFormatActions } from 'projects/wavelet-erp/applets/internal-sales-invoice-applet/src/app/state-controllers/printable-format-controller/store/actions';
+import { PrintableFormatStates } from '../../../../state-controllers/printable-format-controller/store/states';
+import { PrintableFormatActions } from '../../../../state-controllers/printable-format-controller/store/actions';
 import { ReasonSettingActions } from '../../../../state-controllers/reason-settings-controller/store/actions';
 import { ReasonSettingSelectors } from '../../../../state-controllers/reason-settings-controller/store/selectors';
 import { ReasonSettingStates } from '../../../../state-controllers/reason-settings-controller/store/states';
@@ -44,7 +44,7 @@ export class ReasonSettingsEditComponent extends ViewColumnComponent {
 
   form: FormGroup;
   @ViewChild(MatTabGroup) matTab: MatTabGroup;
- 
+
   constructor(
     protected viewColFacade: ViewColumnFacade,
     private readonly store: Store<ReasonSettingStates>,
@@ -64,7 +64,7 @@ export class ReasonSettingsEditComponent extends ViewColumnComponent {
         reasonCode: new FormControl(),
         reasonName: new FormControl(),
     })
-    
+
     this.subSink.sink = this.store.select(ReasonSettingSelectors.selectReasonSetting).subscribe(
       (data) => {
         this.reasonGuid = data.bl_svc_return_reason.guid.toString();
@@ -89,13 +89,13 @@ export class ReasonSettingsEditComponent extends ViewColumnComponent {
 
   onSave(){
     this.store.dispatch(ReasonSettingActions.updateReasonSettingInit({guid: this.reasonGuid, reasonSetting: this.form}));
-   
+
   }
 
-  
+
   onDelete(){
     this.store.dispatch(ReasonSettingActions.deleteReasonSettingInit({guid: this.reasonGuid}));
-  
+
   }
-  
+
 }

@@ -10,6 +10,9 @@ if (environment.production) {
   enableProdMode();
   console.log = function () {};
 } else {
+  sessionStorage.setItem('appletGuid', 'c8312bf9-7e36-4b7f-a778-5937f10b189c');
+  sessionStorage.setItem('appletCode', 'InternalSalesReturnApplet');
+  sessionStorage.setItem('tenantCode', 'staging_tenant');
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)

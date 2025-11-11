@@ -2,10 +2,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { InternalSalesReturnFeatureKey } from '../reducers/internal-sales-return.reducers';
 import { InternalSalesReturnStates } from '../states';
 import { InternalSalesReturnState } from '../states/internal-sales-return.states';
-import {
-  InternalPaymentVoucherStates
-} from "../../../../../../../internal-payment-voucher-applet/src/app/state-controllers/internal-payment-voucher-controller/store/states";
-
 export const selectInternalSalesReturnFeature = createFeatureSelector<InternalSalesReturnState>(InternalSalesReturnFeatureKey);
 
 export const selectTotalRecords = (state: InternalSalesReturnStates) => state.internalSalesReturn.totalRecords;

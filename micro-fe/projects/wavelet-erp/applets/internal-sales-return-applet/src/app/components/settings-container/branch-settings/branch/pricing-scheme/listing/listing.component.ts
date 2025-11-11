@@ -7,7 +7,7 @@ import { pageFiltering, pageSorting } from 'projects/shared-utilities/listing.ut
 import { PaginationComponent } from 'projects/shared-utilities/utilities/pagination/pagination.component';
 import { ViewColumnComponent } from 'projects/shared-utilities/view-column.component';
 import { AppConfig } from 'projects/shared-utilities/visa';
-import { BranchSettingsStates } from 'projects/wavelet-erp/applets/pos-general-applet/src/app/state-controllers/branch-settings-controller/states';
+import { BranchSettingsStates } from '../../../../../../state-controllers/branch-settings-controller/states';
 import { forkJoin, from, iif, of } from 'rxjs';
 import { catchError, concatMap, map, mergeMap, tap, toArray } from 'rxjs/operators';
 import { SubSink } from 'subsink2';
@@ -19,7 +19,7 @@ interface LocalState {
     deactivateList: boolean;
     selectedRowIndex: number;
   }
-  
+
 @Component({
     selector: 'app-branch-pricing-scheme-listing',
     templateUrl: './listing.component.html',
@@ -27,7 +27,7 @@ interface LocalState {
     encapsulation: ViewEncapsulation.None,
 })
 
-  
+
 export class BranchPricingSchemeListingComponent  extends ViewColumnComponent {
     protected subs = new SubSink();
     protected readonly index = 0;
@@ -55,8 +55,8 @@ export class BranchPricingSchemeListingComponent  extends ViewColumnComponent {
         {headerName: 'Priority', field: 'bl_fi_mst_branch_pricing_scheme_hdr_link.level_value', cellStyle: () => ({'text-align': 'left'})},
         {headerName: 'Creation Date', field: 'bl_fi_mst_branch_pricing_scheme_hdr_link.created_date',
         valueFormatter: params => moment(params.value).format('YYYY-MM-DD')},
-     
-    
+
+
       ];
     }
 
@@ -65,7 +65,7 @@ export class BranchPricingSchemeListingComponent  extends ViewColumnComponent {
         this.branchGuid = b.bl_fi_mst_branch.guid;
       })
     }
-    
+
     onGridReady(params) {
       this.gridApi = params.api;
       this.gridApi.closeToolPanel();
@@ -82,12 +82,12 @@ export class BranchPricingSchemeListingComponent  extends ViewColumnComponent {
               value: this.branchGuid
             }
           ];
-  
+
           const sortModel = grid.request.sortModel;
           const filterModel = grid.request.filterModel;
           const sortOn = pageSorting(sortModel);
           const filter = pageFiltering(filterModel);
-  
+
           this.subs.sink = this.branchPricingService.getByCriteria(this.pagination, this.apiVisa).pipe(
             mergeMap(a => from(a.data).pipe(
               concatMap(a_a => forkJoin([
@@ -109,11 +109,11 @@ export class BranchPricingSchemeListingComponent  extends ViewColumnComponent {
                       catchError((err) => of(err))
                     )
                   ),
-                  
+
                 ]
                 ).pipe(
                 map(([b_a]) => {
-                 
+
                   Object.assign(a_a.bl_fi_mst_branch_pricing_scheme_hdr_link,
                     {
                       branch_name: b_a.error ? b_a.error.code : b_a.bl_fi_mst_pricing_scheme_hdr.code + ' | ' + b_a.bl_fi_mst_pricing_scheme_hdr.name,
@@ -145,7 +145,7 @@ export class BranchPricingSchemeListingComponent  extends ViewColumnComponent {
           });
         }
       };
-  
+
       this.gridApi.setServerSideDatasource(datasource);
     }
 

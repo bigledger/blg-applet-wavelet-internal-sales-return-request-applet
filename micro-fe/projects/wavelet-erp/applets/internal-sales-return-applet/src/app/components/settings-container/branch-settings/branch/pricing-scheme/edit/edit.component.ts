@@ -4,9 +4,8 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { ComponentStore } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
 import { ViewColumnComponent } from 'projects/shared-utilities/view-column.component';
-import { BranchSettingsSelectors } from 'projects/wavelet-erp/applets/pos-general-applet/src/app/state-controllers/branch-settings-controller/selectors';
-import { BranchSettingsStates } from 'projects/wavelet-erp/applets/pos-general-applet/src/app/state-controllers/branch-settings-controller/states';
-import { PosStates } from 'projects/wavelet-erp/applets/pos-general-applet/src/app/state-controllers/pos-controller/store/states';
+import { BranchSettingsSelectors } from '../../../../../../state-controllers/branch-settings-controller/selectors';
+import { BranchSettingsStates } from '../../../../../../state-controllers/branch-settings-controller/states';
 import { SubSink } from 'subsink2';
 import { ViewColumnFacade } from '../../../../../../facades/view-column.facade';
 
@@ -34,7 +33,7 @@ export class BranchPricingSchemeEditComponent extends ViewColumnComponent {
   protected localState: LocalState;
   readonly localState$ = this.viewColFacade.selectLocalState(this.index);
 
- 
+
   branchGuid;
   form: FormGroup;
   @ViewChild(MatTabGroup) matTab: MatTabGroup;
@@ -42,7 +41,6 @@ export class BranchPricingSchemeEditComponent extends ViewColumnComponent {
   constructor(
     private branchSettingsStore: Store<BranchSettingsStates>,
     protected viewColFacade: ViewColumnFacade,
-    private readonly store: Store<PosStates>,
     protected readonly componentStore: ComponentStore<LocalState>
     ) {
     super();
@@ -67,7 +65,7 @@ export class BranchPricingSchemeEditComponent extends ViewColumnComponent {
        level: this.selectedPricingScheme.bl_fi_mst_branch_pricing_scheme_hdr_link.level_value
     });
 
-    
+
   }
 
   onReturn(){
@@ -86,5 +84,5 @@ export class BranchPricingSchemeEditComponent extends ViewColumnComponent {
     this.onReturn();
   }
 
-  
+
 }

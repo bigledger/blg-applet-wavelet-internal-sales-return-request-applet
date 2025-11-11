@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { internalSalesGRNSearchModel } from 'projects/wavelet-erp/applets/internal-sales-grn-applet/src/app/models/advanced-search-models/internal-sales-grn.model';
 
 @Component({
   selector: 'app-issue-link-edit-linked-issues',
@@ -43,7 +42,7 @@ export class IssueLinkEditLinkedIssuesComponent implements OnInit, OnDestroy {
     }
   ]
 
-  searchModel = internalSalesGRNSearchModel;
+  searchModel;
 
   constructor() { }
 

@@ -11,11 +11,10 @@ import { LinkActions, PNSActions } from '../../../../../state-controllers/draft-
 import { DraftStates } from '../../../../../state-controllers/draft-controller/store/states';
 import { InternalSalesReturnActions } from '../../../../../state-controllers/internal-sales-return-controller/store/actions';
 import { InternalSalesReturnStates } from '../../../../../state-controllers/internal-sales-return-controller/store/states';
-import { salesLineItemSearchModel } from 'projects/wavelet-erp/applets/internal-purchase-grn-applet/src/app/models/advanced-search-models/line-item.models';
 import { salesQuotationLineItemSearchModel, salesInvoiceLineItemSearchModel } from '../../../../../models/advanced-search-models/line-item.model';
-import { jobsheetLineItemSearchModel } from 'projects/wavelet-erp/applets/internal-purchase-grn-applet/src/app/models/advanced-search-models/line-item.models';
-import { deliveryOrderLineItemSearchModel } from 'projects/wavelet-erp/applets/internal-purchase-grn-applet/src/app/models/advanced-search-models/line-item.models';
-import { 
+import { jobsheetLineItemSearchModel } from '../../../../../models/advanced-search-models/line-item.model';
+import { deliveryOrderLineItemSearchModel } from '../../../../../models/advanced-search-models/line-item.model';
+import {
   InternalSalesQuotationService,
   InternalOutboundDeliveryOrderService,
   InternalJobsheetService,
@@ -67,7 +66,7 @@ export class LineItemCreateComponent extends ViewColumnComponent {
   PNSEditActions = PNSActions;
   PNSActions = PNSActions;
 
-  salesLineItemSearchModel = salesLineItemSearchModel;
+  salesLineItemSearchModel;
   salesQuotationLineItemSearchModel = salesQuotationLineItemSearchModel;
   jobsheetLineItemSearchModel = jobsheetLineItemSearchModel;
   deliveryOrderLineItemSearchModel = deliveryOrderLineItemSearchModel;
@@ -119,7 +118,7 @@ export class LineItemCreateComponent extends ViewColumnComponent {
     //   this.componentStore.patchState({ purchaseOrderEdit: true });
     //   console.log(this.localState);
     // }
-    // else 
+    // else
     //   this.componentStore.patchState({ purchaseOrderEdit: false });
     this.subs.sink = this.store.select(HDRSelectors.selectHdr).subscribe(data=>{
       this.compGuid = data.guid_comp;
@@ -133,11 +132,11 @@ export class LineItemCreateComponent extends ViewColumnComponent {
       console.log(response);
       if(response!==null){
         response.forEach(setting=>{
-          
+
           if(setting.bl_fi_comp_gendoc_flow_config.server_doc_type_1 === ServerDocTypeConstants.INTERNAL_SALES_ORDER && setting.bl_fi_comp_gendoc_flow_config.flow_type=="LINE"){
             this.koSO = setting.bl_fi_comp_gendoc_flow_config.is_enabled;
           }
-          
+
           if(setting.bl_fi_comp_gendoc_flow_config.server_doc_type_1 === ServerDocTypeConstants.INTERNAL_JOBSHEET && setting.bl_fi_comp_gendoc_flow_config.flow_type=="LINE"){
             this.koJS = setting.bl_fi_comp_gendoc_flow_config.is_enabled;
           }
@@ -153,7 +152,7 @@ export class LineItemCreateComponent extends ViewColumnComponent {
           if(setting.bl_fi_comp_gendoc_flow_config.server_doc_type_1 === ServerDocTypeConstants.INTERNAL_SALES_INVOICE && setting.bl_fi_comp_gendoc_flow_config.flow_type=="LINE"){
             this.koSI = setting.bl_fi_comp_gendoc_flow_config.is_enabled;
           }
-  
+
         })
       }
     })

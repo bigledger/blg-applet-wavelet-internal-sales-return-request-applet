@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { salesCreditNoteSearchModel } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/models/advanced-search-models/internal-sales-credit-note.model';
 
 @Component({
   selector: 'app-edit-issue-link-edit-linked-issues',
@@ -43,7 +42,7 @@ export class EditLineItemIssueLinkEditLinkedIssuesComponent implements OnInit {
     }
   ]
 
-  searchModel = salesCreditNoteSearchModel;
+  searchModel;
 
   constructor() { }
 

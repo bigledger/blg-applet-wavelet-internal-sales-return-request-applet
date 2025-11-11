@@ -4,7 +4,7 @@ import { pageFiltering, pageSorting } from 'projects/shared-utilities/listing.ut
 import { SearchQueryModel } from 'projects/shared-utilities/models/query.model';
 import { PaginationComponent } from 'projects/shared-utilities/utilities/pagination/pagination.component';
 import { AppConfig } from 'projects/shared-utilities/visa';
-import { deliveryOrderLineItemSearchModel } from 'projects/wavelet-erp/applets/internal-purchase-grn-applet/src/app/models/advanced-search-models/line-item.models';
+import { deliveryOrderLineItemSearchModel } from '../../../../../../models/advanced-search-models/line-item.model';
 import { forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { SubSink } from 'subsink2';

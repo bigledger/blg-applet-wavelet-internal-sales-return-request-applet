@@ -9,12 +9,10 @@ import { pageFiltering, pageSorting } from 'projects/shared-utilities/listing.ut
 import { SearchQueryModel } from 'projects/shared-utilities/models/query.model';
 import { PaginationComponent } from 'projects/shared-utilities/utilities/pagination/pagination.component';
 import { AppConfig } from 'projects/shared-utilities/visa';
-import { salesLineItemSearchModel } from 'projects/wavelet-erp/applets/internal-purchase-grn-applet/src/app/models/advanced-search-models/line-item.models';
-import { AppletConstants } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/models/constants/applet-constants';
-import { LinkActions, PNSActions } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/draft-controller/store/actions';
-import { DraftStates } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/draft-controller/store/states';
-import { InternalSalesCreditNoteActions } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/internal-sales-credit-note-controller/store/actions';
-import { InternalSalesCreditNoteStates } from 'projects/wavelet-erp/applets/internal-sales-credit-note-applet/src/app/state-controllers/internal-sales-credit-note-controller/store/states';
+import { salesLineItemSearchModel } from '../../../../../../models/advanced-search-models/line-item.model';
+import { AppletConstants } from '../../../../../../models/constants/applet-constants';
+import { LinkActions, PNSActions } from '../../../../../../state-controllers/draft-controller/store/actions';
+import { DraftStates } from '../../../../../../state-controllers/draft-controller/store/states';
 import { forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { SubSink } from 'subsink2';
@@ -28,7 +26,7 @@ export class KoForSalesOrderItemComponent implements OnInit, OnDestroy {
 
   @Input() localState: any;
   @Input() hdr: bl_fi_generic_doc_hdr_RowClass;
-  
+
   @Output() addLineItem = new EventEmitter();
 
   protected subs = new SubSink();
@@ -58,8 +56,8 @@ export class KoForSalesOrderItemComponent implements OnInit, OnDestroy {
 
   columnsDefs = [
     { headerName: 'Sales Order No.', field: 'doc_number', cellStyle: () => ({ 'text-align': 'left' }), maxWidth: 100, checkboxSelection: true },
-    { headerName: 'Server Doc Type', field: 'server_doc_type_hdr', cellStyle: () => ({ 'text-align': 'left' }) },    
-    { headerName: 'Txn Date', field: 'date_txn', cellStyle: () => ({ 'text-align': 'left' }), maxWidth: 100, 
+    { headerName: 'Server Doc Type', field: 'server_doc_type_hdr', cellStyle: () => ({ 'text-align': 'left' }) },
+    { headerName: 'Txn Date', field: 'date_txn', cellStyle: () => ({ 'text-align': 'left' }), maxWidth: 100,
       valueFormatter: params => params.value ? moment(params.value).format('YYYY-MM-DD') : null },
     { headerName: 'Item Code', field: 'item_code', cellStyle: () => ({ 'text-align': 'left' }) },
     { headerName: 'Item Name', field: 'item_name', cellStyle: () => ({ 'text-align': 'left' }) },
@@ -88,7 +86,7 @@ export class KoForSalesOrderItemComponent implements OnInit, OnDestroy {
   constructor(
     private soService: InternalSalesOrderService,
     private subQueryService: SubQueryService,
-    private store: Store<InternalSalesCreditNoteStates>,
+   // private store: Store<InternalSalesCreditNoteStates>,
     private readonly draftStore: Store<DraftStates>) {
   }
 
@@ -301,7 +299,7 @@ export class KoForSalesOrderItemComponent implements OnInit, OnDestroy {
 
   onRowClicked(item) {
     if(!this.isChecked) {
-      this.store.dispatch(InternalSalesCreditNoteActions.selectPricingSchemeLink({ item }));
+      //this.store.dispatch(InternalSalesCreditNoteActions.selectPricingSchemeLink({ item }));
       this.addLineItem.emit(item);
     }
   }
