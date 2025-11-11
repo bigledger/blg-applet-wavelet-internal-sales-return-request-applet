@@ -42,7 +42,7 @@ export class Column4ViewModelEffects {
     concatMap(([action, baseQty, serialNumberListing, hdr, invItemGuid, master, editMode]) => {
       const newArray = serialNumberListing.map(({ guid, ...sn }) => sn);
       let json = {
-        "txn_type":"SALES_RETURN",
+        "txn_type":"PURCHASE",
         "location_guid":hdr.guid_store,
         "company_guid":hdr.guid_comp,
         "inv_item_guid":invItemGuid,
