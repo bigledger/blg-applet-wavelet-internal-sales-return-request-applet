@@ -11751,11 +11751,11 @@
                 }
               ]
             },
-  "senheng-staging": {
+  "senwave-staging": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.senheng-staging.ts"
+                  "with": "src/environments/environment.senwave-staging.ts"
                 }
               ],
               "optimization": true,
