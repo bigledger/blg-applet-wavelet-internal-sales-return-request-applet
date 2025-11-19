@@ -152,6 +152,8 @@ export interface AppletSettings {
     VERTICAL_ORIENTATION: boolean;
     DEFAULT_ORIENTATION: string;
 
+    SALES_RETURN_DETAILS_TAB_ORDER: { title: string; content: string; }[];
+
     EXPAND_MAIN_DETAILS: boolean;
     EXPAND_ACCOUNT: boolean;
     EXPAND_LINE_ITEMS: boolean;

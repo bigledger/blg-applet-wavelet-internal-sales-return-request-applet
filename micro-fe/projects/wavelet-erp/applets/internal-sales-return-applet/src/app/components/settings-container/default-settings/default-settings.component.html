@@ -20,5 +20,15 @@
         </li>
       </ul>
     </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span class="field-header">Details Tab Ordering</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let detailsTab of detailsTabs" cdkDrag>{{ detailsTab.title }}</div>
+      </div>
+    </mat-expansion-panel>
   </mat-accordion>
 </div>

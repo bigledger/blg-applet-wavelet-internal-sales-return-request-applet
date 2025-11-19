@@ -117,10 +117,10 @@ export class InternalSalesReturnEditComponent extends ViewColumnComponent implem
     { title: 'Lines', content: 'lines', expandSetting: 'EXPAND_LINE_ITEMS', invalid: false },
     { title: 'ARAP', content: 'arap', hide: 'HIDE_MAIN_ARAP_TAB', expandSetting: 'EXPAND_MAIN_ARAP'},
     { title: 'Delivery Details', content: 'delivery-details', hide: 'HIDE_DELIVERY_DETAILS_TAB', expandSetting: 'EXPAND_DELIVERY_DETAILS' },
-    { title: 'Payment', content: 'payment', hide: 'HIDE_PAYMENT_TAB', expandSetting: 'EXPAND_PAYMENT', invalid: false },
+    { title: 'Payment', content: 'payment', hide: 'HIDE_MAIN_PAYMENT_TAB', expandSetting: 'EXPAND_PAYMENT', invalid: false },
     { title: 'Payment Adjustment', content: 'payment-adjustment', hide: 'HIDE_PAYMENT_TAB', expandSetting: 'EXPAND_PAYMENT', invalid: this.paymentTabInvalid || false },
-    { title: 'Department Hdr', content: 'department-hdr', hide: 'HIDE_DEPARTMENT_HDR_TAB', expandSetting: 'EXPAND_DEPARTMENT_HDR' },
-    { title: 'TraceDocument', content: 'trace-document', hide: 'HIDE_MAIN_CONTRA_TAB', expandSetting: 'EXPAND_TRACE_DOCUMENT'},
+    { title: 'Department Hdr', content: 'department-hdr', hide: 'HIDE_DEPARTMENT_HDR_TAB', expandSetting: 'EXPAND_DEPARTMENT_HDR', lazy: true },
+    { title: 'TraceDocument', content: 'trace-document', hide: 'HIDE_TRACE_DOCUMENT_TAB', expandSetting: 'EXPAND_TRACE_DOCUMENT'},
     { title: 'Contra', content: 'contra', hide: 'HIDE_MAIN_CONTRA_TAB', expandSetting: 'EXPAND_MAIN_CONTRA' },
     { title: 'Doc Link', content: 'doc-link', hide: 'HIDE_DOC_LINK_TAB', expandSetting: 'EXPAND_DOC_LINK'},
     { title: 'Attachments', content: 'attachments', hide: 'HIDE_ATTACHMENT_TAB', expandSetting: 'EXPAND_ATTACHMENT' },
@@ -194,8 +194,29 @@ export class InternalSalesReturnEditComponent extends ViewColumnComponent implem
         this.genDocLock = lock;
         this.FINAL_BUTTON_GUID = master.FINAL_STATUS_GUID ? master.FINAL_STATUS_GUID.toString() : null;
         this.appletSettings = master;
+        if (master?.SALES_RETURN_DETAILS_TAB_ORDER) {
+          const orderedMap: { [key: string]: number } = {};
+          if (master.SALES_RETURN_DETAILS_TAB_ORDER.length > 0) {
+            master.SALES_RETURN_DETAILS_TAB_ORDER.forEach((tab, index) => { 
+              orderedMap[tab.content] = index;
+            });
+
+            // Separate panels into saved (with order) and new (without order)
+            const savedPanels = this.panels.filter(panel => orderedMap.hasOwnProperty(panel.content));
+            const newPanels = this.panels.filter(panel => !orderedMap.hasOwnProperty(panel.content));
+
+            // Sort saved panels by their saved order, then append new panels
+            this.panels = [
+              ...savedPanels.sort((a, b) => (orderedMap[a.content] ?? Number.MAX_VALUE) - (orderedMap[b.content] ?? Number.MAX_VALUE)),
+              ...newPanels
+            ];
+          }
+        }
         this.showAdjustment = master?.ENABLE_EDIT_SETTLEMENT_FINAL && this.permEditSettlement && this.postingStatus === 'FINAL';
 
+        if (!this.showAdjustment) {
+          this.panels = this.panels.filter(panel => panel.content !== 'payment-adjustment');
+        }
         this.clientSidePermissionSettings = permissionList;
         permissionList.forEach(permission => {
           if (permission.perm_code === "SHOW_GENDOC_FINAL_BUTTON") {
@@ -223,6 +244,9 @@ export class InternalSalesReturnEditComponent extends ViewColumnComponent implem
         hdr.bl_fi_generic_doc_hdr.status === 'TEMP'? this.title = of('Create') : this.title = of('Edit');
 
         this.showAdjustment = master?.ENABLE_EDIT_SETTLEMENT_FINAL && this.permEditSettlement && this.postingStatus === 'FINAL';
+        if (!this.showAdjustment) {
+          this.panels = this.panels.filter(panel => panel.content !== 'payment-adjustment');
+        }
       }});
 
     this.subs.sink = this.localState$.subscribe(a => {
