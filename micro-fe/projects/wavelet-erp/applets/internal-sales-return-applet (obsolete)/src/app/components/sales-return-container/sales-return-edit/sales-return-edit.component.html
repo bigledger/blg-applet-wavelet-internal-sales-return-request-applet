@@ -10,7 +10,7 @@
     </div>
     <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px">
       <button mat-raised-button color="primary" type="button" (click)="onReset()">RESET</button>
-      <button mat-raised-button color="primary" type="button" (click)="onPostToFinal()">FINAL</button>
+      <button mat-raised-button color="primary" type="button" (click)="onPostToFinal() *ngIf="!appletSettings.HIDE_FINAL_BUTTON"">FINAL</button>
       <button mat-raised-button color="primary" type="button" [disabled]="disableSave()"
         (click)="onSave()">SAVE</button>
     </div>

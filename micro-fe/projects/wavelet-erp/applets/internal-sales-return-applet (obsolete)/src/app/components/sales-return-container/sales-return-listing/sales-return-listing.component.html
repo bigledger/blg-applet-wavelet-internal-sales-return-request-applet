@@ -22,7 +22,7 @@
     </div>
 
     <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px" [style.padding]="'5px'">
-      <button mat-raised-button color="primary" type="button"
+      <button mat-raised-button color="primary" type="button" *ngIf="!appletSettings.HIDE_FINAL_BUTTON"
         (click)="onPostToFinal()">FINAL
       </button>
   </div>
