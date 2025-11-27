@@ -109,6 +109,7 @@ export class AppComponent implements OnInit {
 
         updateMenuItem( "intercompany", !this.SHOW_INTERCOMPANY_MENU && this.appletSettings.HIDE_INTERCOMPANY_MENU );
         updateMenuItem( "file-export", !this.SHOW_FILE_EXPORT_MENU && this.appletSettings.HIDE_FILE_EXPORT_MENU );
+        updateMenuItem( "file-import", this.appletSettings.HIDE_FILE_IMPORT_MENU );
       },
     });
 

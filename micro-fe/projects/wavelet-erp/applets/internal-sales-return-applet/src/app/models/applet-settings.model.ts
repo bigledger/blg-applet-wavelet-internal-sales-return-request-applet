@@ -175,8 +175,10 @@ export interface AppletSettings {
     MANDATORY_MAIN_DETAILS_SALES_AGENT: boolean;
     HIDE_INTERCOMPANY_MENU: boolean;
     HIDE_FILE_EXPORT_MENU: boolean;
+    HIDE_FILE_IMPORT_MENU: boolean;
+    HIDE_FINAL_BUTTON: boolean;
     DEFAULT_TRANSACTION_DATE: boolean;
     ENABLE_EDITING_UNIT_PRICE_STD: boolean;
     HIDE_TOTAL_DISCOUNT_AMOUNT: boolean;
-  ENABLE_EDIT_SETTLEMENT_FINAL: boolean;
+    ENABLE_EDIT_SETTLEMENT_FINAL: boolean;
 }
