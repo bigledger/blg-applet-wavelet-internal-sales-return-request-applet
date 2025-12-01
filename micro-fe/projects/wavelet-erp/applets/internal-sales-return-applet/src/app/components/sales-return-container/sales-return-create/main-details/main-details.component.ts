@@ -481,7 +481,7 @@ export class InternalSalesReturnMainComponent implements OnInit, OnDestroy {
       console.log("targets", targets);
       let target = targets.filter(
         (target) =>
-          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID"
+          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID"
       );
       let targetDelivery = targets.filter(
         (targetDelivery) =>
@@ -539,7 +539,7 @@ export class InternalSalesReturnMainComponent implements OnInit, OnDestroy {
       this.getDefaultEntityBranch();
     }
 
-    this.branchSettingStore.dispatch(BranchSettingsActions.selectDefaultPrintableFormatInit({branchGuid: this.selectedBranch.toString(), serverDocType:"INTERNAL_SALES_RETURN"}));
+    this.branchSettingStore.dispatch(BranchSettingsActions.selectDefaultPrintableFormatInit({branchGuid: this.selectedBranch.toString(), serverDocType:"INTERNAL_SALES_RETURN_REQUEST"}));
   }
 
   DateConvert(date) {
@@ -582,7 +582,7 @@ export class InternalSalesReturnMainComponent implements OnInit, OnDestroy {
     };
     this.selectedCompany = e.bl_fi_mst_branch.comp_guid;
     this.store.dispatch(InternalSalesReturnActions.loadBranchCompany({ compGuid: e.bl_fi_mst_branch.comp_guid,branchGuid:e.bl_fi_mst_branch.guid,changeDefault: true, branchObj:e }));
-    this.branchSettingStore.dispatch(BranchSettingsActions.selectDefaultPrintableFormatInit({branchGuid: e.bl_fi_mst_branch.guid.toString(), serverDocType:"INTERNAL_SALES_RETURN"}));
+    this.branchSettingStore.dispatch(BranchSettingsActions.selectDefaultPrintableFormatInit({branchGuid: e.bl_fi_mst_branch.guid.toString(), serverDocType:"INTERNAL_SALES_RETURN_REQUEST"}));
   }
 
   onLocationSelected(e: LocationContainerModel) {

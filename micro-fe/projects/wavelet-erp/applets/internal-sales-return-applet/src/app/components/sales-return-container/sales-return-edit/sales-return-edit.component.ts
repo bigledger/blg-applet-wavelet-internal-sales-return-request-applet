@@ -288,7 +288,7 @@ export class InternalSalesReturnEditComponent extends ViewColumnComponent implem
     this.subs.sink = this.userPermissionTarget$.subscribe((targets) => {
       let updatePermissionTarget = targets.filter(
         (target) =>
-          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_UPDATE_TGT_GUID"
+          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_UPDATE_TGT_GUID"
       );
       let adminUpdatePermissionTarget = targets.filter(
         (target) =>

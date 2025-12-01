@@ -131,7 +131,7 @@ export class LineItemsListingComponent extends ViewColumnComponent {
         const filter = pageFiltering(grid.request.filterModel);
         const sortOn = this.pageSorting(grid.request.sortModel);
 
-        const docType: string = "internal-sales-returns";
+        const docType: string = "internal-sales-return-requests";
         this.subs.sink = this.GenericDocHdrLineService.getGenericDocumentHdrLineByCriteria(docType, this.pagination, apiVisa).pipe(
           mergeMap(a => {
             const source: Observable<bl_fi_generic_doc_line_RowClass>[] = [];

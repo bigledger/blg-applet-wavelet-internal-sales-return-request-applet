@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { FileDetails, FilesDetailsRequest, InternalSalesReturnService, GenericDocAttachmentService, SalesReturnFileImportService } from 'blg-akaun-ts-lib';
+import { FileDetails, FilesDetailsRequest, InternalSalesReturnRequestService, GenericDocAttachmentService, SalesReturnFileImportService } from 'blg-akaun-ts-lib';
 import { AppConfig } from 'projects/shared-utilities/visa';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, mergeMap, withLatestFrom } from 'rxjs/operators';
@@ -106,7 +106,7 @@ export class AttachmentEffects {
 
     constructor(
         private actions$: Actions,
-        private isdnService: InternalSalesReturnService,
+        private isdnService: InternalSalesReturnRequestService,
         private fileImportService: SalesReturnFileImportService,
         private genDocAttachmentService: GenericDocAttachmentService,
         private viewColFacade: ViewColumnFacade,

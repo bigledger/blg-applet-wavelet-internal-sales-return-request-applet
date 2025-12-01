@@ -39,7 +39,7 @@ export const salesReturnSearchModel: SearchModel = {
 
   query: (query) => 
     `(hdr.server_doc_1 ILIKE '%${query}%' OR branch.name ILIKE '%${query}%' OR customer.name ILIKE '%${query}%' OR subject.value_string ILIKE '%${query}%') 
-    AND subject.param_code= 'FIRST_NAME' AND hdr.server_doc_type = 'INTERNAL_SALES_RETURN' AND hdr.status = 'ACTIVE'`,
+    AND subject.param_code= 'FIRST_NAME' AND hdr.server_doc_type = 'INTERNAL_SALES_RETURN_REQUEST' AND hdr.status = 'ACTIVE'`,
 
   table: 'bl_fi_generic_doc_hdr',
 
@@ -60,5 +60,5 @@ export const salesReturnSearchModel: SearchModel = {
     createdBy: query => query ? `subject.value_string ILIKE '%${query.trim()}%' AND subject.param_code= 'FIRST_NAME'` : ''
   },
 
-  additionalCondition: ` AND hdr.server_doc_type = 'INTERNAL_SALES_RETURN' AND hdr.status = 'ACTIVE'`
+  additionalCondition: ` AND hdr.server_doc_type = 'INTERNAL_SALES_RETURN_REQUEST' AND hdr.status = 'ACTIVE'`
 };

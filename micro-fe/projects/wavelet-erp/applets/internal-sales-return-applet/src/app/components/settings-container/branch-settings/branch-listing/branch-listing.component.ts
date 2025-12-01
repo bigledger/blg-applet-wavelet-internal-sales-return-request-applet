@@ -187,7 +187,7 @@ export class BranchListingComponent extends ViewColumnComponent {
     this.store.dispatch(BranchSettingsActions.selectBranchSettlementMethodListInit({branchGuid: branch.bl_fi_mst_branch.guid}))
     this.isrStore.dispatch(InternalSalesReturnActions.resetSettingItemFilter());
     this.isrStore.dispatch(InternalSalesReturnActions.selectSettingItemFilter({branch: branch.bl_fi_mst_branch.guid}));
-    this.store.dispatch(BranchSettingsActions.selectDefaultPrintableFormatInit({branchGuid: branch.bl_fi_mst_branch.guid,serverDocType:"INTERNAL_SALES_RETURN"}))
+    this.store.dispatch(BranchSettingsActions.selectDefaultPrintableFormatInit({branchGuid: branch.bl_fi_mst_branch.guid,serverDocType:"INTERNAL_SALES_RETURN_REQUEST"}))
 
     // deactivate add and list in this local state
     if (!this.localState.deactivateList) {

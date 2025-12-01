@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
-import { InternalSalesReturnService, GenericDocLineService  } from 'blg-akaun-ts-lib';
+import { InternalSalesReturnRequestService, GenericDocLineService  } from 'blg-akaun-ts-lib';
 import { SearchQueryModel } from 'projects/shared-utilities/models/query.model';
 import { ViewColumnComponent } from 'projects/shared-utilities/view-column.component';
 import { AppConfig } from 'projects/shared-utilities/visa';
@@ -55,7 +55,7 @@ export class LineItemsListingComponent extends ViewColumnComponent {
   );
 
   readPermissionDefintion = {
-    branch: "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID"
+    branch: "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID"
   }
 
   protected subs = new SubSink();
@@ -128,7 +128,7 @@ export class LineItemsListingComponent extends ViewColumnComponent {
     private readonly viewModelStore: Store<ColumnViewModelStates>,
     private readonly permissionStore: Store<PermissionStates>,
     private viewColFacade: ViewColumnFacade,
-    private isSalesReturnService: InternalSalesReturnService,
+    private isSalesReturnService: InternalSalesReturnRequestService,
     private readonly componentStore: ComponentStore<LocalState>,
     private readonly store: Store<LineItemStates>,
     private listingService: ListingService,
@@ -171,7 +171,7 @@ export class LineItemsListingComponent extends ViewColumnComponent {
     this.subs.sink = this.userPermissionTarget$.subscribe((targets) => {
       let target = targets.filter(
         (target) =>
-          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID"
+          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID"
       );
       let adminCreatePermissionTarget = targets.filter(
         (target) => target.permDfn === "TNT_TENANT_ADMIN"
@@ -250,7 +250,7 @@ export class LineItemsListingComponent extends ViewColumnComponent {
     console.log("on create data....");
     const formData = this.getInputModel();
     if (showAll) formData.limit = null;
-    this.subs.sink = this.listingService.get("gen-doc-line/internal-sales-returns/backoffice-ep", formData, this.apiVisa).pipe(
+    this.subs.sink = this.listingService.get("gen-doc-line/internal-sales-return-requests/backoffice-ep", formData, this.apiVisa).pipe(
 	  mergeMap(a => from(a.data).pipe(
         map(b => {
           Object.assign(b,
@@ -417,7 +417,7 @@ export class LineItemsListingComponent extends ViewColumnComponent {
 
     formData.calcTotalRecords = true;
     formData.calcTotalRecordsOnly = true;
-    this.subs.sink = this.listingService.get("gen-doc-line/internal-sales-returns/backoffice-ep", formData, this.apiVisa).pipe(
+    this.subs.sink = this.listingService.get("gen-doc-line/internal-sales-return-requests/backoffice-ep", formData, this.apiVisa).pipe(
     ).subscribe(resolved => {
       this.totalRecords = resolved.totalRecords;
       this.store.dispatch(LineItemActions.selectTotalRecords({totalRecords: this.totalRecords}));

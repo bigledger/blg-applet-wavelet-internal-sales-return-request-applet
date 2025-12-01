@@ -46,7 +46,7 @@ export class DefaultPrintableFormatComponent extends ViewColumnComponent {
           this.branch = b;
           this.store.dispatch(BranchSettingsActions.selectDefaultPrintableFormatInit({
             branchGuid: b.bl_fi_mst_branch.guid, 
-            serverDocType:'INTERNAL_SALES_RETURN'
+            serverDocType:'INTERNAL_SALES_RETURN_REQUEST'
           }));
         }
       });
@@ -75,7 +75,7 @@ export class DefaultPrintableFormatComponent extends ViewColumnComponent {
     // Avoid creating new record in database (only allow updating) if the same branch_guid and server_doc_type are found
     const paging = new Pagination();
     paging.conditionalCriteria.push({ columnName: 'branch_guid', operator: '=', value: this.branch.bl_fi_mst_branch.guid.toString() });
-    paging.conditionalCriteria.push({ columnName: 'server_doc_type', operator: '=', value: 'INTERNAL_SALES_RETURN' });
+    paging.conditionalCriteria.push({ columnName: 'server_doc_type', operator: '=', value: 'INTERNAL_SALES_RETURN_REQUEST' });
     const resolve = await this.branchPrintableService.getByCriteria(paging, this.apiVisa).subscribe(
       resolve => {
         if (resolve.data.length > 0) {
@@ -108,7 +108,7 @@ export class DefaultPrintableFormatComponent extends ViewColumnComponent {
           container.bl_fi_mst_branch_default_printable_format_hdr.branch_name =
             this.branch.bl_fi_mst_branch.name;
           container.bl_fi_mst_branch_default_printable_format_hdr.server_doc_type =
-            "INTERNAL_SALES_RETURN";
+            "INTERNAL_SALES_RETURN_REQUEST";
           container.bl_fi_mst_branch_default_printable_format_hdr.header =
             this.form.value.header;
           container.bl_fi_mst_branch_default_printable_format_hdr.footer =

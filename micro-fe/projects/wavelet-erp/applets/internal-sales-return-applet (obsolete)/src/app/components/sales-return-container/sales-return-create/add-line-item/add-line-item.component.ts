@@ -112,10 +112,10 @@ export class AddLineItemComponent extends ViewColumnComponent implements OnInit,
     line.item_property_json = {...this.itemDetails.main.form.value};
     line.line_property_json = <any>{ delivery_instructions: { ...this.itemDetails.delivery.form.value } };
     line.txn_type = 'PNS';
-    line.quantity_signum = 1;
-    line.amount_signum = -1;
-    line.server_doc_type = 'INTERNAL_SALES_RETURN';
-    line.client_doc_type = 'INTERNAL_SALES_RETURN';
+    line.quantity_signum = 0;
+    line.amount_signum = 0;
+    line.server_doc_type = 'INTERNAL_SALES_RETURN_REQUEST';
+    line.client_doc_type = 'INTERNAL_SALES_RETURN_REQUEST';
     line.date_txn = new Date();
     line.status = 'ACTIVE';
     line.serial_no = this.subItemType === this.SUB_ITEM_TYPE.serialNumber ? <any>{ serialNumbers: this.serialNumber.serialNumbers } : null;
@@ -131,8 +131,8 @@ export class AddLineItemComponent extends ViewColumnComponent implements OnInit,
       link.guid_doc_1_line = this.itemDetails.main.form.value.lineGuid;
       link.server_doc_type_doc_1_hdr = this.itemDetails.main.form.value.serverDocTypeHdr;
       link.server_doc_type_doc_1_line = this.itemDetails.main.form.value.serverDocTypeLine;
-      link.server_doc_type_doc_2_hdr = 'INTERNAL_SALES_RETURN';
-      link.server_doc_type_doc_2_line = 'INTERNAL_SALES_RETURN';
+      link.server_doc_type_doc_2_hdr = 'INTERNAL_SALES_RETURN_REQUEST';
+      link.server_doc_type_doc_2_line = 'INTERNAL_SALES_RETURN_REQUEST';
       link.txn_type = this.getLinkTxnType(this.itemDetails.main.form.value.itemType);
       link.quantity_signum = 1;
       link.quantity_contra = line.quantity_base;

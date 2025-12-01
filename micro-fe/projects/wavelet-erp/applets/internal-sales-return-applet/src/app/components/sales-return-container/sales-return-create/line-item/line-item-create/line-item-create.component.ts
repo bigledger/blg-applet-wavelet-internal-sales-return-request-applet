@@ -127,7 +127,7 @@ export class LineItemCreateComponent extends ViewColumnComponent {
 
     this.subs.sink = this.appletSettings$.subscribe(resolve => this.appletSettings = resolve);
 
-    this.sessionStore.dispatch(SessionActions.getKOSettingsInit({compGuid:this.compGuid, serverDoc2: ServerDocTypeConstants.INTERNAL_SALES_RETURN }))
+    this.sessionStore.dispatch(SessionActions.getKOSettingsInit({compGuid:this.compGuid, serverDoc2: ServerDocTypeConstants.INTERNAL_SALES_RETURN_REQUEST }))
     this.subs.sink = this.sessionStore.select(SessionSelectors.selectKOSettings).subscribe(response=>{
       console.log(response);
       if(response!==null){

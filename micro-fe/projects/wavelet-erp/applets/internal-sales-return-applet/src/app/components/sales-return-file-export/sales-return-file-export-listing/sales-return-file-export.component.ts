@@ -138,7 +138,7 @@ export class SalesReturnFileExportListingComponent extends ViewColumnComponent i
           { columnName: 'calcTotalRecords', operator: '=', value: 'true' },
           { columnName: 'orderBy', operator: '=', value: 'updated_date' },
           { columnName: 'order', operator: '=', value: 'DESC' },
-          { columnName: 'doc_type', operator: '=', value: 'INTERNAL_SALES_RETURN' },
+          { columnName: 'doc_type', operator: '=', value: 'INTERNAL_SALES_RETURN_REQUEST' },
           {
             columnName: 'guids',
             operator: '=',
@@ -231,7 +231,7 @@ export class SalesReturnFileExportListingComponent extends ViewColumnComponent i
       this.conditionList.date_txn_to = formattedDate;
     }
     
-    this.subs.sink = this.reportService.generateGenericDocFile("internal-sales-returns",this.conditionList,this.apiVisa)
+    this.subs.sink = this.reportService.generateGenericDocFile("internal-sales-return-requests",this.conditionList,this.apiVisa)
       .subscribe(
         (data) => {
           this.toaster.success(

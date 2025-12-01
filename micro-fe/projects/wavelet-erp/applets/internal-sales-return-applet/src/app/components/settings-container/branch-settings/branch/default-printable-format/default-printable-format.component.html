@@ -1,7 +1,7 @@
 <div style="text-align: right; margin-top: 16px;">
     <button mat-raised-button color="primary" type="button" (click)="onSave()">SAVE</button>
 </div>
-  <app-select-parent-printable  [(printable)]="form.controls['printableFormatHdr']" [txnType]="'INTERNAL_SALES_RETURN'" [hideNone]=true></app-select-parent-printable> 
+  <app-select-parent-printable  [(printable)]="form.controls['printableFormatHdr']" [txnType]="'INTERNAL_SALES_RETURN_REQUEST'" [hideNone]=true></app-select-parent-printable> 
   <mat-form-field class="example-full-width" appearance="outline">
     <mat-label>Header</mat-label>
     <textarea #remarks matInput placeholder="Remarks" [formControl]="form.controls['header']"></textarea>

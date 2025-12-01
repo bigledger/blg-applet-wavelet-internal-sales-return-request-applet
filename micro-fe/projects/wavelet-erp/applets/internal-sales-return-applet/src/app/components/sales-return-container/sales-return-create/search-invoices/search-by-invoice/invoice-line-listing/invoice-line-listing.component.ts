@@ -546,13 +546,13 @@ export class InvoiceLineListingComponent extends ViewColumnComponent {
             (unitDiscount * record.source_gen_doc_line.uom_to_base_ratio)
           );
           line.txn_type = "PNS";
-          line.quantity_signum = 1;
-          line.amount_signum = -1;
-          line.server_doc_type = "INTERNAL_SALES_RETURN";
-          line.client_doc_type = "INTERNAL_SALES_RETURN";
+          line.quantity_signum = 0;
+          line.amount_signum = 0;
+          line.server_doc_type = "INTERNAL_SALES_RETURN_REQUEST";
+          line.client_doc_type = "INTERNAL_SALES_RETURN_REQUEST";
           if(line.item_txn_type==='NSTI'){
-            line.quantity_signum = -1;
-            line.amount_signum = 1;
+            line.quantity_signum = 0;
+            line.amount_signum = 0;
             line.server_doc_type = "INTERNAL_SALES_TRADE_IN";
             line.client_doc_type = "INTERNAL_SALES_TRADE_IN";
           }
@@ -588,7 +588,7 @@ export class InvoiceLineListingComponent extends ViewColumnComponent {
           link.server_doc_type_doc_2_hdr = AppletConstants.docType;
           link.server_doc_type_doc_2_line = AppletConstants.docType;
           link.txn_type = "RETURN";
-          link.quantity_signum = -1;
+          link.quantity_signum = 0;
           link.quantity_contra = line.quantity_base;
           link.date_txn = new Date();
           link.status = "DRAFT";
@@ -789,10 +789,10 @@ export class InvoiceLineListingComponent extends ViewColumnComponent {
             (unitDiscount * record.source_gen_doc_line.uom_to_base_ratio)
           );
           line.txn_type = "PNS";
-          line.quantity_signum = 1;
-          line.amount_signum = -1;
-          line.server_doc_type = "INTERNAL_SALES_RETURN";
-          line.client_doc_type = "INTERNAL_SALES_RETURN";
+          line.quantity_signum = 0;
+          line.amount_signum = 0;
+          line.server_doc_type = "INTERNAL_SALES_RETURN_REQUEST";
+          line.client_doc_type = "INTERNAL_SALES_RETURN_REQUEST";
           if(line.item_txn_type==='NSTI'){
             line.quantity_signum = -1;
             line.amount_signum = 1;
@@ -1047,10 +1047,10 @@ export class InvoiceLineListingComponent extends ViewColumnComponent {
 
     // Fixed attributes
     line.txn_type = "PNS";
-    line.quantity_signum = 1;
-    line.amount_signum = -1;
-    line.server_doc_type = "INTERNAL_SALES_RETURN";
-    line.client_doc_type = "INTERNAL_SALES_RETURN";
+    line.quantity_signum = 0;
+    line.amount_signum = 0;
+    line.server_doc_type = "INTERNAL_SALES_RETURN_REQUEST";
+    line.client_doc_type = "INTERNAL_SALES_RETURN_REQUEST";
     if(line.item_txn_type==='NSTI'){
       line.quantity_signum = -1;
       line.amount_signum = 1;

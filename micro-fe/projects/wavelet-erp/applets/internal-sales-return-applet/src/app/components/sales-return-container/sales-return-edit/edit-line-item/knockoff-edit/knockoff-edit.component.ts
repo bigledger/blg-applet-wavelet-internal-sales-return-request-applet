@@ -272,7 +272,7 @@ export class KnockoffEditComponent extends ViewColumnComponent {
       link.server_doc_type_doc_2_hdr = this.AppletConstants.docType;
       link.server_doc_type_doc_2_line = this.AppletConstants.docType;
       link.txn_type = 'KO';
-      link.quantity_signum = -1;
+      link.quantity_signum = 0;
       link.quantity_contra = diff;
       link.date_txn = new Date();
       link.status = 'DRAFT_TEMP'; // Temporary draft, will not upsert to database

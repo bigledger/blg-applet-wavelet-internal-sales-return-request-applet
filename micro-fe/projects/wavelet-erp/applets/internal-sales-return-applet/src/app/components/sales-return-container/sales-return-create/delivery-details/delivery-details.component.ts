@@ -208,7 +208,7 @@ export class DeliveryDetailsComponent extends ViewColumnComponent {
       let tempBranch: any;
       let target = targets.filter(
         (target) =>
-          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID"
+          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID"
       );
       let targetDelivery = targets.filter(
         (targetDelivery) =>

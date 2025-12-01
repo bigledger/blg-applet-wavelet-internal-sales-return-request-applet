@@ -57,7 +57,7 @@ export class SearchByInvoiceComponent implements OnInit {
   searchModel = salesInvoiceSearchModel;
 
   readPermissionDefintion = {
-    branch: "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID"
+    branch: "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID"
   }
 
   userPermissionTarget$ = this.permissionStore.select(
@@ -179,7 +179,7 @@ export class SearchByInvoiceComponent implements OnInit {
       console.log("targets", targets);
       let target = targets.filter(
         (target) =>
-          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID"
+          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID"
       );
       let adminCreatePermissionTarget = targets.filter(
         (target) => target.permDfn === "TNT_TENANT_ADMIN"

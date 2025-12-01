@@ -214,7 +214,7 @@ export class IntercompanyProcessingQueueListingComponent extends ViewColumnCompo
       pagination.conditionalCriteria = [
         { columnName: "order", operator: "=", value: "DESC" },
         { columnName: "orderBy", operator: "=", value: "updated_date"},
-        { columnName: "src_gendoc_server_doc_types", operator: "=", value: "INTERNAL_SALES_RETURN"},
+        { columnName: "src_gendoc_server_doc_types", operator: "=", value: "INTERNAL_SALES_RETURN_REQUEST"},
       ]
       this.retrieveData(pagination);
 

@@ -178,7 +178,7 @@ export class KnockOffSalesOrderComponent extends ViewColumnComponent {
       {
         columnName: "line_open_queue_server_doc_type_2",
         operator: "=",
-        value: "INTERNAL_SALES_RETURN",
+        value: "INTERNAL_SALES_RETURN_REQUEST",
       },
       {
         columnName: "guids",
@@ -308,7 +308,7 @@ export class KnockOffSalesOrderComponent extends ViewColumnComponent {
     link.server_doc_type_doc_2_line = AppletConstants.docType;
     // link.txn_type = 'ISO_IPO';
     link.txn_type = "KO";
-    link.quantity_signum = -1;
+    link.quantity_signum = 0;
     // link.quantity_contra = line.quantity_base;
     link.quantity_contra = a.qty_open;
     link.date_txn = new Date();
@@ -324,7 +324,7 @@ export class KnockOffSalesOrderComponent extends ViewColumnComponent {
       const sql = {
         subquery:
           e.queryString +
-          `AND queue.server_doc_type_1 = 'INTERNAL_SALES_ORDER' AND queue.server_doc_type_2 = 'INTERNAL_SALES_RETURN'`,
+          `AND queue.server_doc_type_1 = 'INTERNAL_SALES_ORDER' AND queue.server_doc_type_2 = 'INTERNAL_SALES_RETURN_REQUEST'`,
         table: e.table,
       };
       this.subs.sink = this.subQueryService
