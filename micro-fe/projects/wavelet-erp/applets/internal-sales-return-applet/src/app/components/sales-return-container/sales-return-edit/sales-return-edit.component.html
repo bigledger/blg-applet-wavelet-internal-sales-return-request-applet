@@ -6,7 +6,7 @@
                 <img [ngClass]="navBtn.disabled ? 'blg-button-disabled' : null"
                     src="../../../assets/images/backbutton.png" alt="add" width="40px" height="40px" />
             </button>
-            <span>{{title | async}} Internal Sales Return</span>
+            <span>{{title | async}} Internal Sales Return Request</span>
         </div>
         <div fxFlex="1 0 25" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="5px" *ngIf="isNotShadow()">
             <button mat-raised-button color="primary" type="button" [disabled]="disableFinal()" (click)="onFinal()"

@@ -35,7 +35,7 @@ export class SalesReturnListingComponent extends ViewColumnComponent {
 
   protected subs = new SubSink();
 
-  protected compName = 'Sales Return Listing';
+  protected compName = 'Sales Return Request Listing';
   protected readonly index = 0;
   protected localState: LocalState;
 

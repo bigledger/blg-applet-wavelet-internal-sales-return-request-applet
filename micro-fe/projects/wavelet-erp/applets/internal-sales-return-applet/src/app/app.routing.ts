@@ -29,7 +29,7 @@ import { AppletLogComponent } from './components/settings-container/applet-log/a
 import { BranchSettingsContainerComponent } from './components/settings-container/branch-settings/branch-settings-container.component';
 import { FileImportContainerComponent } from './components/file-import-container/file-import-container.component';
 
-export const mainPath = "applets/tnt/wavelet/erp/internal-sales-return-applet";
+export const mainPath = "applets/tnt/wavelet/erp/internal-sales-return-applet-request";
 
 export const AppRoutes: Routes = [
   {
