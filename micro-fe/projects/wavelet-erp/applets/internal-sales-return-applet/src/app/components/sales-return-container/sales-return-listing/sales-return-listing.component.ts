@@ -6,7 +6,7 @@ import {
   GenericDocContainerModel,
   GenericDocEditingLockDto,
   GenericDocLockService,
-  InternalSalesReturnService,
+  InternalSalesReturnRequestService,
   DocumentShortCodesClass ,
 } from "blg-akaun-ts-lib";
 import * as moment from "moment";
@@ -74,8 +74,8 @@ export class SalesReturnListingComponent extends ViewColumnComponent {
   searchModel = salesReturnSearchModel;
 
   readPermissionDefintion = {
-    branch: "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID",
-    company: "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID",
+    branch: "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID",
+    company: "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID",
   }
 
   showColumns = [
@@ -364,7 +364,7 @@ export class SalesReturnListingComponent extends ViewColumnComponent {
     public readonly viewModelStore: Store<ColumnViewModelStates>,
     protected readonly permissionStore: Store<PermissionStates>,
     private readonly componentStore: ComponentStore<LocalState>,
-    private isdnService: InternalSalesReturnService,
+    private isdnService: InternalSalesReturnRequestService,
     private listingService: ListingService,
     private cdr: ChangeDetectorRef,
     private genericDocLockService: GenericDocLockService,
@@ -416,11 +416,11 @@ export class SalesReturnListingComponent extends ViewColumnComponent {
     this.subs.sink = this.userPermissionTarget$.subscribe((targets) => {
       let target = targets.filter(
         (target) =>
-          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID"
+          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID"
       );
       let createPermissionTarget = targets.filter(
         (target) =>
-          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_CREATE_TGT_GUID"
+          target.permDfn === "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_CREATE_TGT_GUID"
       );
       let adminCreatePermissionTarget = targets.filter(
         (target) => target.permDfn === "TNT_TENANT_ADMIN"
@@ -670,7 +670,7 @@ export class SalesReturnListingComponent extends ViewColumnComponent {
     console.log("on create data....");
     const formData = this.getInputModel();
     if (showAll) formData.limit = null;
-    this.subs.sink = this.listingService.get("gen-doc/internal-sales-returns", formData, this.apiVisa).pipe(
+    this.subs.sink = this.listingService.get("gen-doc/internal-sales-return-requests", formData, this.apiVisa).pipe(
       mergeMap(a => from(a.data).pipe(
         map(b => {
           Object.assign(b,
@@ -968,7 +968,7 @@ export class SalesReturnListingComponent extends ViewColumnComponent {
 
     formData.calcTotalRecords = true;
     formData.calcTotalRecordsOnly = true;
-    this.subs.sink = this.listingService.get("gen-doc/internal-sales-returns", formData, this.apiVisa).pipe(
+    this.subs.sink = this.listingService.get("gen-doc/internal-sales-return-requests", formData, this.apiVisa).pipe(
     ).subscribe(resolved => {
       this.totalRecords = resolved.totalRecords;
       this.store.dispatch(InternalSalesReturnActions.selectTotalRecords({ totalRecords: this.totalRecords }));

@@ -91,7 +91,7 @@ export class InternalSalesReturnEditExportComponent implements OnInit, OnDestroy
     paging.conditionalCriteria.push({
       columnName: "server_doc_type",
       operator: "=",
-      value: "INTERNAL_SALES_RETURN",
+      value: "INTERNAL_SALES_RETURN_REQUEST",
     });
 
     this.subs.sink = this.branchPrintableService

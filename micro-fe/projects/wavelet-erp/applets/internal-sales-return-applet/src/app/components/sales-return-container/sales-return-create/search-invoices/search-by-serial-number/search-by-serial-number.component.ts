@@ -347,10 +347,10 @@ export class SearchBySerialNumberComponent implements OnInit {
           (unitDiscount * record.bl_fi_generic_doc_line.uom_to_base_ratio)
         );
         line.txn_type = "PNS";
-        line.quantity_signum = 1;
-        line.amount_signum = -1;
-        line.server_doc_type = "INTERNAL_SALES_RETURN";
-        line.client_doc_type = "INTERNAL_SALES_RETURN";
+        line.quantity_signum = 0;
+        line.amount_signum = 0;
+        line.server_doc_type = "INTERNAL_SALES_RETURN_REQUEST";
+        line.client_doc_type = "INTERNAL_SALES_RETURN_REQUEST";
         line.date_txn = new Date();
         line.status = "ACTIVE";
         line.serial_no = <any>{
@@ -379,10 +379,10 @@ export class SearchBySerialNumberComponent implements OnInit {
         link.guid_doc_1_line = record.bl_fi_generic_doc_line.guid;
         link.server_doc_type_doc_1_hdr = "INTERNAL_SALES_INVOICE";
         link.server_doc_type_doc_1_line = "INTERNAL_SALES_INVOICE";
-        link.server_doc_type_doc_2_hdr = "INTERNAL_SALES_RETURN";
-        link.server_doc_type_doc_2_line = "INTERNAL_SALES_RETURN";
+        link.server_doc_type_doc_2_hdr = "INTERNAL_SALES_RETURN_REQUEST";
+        link.server_doc_type_doc_2_line = "INTERNAL_SALES_RETURN_REQUEST";
         link.txn_type = "RETURN";
-        link.quantity_signum = 1;
+        link.quantity_signum = 0;
         link.quantity_contra = line.quantity_base;
         link.date_txn = new Date();
         link.status = "DRAFT";
@@ -520,10 +520,10 @@ export class SearchBySerialNumberComponent implements OnInit {
           (unitDiscount * record.bl_fi_generic_doc_line.uom_to_base_ratio)
         );
         line.txn_type = "PNS";
-        line.quantity_signum = 1;
-        line.amount_signum = -1;
-        line.server_doc_type = "INTERNAL_SALES_RETURN";
-        line.client_doc_type = "INTERNAL_SALES_RETURN";
+        line.quantity_signum = 0;
+        line.amount_signum = 0;
+        line.server_doc_type = "INTERNAL_SALES_RETURN_REQUEST";
+        line.client_doc_type = "INTERNAL_SALES_RETURN_REQUEST";
         line.date_txn = new Date();
         line.status = "ACTIVE";
         line.serial_no = <any>{
@@ -547,10 +547,10 @@ export class SearchBySerialNumberComponent implements OnInit {
         link.guid_doc_1_line = record.bl_fi_generic_doc_line.guid;
         link.server_doc_type_doc_1_hdr = "INTERNAL_SALES_INVOICE";
         link.server_doc_type_doc_1_line = "INTERNAL_SALES_INVOICE";
-        link.server_doc_type_doc_2_hdr = "INTERNAL_SALES_RETURN";
-        link.server_doc_type_doc_2_line = "INTERNAL_SALES_RETURN";
+        link.server_doc_type_doc_2_hdr = "INTERNAL_SALES_RETURN_REQUEST";
+        link.server_doc_type_doc_2_line = "INTERNAL_SALES_RETURN_REQUEST";
         link.txn_type = "RETURN";
-        link.quantity_signum = 1;
+        link.quantity_signum = 0;
         link.quantity_contra = line.quantity_base;
         link.date_txn = new Date();
         link.status = "DRAFT";

@@ -16,7 +16,7 @@ import {
   GenericDocContainerModel,
   GenericDocLinkBackofficeEPService,
   GenericDocLinkContainerModel,
-  InternalSalesReturnService,
+  InternalSalesReturnRequestService,
   Pagination,
   PricingSchemeLinkService,
   PricingSchemeService,
@@ -589,11 +589,11 @@ export class InternalSalesReturnEffects {
             temp.bl_fi_generic_doc_hdr.revision;
           container.bl_fi_generic_doc_hdr.status = "ACTIVE";
           container.bl_fi_generic_doc_hdr.doc_source_type = "INTERNAL";
-          container.bl_fi_generic_doc_hdr.amount_signum = -1;
+          container.bl_fi_generic_doc_hdr.amount_signum = 0;
           container.bl_fi_generic_doc_hdr.created_by_subject_guid =
             localStorage.getItem("guid");
           container.bl_fi_generic_doc_hdr.client_doc_type =
-            "INTERNAL_SALES_RETURN";
+            "INTERNAL_SALES_RETURN_REQUEST";
           // container.bl_fi_generic_doc_hdr.date_txn = new Date(
           //   container.bl_fi_generic_doc_hdr.date_txn
           // ).toISOString();
@@ -925,7 +925,7 @@ export class InternalSalesReturnEffects {
 
         if (!genDoc.bl_fi_generic_doc_hdr.doc_source_type || genDoc.bl_fi_generic_doc_hdr.amount_signum === null) {
           genDoc.bl_fi_generic_doc_hdr.doc_source_type = "INTERNAL";
-          genDoc.bl_fi_generic_doc_hdr.amount_signum = -1;
+          genDoc.bl_fi_generic_doc_hdr.amount_signum = 0;
         }
 
         return genDoc;
@@ -1284,79 +1284,79 @@ export class InternalSalesReturnEffects {
       )
     )
   );
-  printJasperPdf$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(InternalSalesReturnActions.printJasperPdfInit),
-      withLatestFrom(
-        this.store.select(HDRSelectors.selectHdr),
-        this.isSalesReturnStore.select(
-          InternalSalesReturnSelectors.selectPrintableFormatGuid
-        )
-      ),
-      exhaustMap(([action, hdr, printableGuid]) =>
-        this.isdnService
-          .printJasperPdf(
-            hdr.guid.toString(),
-            "CP_COMMERCE_INTERNAL_SALES_ORDERS_JASPER_PRINT_SERVICE",
-            printableGuid,
-            AppConfig.apiVisa
-          )
-          .pipe(
-            map((a) => {
-              const downloadURL = window.URL.createObjectURL(a);
-              const link = document.createElement("a");
-              link.href = downloadURL;
-              link.download = `${hdr.server_doc_1}.pdf`;
-              link.click();
-              link.remove();
-              this.viewColFacade.showSuccessToast(
-                "Sales Return Exported Successfully"
-              );
-              return InternalSalesReturnActions.printJasperPdfSuccess();
-            }),
-            catchError((err) => {
-              this.viewColFacade.showFailedToast(err);
-              return of(InternalSalesReturnActions.printJasperPdfFailed());
-            })
-          )
-      )
-    )
-  );
+  // printJasperPdf$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(InternalSalesReturnActions.printJasperPdfInit),
+  //     withLatestFrom(
+  //       this.store.select(HDRSelectors.selectHdr),
+  //       this.isSalesReturnStore.select(
+  //         InternalSalesReturnSelectors.selectPrintableFormatGuid
+  //       )
+  //     ),
+  //     exhaustMap(([action, hdr, printableGuid]) =>
+  //       this.isdnService
+  //         .printJasperPdf(
+  //           hdr.guid.toString(),
+  //           "CP_COMMERCE_INTERNAL_SALES_ORDERS_JASPER_PRINT_SERVICE",
+  //           printableGuid,
+  //           AppConfig.apiVisa
+  //         )
+  //         .pipe(
+  //           map((a) => {
+  //             const downloadURL = window.URL.createObjectURL(a);
+  //             const link = document.createElement("a");
+  //             link.href = downloadURL;
+  //             link.download = `${hdr.server_doc_1}.pdf`;
+  //             link.click();
+  //             link.remove();
+  //             this.viewColFacade.showSuccessToast(
+  //               "Sales Return Exported Successfully"
+  //             );
+  //             return InternalSalesReturnActions.printJasperPdfSuccess();
+  //           }),
+  //           catchError((err) => {
+  //             this.viewColFacade.showFailedToast(err);
+  //             return of(InternalSalesReturnActions.printJasperPdfFailed());
+  //           })
+  //         )
+  //     )
+  //   )
+  // );
 
-  openJasperPdf$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(InternalSalesReturnActions.openJasperPdfInit),
-    withLatestFrom(
-      this.store.select(HDRSelectors.selectHdr),
-      this.isSalesReturnStore.select(
-        InternalSalesReturnSelectors.selectPrintableFormatGuid
-      )
-    ),
-    exhaustMap(([action, hdr, printableGuid]) =>
-      this.isdnService.printJasperPdf(
-        hdr.guid.toString(),
-        "CP_COMMERCE_INTERNAL_SALES_ORDERS_JASPER_PRINT_SERVICE",
-        printableGuid,
-        AppConfig.apiVisa
-      ).pipe(
-        map((blob) => {
-          const blobUrl = window.URL.createObjectURL(blob);
-          window.open(blobUrl, '_blank');
+//   openJasperPdf$ = createEffect(() =>
+//   this.actions$.pipe(
+//     ofType(InternalSalesReturnActions.openJasperPdfInit),
+//     withLatestFrom(
+//       this.store.select(HDRSelectors.selectHdr),
+//       this.isSalesReturnStore.select(
+//         InternalSalesReturnSelectors.selectPrintableFormatGuid
+//       )
+//     ),
+//     exhaustMap(([action, hdr, printableGuid]) =>
+//       this.isdnService.printJasperPdf(
+//         hdr.guid.toString(),
+//         "CP_COMMERCE_INTERNAL_SALES_ORDERS_JASPER_PRINT_SERVICE",
+//         printableGuid,
+//         AppConfig.apiVisa
+//       ).pipe(
+//         map((blob) => {
+//           const blobUrl = window.URL.createObjectURL(blob);
+//           window.open(blobUrl, '_blank');
 
-          // Optional: Revoke the Blob URL after a short delay
-          setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+//           // Optional: Revoke the Blob URL after a short delay
+//           setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
 
-          this.viewColFacade.showSuccessToast("Sales Return PDF Opened Successfully");
-          return InternalSalesReturnActions.openJasperPdfSuccess();
-        }),
-        catchError((err) => {
-          this.viewColFacade.showFailedToast(err);
-          return of(InternalSalesReturnActions.openJasperPdfFailed({ error: err }));
-        })
-      )
-    )
-  )
-);
+//           this.viewColFacade.showSuccessToast("Sales Return PDF Opened Successfully");
+//           return InternalSalesReturnActions.openJasperPdfSuccess();
+//         }),
+//         catchError((err) => {
+//           this.viewColFacade.showFailedToast(err);
+//           return of(InternalSalesReturnActions.openJasperPdfFailed({ error: err }));
+//         })
+//       )
+//     )
+//   )
+// );
 
 updateContra$ = createEffect(() =>
   this.actions$.pipe(
@@ -2190,120 +2190,120 @@ updateContra$ = createEffect(() =>
     )
   );
 
-  printMultipleJasperPdf$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(InternalSalesReturnActions.printMultipleJasperPdfInit),
-      exhaustMap((action) => {
-        const printBlobArray$ = action.guids.map((guid) =>
-          this.isdnService.printJasperPdf(
-            guid.toString(),
-            "CP_COMMERCE_INTERNAL_SALES_ORDERS_JASPER_PRINT_SERVICE",
-            action.printable,
-            AppConfig.apiVisa
-          )
-        );
-              return forkJoin(printBlobArray$).pipe(
-                exhaustMap(async (blobs) => {
-                  const mergedPdf = await PDFDocument.create();
-                  for (const blob of blobs) {
-                    const arrayBuffer = await blob.arrayBuffer();
-                    const pdf = await PDFDocument.load(arrayBuffer);
-                    const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-                    copiedPages.forEach((page) => mergedPdf.addPage(page));
-                  }
-                  const mergedPdfBlob = new Blob([await mergedPdf.save()], { type: 'application/pdf' });
-                  const downloadURL = window.URL.createObjectURL(mergedPdfBlob);
+  // printMultipleJasperPdf$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(InternalSalesReturnActions.printMultipleJasperPdfInit),
+  //     exhaustMap((action) => {
+  //       const printBlobArray$ = action.guids.map((guid) =>
+  //         this.isdnService.printJasperPdf(
+  //           guid.toString(),
+  //           "CP_COMMERCE_INTERNAL_SALES_ORDERS_JASPER_PRINT_SERVICE",
+  //           action.printable,
+  //           AppConfig.apiVisa
+  //         )
+  //       );
+  //             return forkJoin(printBlobArray$).pipe(
+  //               exhaustMap(async (blobs) => {
+  //                 const mergedPdf = await PDFDocument.create();
+  //                 for (const blob of blobs) {
+  //                   const arrayBuffer = await blob.arrayBuffer();
+  //                   const pdf = await PDFDocument.load(arrayBuffer);
+  //                   const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+  //                   copiedPages.forEach((page) => mergedPdf.addPage(page));
+  //                 }
+  //                 const mergedPdfBlob = new Blob([await mergedPdf.save()], { type: 'application/pdf' });
+  //                 const downloadURL = window.URL.createObjectURL(mergedPdfBlob);
 
-                  let fileName = 'INTERNAL_SALES_RETURN';
-                  if (action.docNumbers.length === 1) {
-                    fileName += `-${action.docNumbers[0]}`;
-                  } else {
-                    fileName += '-SLSRTN';
-                  }
-                  if (action.preview) {
+  //                 let fileName = 'INTERNAL_SALES_RETURN_REQUEST';
+  //                 if (action.docNumbers.length === 1) {
+  //                   fileName += `-${action.docNumbers[0]}`;
+  //                 } else {
+  //                   fileName += '-SLSRTN';
+  //                 }
+  //                 if (action.preview) {
 
-                    const previewWindow = window.open('', '_blank');
-                    const blobURL = window.URL.createObjectURL(mergedPdfBlob);
-                    previewWindow.document.write(`
-                      <html>
-                        <head>
-                          <title>${fileName}</title>
-                          <style>
-                            body {
-                              font-family: Arial, sans-serif;
-                              margin: 0;
-                              padding: 0;
-                              background-color: #f4f4f4;
-                              text-align: center;
-                            }
-                            iframe {
-                              width: 100%;
-                              height: 90vh;
-                              border: none;
-                            }
-                            .download-container {
-                              display: flex;
-                              justify-content: center;
-                              align-items: center;
-                              height: 10vh;
-                            }
-                            #downloadBtn {
-                              color: #007bff;
-                              border: 2px solid #007bff;
-                              padding: 10px 20px;
-                              font-size: 16px;
-                              border-radius: 5px;
-                              cursor: pointer;
-                              background: none;
-                              font-weight: bold;
-                              transition: color 0.3s ease, border-color 0.3s ease;
-                            }
-                            #downloadBtn:hover {
-                              color: #0056b3;
-                              border-color: #0056b3;
-                            }
-                            #downloadBtn:active {
-                              color: #004085;
-                              border-color: #004085;
-                            }
-                          </style>
-                        </head>
-                        <body>
-                          <iframe src="${blobURL}"></iframe>
-                          <div class="download-container">
-                            <button id="downloadBtn" aria-label="Download PDF">Download PDF</button>
-                          </div>
-                          <script>
-                            document.getElementById('downloadBtn').addEventListener('click', function() {
-                              const a = document.createElement('a');
-                              a.href = '${blobURL}';
-                              a.download = '${fileName}.pdf'; // Set file name for download
-                              a.click();
-                            });
-                          </script>
-                        </body>
-                      </html>
-                    `);
-                  } else {
+  //                   const previewWindow = window.open('', '_blank');
+  //                   const blobURL = window.URL.createObjectURL(mergedPdfBlob);
+  //                   previewWindow.document.write(`
+  //                     <html>
+  //                       <head>
+  //                         <title>${fileName}</title>
+  //                         <style>
+  //                           body {
+  //                             font-family: Arial, sans-serif;
+  //                             margin: 0;
+  //                             padding: 0;
+  //                             background-color: #f4f4f4;
+  //                             text-align: center;
+  //                           }
+  //                           iframe {
+  //                             width: 100%;
+  //                             height: 90vh;
+  //                             border: none;
+  //                           }
+  //                           .download-container {
+  //                             display: flex;
+  //                             justify-content: center;
+  //                             align-items: center;
+  //                             height: 10vh;
+  //                           }
+  //                           #downloadBtn {
+  //                             color: #007bff;
+  //                             border: 2px solid #007bff;
+  //                             padding: 10px 20px;
+  //                             font-size: 16px;
+  //                             border-radius: 5px;
+  //                             cursor: pointer;
+  //                             background: none;
+  //                             font-weight: bold;
+  //                             transition: color 0.3s ease, border-color 0.3s ease;
+  //                           }
+  //                           #downloadBtn:hover {
+  //                             color: #0056b3;
+  //                             border-color: #0056b3;
+  //                           }
+  //                           #downloadBtn:active {
+  //                             color: #004085;
+  //                             border-color: #004085;
+  //                           }
+  //                         </style>
+  //                       </head>
+  //                       <body>
+  //                         <iframe src="${blobURL}"></iframe>
+  //                         <div class="download-container">
+  //                           <button id="downloadBtn" aria-label="Download PDF">Download PDF</button>
+  //                         </div>
+  //                         <script>
+  //                           document.getElementById('downloadBtn').addEventListener('click', function() {
+  //                             const a = document.createElement('a');
+  //                             a.href = '${blobURL}';
+  //                             a.download = '${fileName}.pdf'; // Set file name for download
+  //                             a.click();
+  //                           });
+  //                         </script>
+  //                       </body>
+  //                     </html>
+  //                   `);
+  //                 } else {
 
-                    const downloadButton = document.createElement('a');
-                    downloadButton.href = downloadURL;
-                    downloadButton.download = `${fileName}.pdf`;
-                    downloadButton.style.display = 'none';
-                    document.body.appendChild(downloadButton);
-                    downloadButton.click();
-                    document.body.removeChild(downloadButton);
-                  }
-                  return InternalSalesReturnActions.printJasperPdfSuccess();
-                }),
-                catchError((err) => {
-                  this.viewColFacade.showFailedToast(err);
-                  return of(InternalSalesReturnActions.printJasperPdfFailed());
-                })
-              );
-            })
-          )
-  );
+  //                   const downloadButton = document.createElement('a');
+  //                   downloadButton.href = downloadURL;
+  //                   downloadButton.download = `${fileName}.pdf`;
+  //                   downloadButton.style.display = 'none';
+  //                   document.body.appendChild(downloadButton);
+  //                   downloadButton.click();
+  //                   document.body.removeChild(downloadButton);
+  //                 }
+  //                 return InternalSalesReturnActions.printJasperPdfSuccess();
+  //               }),
+  //               catchError((err) => {
+  //                 this.viewColFacade.showFailedToast(err);
+  //                 return of(InternalSalesReturnActions.printJasperPdfFailed());
+  //               })
+  //             );
+  //           })
+  //         )
+  // );
 
   selectSettingItemFilter$ = createEffect(() => this.actions$.pipe(
     ofType(InternalSalesReturnActions.selectSettingItemFilter),
@@ -2467,9 +2467,9 @@ updateContra$ = createEffect(() =>
               discLine.unit_price_txn = <any>discLine.amount_txn;
               discLine.unit_price_std = <any>discLine.amount_std;
               discLine.unit_price_net = <any>discLine.amount_txn;
-              discLine.amount_signum = 1;
+              discLine.amount_signum = 0;
               discLine.quantity_base = 1;
-              discLine.quantity_signum = 1;
+              discLine.quantity_signum = 0;
               discLine.txn_type = "PNS";
               discLine.server_doc_type = "INTERNAL_PURCHASE_GRN";
               discLine.date_txn = new Date();
@@ -2692,7 +2692,7 @@ updateContra$ = createEffect(() =>
   constructor(
     private actions$: Actions,
     private genDocLinkService: GenericDocLinkBackofficeEPService,
-    private isdnService: InternalSalesReturnService,
+    private isdnService: InternalSalesReturnRequestService,
     private arapService: ARAPService,
     private toastr: ToastrService,
     private store: Store<DraftStates>,

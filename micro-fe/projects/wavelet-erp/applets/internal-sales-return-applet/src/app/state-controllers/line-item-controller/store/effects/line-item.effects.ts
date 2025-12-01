@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { InternalSalesReturnService, Pagination, PricingSchemeLinkService, PricingSchemeService } from 'blg-akaun-ts-lib';
+import { InternalSalesReturnRequestService, Pagination, PricingSchemeLinkService, PricingSchemeService } from 'blg-akaun-ts-lib';
 import { ToastrService } from 'ngx-toastr';
 import { AppConfig } from 'projects/shared-utilities/visa';
 import { forkJoin, of } from 'rxjs';
@@ -118,7 +118,7 @@ export class LineItemEffects {
 
   constructor(
     private actions$: Actions,
-    private isSalesReturnService: InternalSalesReturnService,
+    private isSalesReturnService: InternalSalesReturnRequestService,
     private pricingService: PricingSchemeService,
     private pslService: PricingSchemeLinkService,
     private toastr: ToastrService,

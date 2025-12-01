@@ -221,7 +221,7 @@ export class ItemDetailsDeliveryDetailsComponent implements OnInit {
       let target = targets.filter(
         (target) =>
           target.permDfn ===
-          "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID"
+          "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID"
       );
       let targetDelivery = targets.filter(
         (targetDelivery) =>

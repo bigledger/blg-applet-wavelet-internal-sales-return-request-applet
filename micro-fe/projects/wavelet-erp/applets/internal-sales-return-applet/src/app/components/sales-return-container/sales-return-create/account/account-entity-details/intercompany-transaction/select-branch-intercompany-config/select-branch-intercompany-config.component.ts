@@ -31,7 +31,7 @@ export class SelectBranchIntercompanyConfigComponent implements OnInit, OnDestro
 
   private subs = new SubSink();
   private apiVisa = AppConfig.apiVisa;
-  private ISR:string = 'INTERNAL_SALES_RETURN'
+  private ISR:string = 'INTERNAL_SALES_RETURN_REQUEST'
   configFilterControl = new FormControl();
   filteredConfigs$: ReplaySubject<BranchIntercompanySettingContainerModel[]> = new ReplaySubject<BranchIntercompanySettingContainerModel[]>(1);
   configList: any[];

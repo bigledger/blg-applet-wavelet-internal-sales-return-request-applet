@@ -42,7 +42,7 @@ export class SettlementAdjustmentEffects {
       container.bl_fi_generic_doc_settlement_method_adjustment.adjustment_status = "UNPROCESSED";
       container.bl_fi_generic_doc_settlement_method_adjustment.old_settlement = <any> { doclines: settlement};
       container.bl_fi_generic_doc_settlement_method_adjustment.new_settlement =  <any> { doclines: settlementAdjustment};
-      container.bl_fi_generic_doc_settlement_method_adjustment.server_doc_type =  'INTERNAL_SALES_RETURN';
+      container.bl_fi_generic_doc_settlement_method_adjustment.server_doc_type =  'INTERNAL_SALES_RETURN_REQUEST';
       container.bl_fi_generic_doc_settlement_method_adjustment.server_doc_1 =  selectedSr.bl_fi_generic_doc_hdr.server_doc_1;
 
       let json = {

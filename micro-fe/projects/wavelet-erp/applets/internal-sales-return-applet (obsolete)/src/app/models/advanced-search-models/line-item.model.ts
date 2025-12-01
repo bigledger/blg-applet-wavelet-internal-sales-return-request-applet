@@ -32,7 +32,7 @@ export const lineItemSearchModel: SearchModel = {
 
   query: (query) => 
     `(hdr.server_doc_1 ILIKE '%${query}%' OR line.item_code ILIKE '%${query}%' OR line.item_name ILIKE '%${query}%') 
-    AND line.server_doc_type = 'INTERNAL_SALES_RETURN' AND line.status = 'ACTIVE'`,
+    AND line.server_doc_type = 'INTERNAL_SALES_RETURN_REQUEST' AND line.status = 'ACTIVE'`,
 
   table: 'bl_fi_generic_doc_hdr',
 
@@ -52,7 +52,7 @@ export const lineItemSearchModel: SearchModel = {
     },
   },
 
-  additionalCondition: ` AND line.server_doc_type = 'INTERNAL_SALES_RETURN' AND line.status = 'ACTIVE'`
+  additionalCondition: ` AND line.server_doc_type = 'INTERNAL_SALES_RETURN_REQUEST' AND line.status = 'ACTIVE'`
 };
 
 export const blanketLineItemSearchModel: SearchModel = {

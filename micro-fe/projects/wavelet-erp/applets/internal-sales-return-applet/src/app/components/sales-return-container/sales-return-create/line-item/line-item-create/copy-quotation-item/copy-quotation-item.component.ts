@@ -331,7 +331,7 @@ export class CopyQuotationItemComponent implements OnInit, OnDestroy {
       link.server_doc_type_doc_2_line = AppletConstants.docType;
       // link.txn_type = 'ISO_IPO';
       link.txn_type = 'CP';
-      link.quantity_signum = 1;
+      link.quantity_signum = 0;
       // link.quantity_contra = line.quantity_base;
       // link.quantity_contra = a.ko_qty;
       link.quantity_contra = 0; // copy of line item does not deduct any balance

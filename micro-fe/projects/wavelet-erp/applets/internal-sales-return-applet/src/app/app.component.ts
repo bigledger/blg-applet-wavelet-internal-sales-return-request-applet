@@ -116,13 +116,13 @@ export class AppComponent implements OnInit {
     let dto = {
       app_permission_dto: [
         {
-          permDfn: "TNT_API_DOC_INTERNAL_SALES_RETURN_READ_TGT_GUID",
+          permDfn: "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_READ_TGT_GUID",
         },
         {
-          permDfn: "TNT_API_DOC_INTERNAL_SALES_RETURN_CREATE_TGT_GUID",
+          permDfn: "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_CREATE_TGT_GUID",
         },
         {
-          permDfn: "TNT_API_DOC_INTERNAL_SALES_RETURN_UPDATE_TGT_GUID",
+          permDfn: "TNT_API_DOC_INTERNAL_SALES_RETURN_REQUEST_UPDATE_TGT_GUID",
         },
         {
           permDfn: "TNT_API_DOC_INTERNAL_SALES_RETURN_DELIVERY_BRANCH_READ",
