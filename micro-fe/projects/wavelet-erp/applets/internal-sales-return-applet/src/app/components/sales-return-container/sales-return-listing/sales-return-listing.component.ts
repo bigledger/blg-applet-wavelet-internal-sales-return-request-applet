@@ -62,7 +62,7 @@ export class SalesReturnListingComponent extends ViewColumnComponent {
   protected subs = new SubSink();
 
   compId = 'salesReturn';
-  compName = "Sales Return Listing";
+  compName = "Sales Return Request Listing";
   protected readonly index = 0;
   protected localState: LocalState;
   readonly localState$ = this.viewColFacade.selectLocalState(this.index);

@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
   // ngOnInit() {
   //   this.router.initialNavigation();
   // }
-  readonly appletName = "Internal-sales-return-applet";
+  readonly appletName = "Internal-sales-return-request-applet";
   menuItems = menuItems;
   readonly mainPath = mainPath;
 
