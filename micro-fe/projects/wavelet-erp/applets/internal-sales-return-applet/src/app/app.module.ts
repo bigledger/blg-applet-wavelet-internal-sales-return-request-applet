@@ -123,12 +123,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 export class AppModule {
 
   constructor(private injector: Injector) {
-    if (!customElements.get('internal-sales-return-applet-elements-' + sessionStorage.getItem('randomNumber'))) {
+    if (!customElements.get('internal-sales-return-request-applet-elements-' + sessionStorage.getItem('randomNumber'))) {
       const el2 = createCustomElement(AppComponent, { injector: this.injector });
-      customElements.define('internal-sales-return-applet-elements-' + sessionStorage.getItem('randomNumber'), el2);
+      customElements.define('internal-sales-return-request-applet-elements-' + sessionStorage.getItem('randomNumber'), el2);
       // to be able to run it the applet as the tag must be same as index.html
       if (document.getElementById('customtag')) {
-        this.changeTagName(document.getElementById('customtag'), 'internal-sales-return-applet-elements-' + sessionStorage.getItem('randomNumber'));
+        this.changeTagName(document.getElementById('customtag'), 'internal-sales-return-request-applet-elements-' + sessionStorage.getItem('randomNumber'));
       }
     }
   }
