@@ -11669,7 +11669,7 @@
         }
       }
     },
-    "internal-sales-return-applet": {
+    "internal-sales-return-request-applet": {
       "root": "projects/wavelet-erp/applets/internal-sales-return-applet/",
       "sourceRoot": "projects/wavelet-erp/applets/internal-sales-return-applet/src",
       "projectType": "application",
@@ -11679,7 +11679,7 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
-            "outputPath": "dist/internal-sales-return-applet",
+            "outputPath": "dist/internal-sales-return-request-applet",
             "index": "projects/wavelet-erp/applets/internal-sales-return-applet/src/index.html",
             "main": "projects/wavelet-erp/applets/internal-sales-return-applet/src/main.ts",
             "polyfills": "projects/wavelet-erp/applets/internal-sales-return-applet/src/polyfills.ts",

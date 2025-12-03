@@ -6,7 +6,7 @@ set -x
 export NODE_OPTIONS=--max_old_space_size=8192
 
 #compile angular application
-ng build --configuration=senwave-staging --project=internal-sales-return-request-applet --output-hashing none
+# ng build --configuration=senwave-staging --project=internal-sales-return-request-applet --output-hashing none
 node elements-build-scripts/wavelet-erp/internal-sales-return-request-applet/internal-sales-return-request-applet-elements-build.js
 
 # WARNING: Backup first
