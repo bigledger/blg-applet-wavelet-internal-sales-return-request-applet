@@ -33,6 +33,7 @@
       <button
       mat-raised-button
       color="primary"
+      *ngIf="!appletSettings.HIDE_EXPORT_TAB"
       type="button"
       (click)="onBulkPrint()"
       [disabled]="!appletSettings.PRINTABLE"
