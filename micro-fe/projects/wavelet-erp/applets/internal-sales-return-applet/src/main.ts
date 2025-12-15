@@ -10,9 +10,9 @@ if (environment.production) {
   enableProdMode();
   console.log = function () {};
 } else {
-  sessionStorage.setItem('appletGuid', 'c8312bf9-7e36-4b7f-a778-5937f10b189c');
+  sessionStorage.setItem('appletGuid', 'c7bc006f-3df2-4f04-8ea9-15993593b85d');
   sessionStorage.setItem('appletCode', 'InternalSalesReturnRequestApplet');
-  sessionStorage.setItem('tenantCode', 'staging_tenant');
+  sessionStorage.setItem('tenantCode', 'senhenghq');
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)

@@ -11825,18 +11825,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "internal-sales-return-applet:build"
+            "browserTarget": "internal-sales-return-request-applet:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "internal-sales-return-applet:build:production"
+              "browserTarget": "internal-sales-return-request-applet:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "internal-sales-return-applet:build"
+            "browserTarget": "internal-sales-return-request-applet:build"
           }
         },
         "test": {
